@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="O guia definitivo para sair das dívidas, conseguir cartões de crédito e empréstimos com as melhores taxas.">
+    <title>CrediFácil | Recuperação de Crédito e Finanças</title>
+
+    <!-- Tailwind CSS (Framework Moderno de Design) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Ícones (Phosphor Icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Configuração de Design System -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#FEFCE8',
+                            100: '#FEF9C3',
+                            400: '#FACC15', // Amarelo Principal (Botões)
+                            500: '#EAB308', // Amarelo Escuro (Hover)
+                            600: '#CA8A04',
+                            900: '#713F12',
+                        },
+                        navy: {
+                            800: '#18181b', // Cinza Quase Preto
+                            900: '#000000', // Preto Puro
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos Customizados para transições suaves */
+        body {
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden-section {
+            display: none;
+        }
+
+        /* Garantir footer no final */
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .card-enter {
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 page-wrapper">
+
+    <!-- HEADER / NAVEGAÇÃO -->
+    <header class="bg-black shadow-sm sticky top-0 z-50 border-b border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 cursor-pointer" onclick="navigateTo('home')">
+                    <div class="flex items-center gap-2">
+                        <div class="bg-brand-400 text-black p-2 rounded-lg">
+                            <i class="ph-fill ph-coins text-2xl"></i>
+                        </div>
+                        <span class="font-bold text-2xl text-white tracking-tight">Credi<span
+                                class="text-brand-400">Fácil</span></span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" onclick="navigateTo('home')"
+                        class="nav-link text-gray-300 hover:text-brand-400 font-medium transition">Início</a>
+                    <a href="#" onclick="navigateTo('emprestimo')"
+                        class="nav-link text-gray-300 hover:text-brand-400 font-medium transition">Empréstimos</a>
+                    <a href="#" onclick="navigateTo('cartoes')"
+                        class="nav-link text-gray-300 hover:text-brand-400 font-medium transition">Cartões</a>
+                    <a href="#" onclick="navigateTo('blog')"
+                        class="nav-link text-gray-300 hover:text-brand-400 font-medium transition">Blog</a>
+                    <a href="#" onclick="navigateTo('sobre')"
+                        class="nav-link text-gray-300 hover:text-brand-400 font-medium transition">Sobre</a>
+                </nav>
+
+                <!-- CTA Button (Solicitar Empréstimo) -->
+                <div class="hidden md:flex">
+                    <button onclick="navigateTo('emprestimo')"
+                        class="bg-brand-400 hover:bg-brand-500 text-black px-6 py-2.5 rounded-full font-bold transition shadow-lg shadow-brand-400/20 flex items-center gap-2">
+                        <span>Solicitar Empréstimo</span>
+                        <i class="ph-bold ph-hand-coins"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-white hover:text-brand-400 p-2">
+                        <i class="ph ph-list text-3xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-zinc-900 border-t border-gray-800 absolute w-full left-0 shadow-lg">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#" onclick="navigateTo('home'); toggleMobileMenu()"
+                    class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Início</a>
+                <a href="#" onclick="navigateTo('emprestimo'); toggleMobileMenu()"
+                    class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Empréstimos</a>
+                <a href="#" onclick="navigateTo('cartoes'); toggleMobileMenu()"
+                    class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Cartões</a>
+                <a href="#" onclick="navigateTo('blog'); toggleMobileMenu()"
+                    class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Blog</a>
+                <a href="#" onclick="navigateTo('sobre'); toggleMobileMenu()"
+                    class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Sobre</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="app-content" class="relative">
+
+        <!-- PÁGINA: HOME (index.html) -->
+        <section id="home" class="page-section fade-in">
+            <!-- Hero Section -->
+            <div class="bg-black text-white relative overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 w-1/2 h-full bg-brand-400 opacity-10 skew-x-12 transform translate-x-20">
+                </div>
+                <div class="container mx-auto px-4 py-20 lg:py-32 relative z-10">
+                    <div class="max-w-3xl">
+                        <span
+                            class="bg-brand-400/20 text-brand-400 px-4 py-1 rounded-full text-sm font-bold tracking-wide uppercase mb-6 inline-block border border-brand-400/20">Sua
+                            liberdade financeira</span>
+                        <h1 class="text-4xl lg:text-6xl font-extrabold leading-tight mb-6">
+                            Saia das dívidas e recupere seu <span class="text-brand-400">Crédito</span> hoje.
+                        </h1>
+                        <p class="text-lg text-gray-400 mb-8 max-w-2xl">
+                            Conteúdo gratuito, análises de cartões para negativados e as melhores taxas de empréstimo.
+                            Tudo para você reorganizar sua vida financeira.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button onclick="navigateTo('blog')"
+                                class="bg-brand-400 hover:bg-brand-500 text-black px-8 py-4 rounded-lg font-bold text-lg transition shadow-lg shadow-brand-400/20">
+                                Ver Artigos Gratuitos
+                            </button>
+                            <button onclick="navigateTo('cartoes')"
+                                class="bg-white/5 hover:bg-white/10 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-lg font-bold text-lg transition">
+                                Melhores Cartões
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="container mx-auto px-4 py-20">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
+                        <div
+                            class="bg-gray-900 w-14 h-14 rounded-xl flex items-center justify-center text-brand-400 mb-6 group-hover:scale-110 transition">
+                            <i class="ph ph-credit-card text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-black mb-3">Cartões Aprovados</h3>
+                        <p class="text-gray-600">Analisamos centenas de cartões para encontrar os que realmente aprovam
+                            negativados e pessoas com score baixo.</p>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
+                        <div
+                            class="bg-brand-50 w-14 h-14 rounded-xl flex items-center justify-center text-brand-600 mb-6 group-hover:scale-110 transition">
+                            <i class="ph ph-currency-dollar text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-black mb-3">Empréstimo Rápido</h3>
+                        <p class="text-gray-600">Simule empréstimos em recomendações confiáveis. Dinheiro na conta
+                            rápido e com parcelas que cabem no bolso.</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
+                        <div
+                            class="bg-gray-100 w-14 h-14 rounded-xl flex items-center justify-center text-gray-700 mb-6 group-hover:scale-110 transition">
+                            <i class="ph ph-graduation-cap text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-black mb-3">Educação Financeira</h3>
+                        <p class="text-gray-600">Aprenda a negociar dívidas, aumentar seu score e investir seu dinheiro
+                            com nossos guias completos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Articles Preview -->
+            <div class="bg-gray-50 py-20 border-t border-gray-200">
+                <div class="container mx-auto px-4">
+                    <div class="flex justify-between items-end mb-12">
+                        <div>
+                            <h2 class="text-3xl font-bold text-black mb-2">Últimas do Blog</h2>
+                            <p class="text-gray-600">Fique por dentro das novidades do mercado financeiro.</p>
+                        </div>
+                        <a href="#" onclick="navigateTo('blog')"
+                            class="hidden md:flex text-brand-600 font-semibold items-center gap-1 hover:gap-2 transition-all">Ver
+                            todos <i class="ph ph-arrow-right"></i></a>
+                    </div>
+
+                    <div id="home-blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Dynamic Content Loaded via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA: EMPRÉSTIMOS (emprestimo.html) -->
+        <section id="emprestimo" class="page-section hidden-section fade-in">
+            <div class="bg-black text-white py-16">
+                <div class="container mx-auto px-4 text-center">
+                    <h1 class="text-4xl font-bold mb-4">Simulador de Empréstimo Inteligente</h1>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Encontre a melhor taxa para o seu perfil e veja na hora o
+                        valor estimado da parcela.</p>
+                </div>
+            </div>
+
+            <div class="container mx-auto px-4 py-16">
+                <div class="grid lg:grid-cols-2 gap-12 items-start">
+                    <!-- Simulator Form -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-brand-400"></div>
+                        <h3 class="text-2xl font-bold text-black mb-6 flex items-center gap-2">
+                            <i class="ph-fill ph-calculator text-brand-500"></i> Simule Agora
+                        </h3>
+
+                        <form id="loan-form" onsubmit="calculateFinalLoan(event)" class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Quanto você precisa?</label>
+                                <div class="relative">
+                                    <span class="absolute left-4 top-3.5 text-gray-500 font-bold">R$</span>
+                                    <input type="number" id="loan-amount" oninput="updateLiveCalculation()"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition text-lg font-bold text-black"
+                                        placeholder="5000" min="500" step="100">
+                                </div>
+                                <div class="flex justify-between text-xs text-gray-400 mt-1">
+                                    <span>Min: R$ 500</span>
+                                    <span>Max: R$ 50.000</span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">Parcelas</label>
+                                    <select id="loan-term" onchange="updateLiveCalculation()"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none bg-white text-black font-medium">
+                                        <option value="12">12x</option>
+                                        <option value="24">24x</option>
+                                        <option value="36">36x</option>
+                                        <option value="48">48x</option>
+                                        <option value="60">60x</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">CPF</label>
+                                    <input type="text"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"
+                                        placeholder="000.000.000-00">
+                                </div>
+                            </div>
+
+                            <!-- Live Preview Box -->
+                            <div id="live-preview" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hidden">
+                                <p class="text-sm text-gray-500 mb-1">Estimativa de parcela:</p>
+                                <div class="flex items-end gap-1">
+                                    <span class="text-2xl font-bold text-brand-600" id="live-installment">R$ 0,00</span>
+                                    <span class="text-sm text-gray-400 mb-1">/mês*</span>
+                                </div>
+                            </div>
+
+                            <button type="submit"
+                                class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-lg transition transform hover:-translate-y-1 shadow-md shadow-brand-400/30 flex items-center justify-center gap-2">
+                                Ver Ofertas Disponíveis <i class="ph-bold ph-arrow-right"></i>
+                            </button>
+                            <p class="text-[10px] text-center text-gray-400 mt-4 leading-tight">
+                                * Simulação estimada. A aprovação de crédito não é garantida e a análise é realizada
+                                exclusivamente pela instituição financeira oficial.
+                            </p>
+                        </form>
+
+                        <!-- Resultado da Simulação (Aparece após submit) -->
+                        <div id="loan-result" class="hidden mt-6 pt-6 border-t border-gray-200 animate-fade-in">
+                            <div class="bg-brand-50 border border-brand-100 rounded-xl p-5 mb-4">
+                                <div class="flex items-start gap-3">
+                                    <div class="bg-brand-100 p-2 rounded-full text-brand-900">
+                                        <i class="ph-fill ph-check-circle text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 text-lg">Pré-aprovação Disponível!</h4>
+                                        <p class="text-gray-700 text-sm mt-1">Encontramos recomendações para seu perfil.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="loan-recommendations-container" class="space-y-3">
+                                <!-- Recomendações serão inseridas aqui via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info Content -->
+                    <div class="space-y-8">
+                        <div>
+                            <h2 class="text-3xl font-bold text-black mb-4">Como funciona?</h2>
+                            <p class="text-gray-600 leading-relaxed">
+                                Nosso algoritmo busca as melhores taxas em mais de 15 instituições financeiras
+                                simultaneamente. Mesmo se você estiver negativado, temos recomendações especializadas.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-4">
+                            <div
+                                class="flex gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-brand-400 transition items-start">
+                                <div
+                                    class="bg-gray-100 text-black w-12 h-12 flex items-center justify-center rounded-lg flex-shrink-0 mt-1">
+                                    <i class="ph ph-lightning text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-black">Aprovação Rápida</h4>
+                                    <p class="text-sm text-gray-600 mt-1">Algumas recomendações depositam o dinheiro via
+                                        PIX em até 30 minutos após a assinatura digital.</p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="flex gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-brand-400 transition items-start">
+                                <div
+                                    class="bg-gray-100 text-black w-12 h-12 flex items-center justify-center rounded-lg flex-shrink-0 mt-1">
+                                    <i class="ph ph-shield-check text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-black">100% Seguro</h4>
+                                    <p class="text-sm text-gray-600 mt-1">Seus dados são criptografados. Nunca pedimos
+                                        depósitos antecipados para liberar crédito.</p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="flex gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-brand-400 transition items-start">
+                                <div
+                                    class="bg-gray-100 text-black w-12 h-12 flex items-center justify-center rounded-lg flex-shrink-0 mt-1">
+                                    <i class="ph ph-thumbs-up text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-black">Score Baixo?</h4>
+                                    <p class="text-sm text-gray-600 mt-1">Temos opções de crédito com garantia (celular
+                                        ou veículo) que aprovam mesmo com score baixo.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA: DETALHES DA OFERTA (offer-screen) - NOVA -->
+        <section id="offer-screen" class="page-section hidden-section fade-in">
+            <div class="min-h-screen bg-gray-50 flex flex-col">
+                <div class="bg-black text-white py-12">
+                    <div class="container mx-auto px-4 text-center">
+                        <button onclick="navigateTo('emprestimo')"
+                            class="text-gray-400 hover:text-white mb-6 flex items-center justify-center gap-2 transition mx-auto">
+                            <i class="ph ph-arrow-left"></i> Voltar para Simulação
+                        </button>
+                        <div
+                            class="inline-flex items-center justify-center p-3 bg-brand-400 rounded-full mb-4 text-black">
+                            <i class="ph-fill ph-confetti text-3xl"></i>
+                        </div>
+                        <h1 class="text-3xl font-bold mb-2">Oferta Personalizada</h1>
+                        <p class="text-gray-400">Essa proposta é exclusiva para o seu perfil.</p>
+                    </div>
+                </div>
+
+                <div class="container mx-auto px-4 -mt-8 pb-16 flex-1">
+                    <div
+                        class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+                        <div class="p-8 border-b border-gray-100">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <p class="text-sm text-gray-500 mb-1">Instituição Recomendada</p>
+                                    <h2 id="offer-partner-name" class="text-2xl font-bold text-black">Banco Parceiro
+                                    </h2>
+                                </div>
+                                <div
+                                    class="bg-brand-100 text-brand-900 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border border-brand-200">
+                                    Pré-Aprovado
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-8 mb-6">
+                                <div>
+                                    <p class="text-sm text-gray-500 mb-1">Valor Solicitado</p>
+                                    <p id="offer-value" class="text-2xl font-bold text-black">R$ 0,00</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 mb-1">Condição de Pagamento</p>
+                                    <p id="offer-installments" class="text-2xl font-bold text-brand-600">12x R$ 0,00</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Taxa de Juros (estimada)</span>
+                                    <span class="font-medium text-black">3.5% a.m.</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Primeira Parcela</span>
+                                    <span class="font-medium text-black">Em até 45 dias</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-8 bg-white">
+                            <h3 class="font-bold text-black mb-4">Vantagens desta oferta:</h3>
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-center gap-3 text-gray-700">
+                                    <i class="ph-fill ph-check-circle text-brand-500 text-xl"></i>
+                                    <span>Sem necessidade de garantia de bens.</span>
+                                </li>
+                                <li class="flex items-center gap-3 text-gray-700">
+                                    <i class="ph-fill ph-check-circle text-brand-500 text-xl"></i>
+                                    <span>Processo 100% digital e sem burocracia.</span>
+                                </li>
+                                <li class="flex items-center gap-3 text-gray-700">
+                                    <i class="ph-fill ph-check-circle text-brand-500 text-xl"></i>
+                                    <span>Dinheiro na conta em até 24 horas úteis.</span>
+                                </li>
+                            </ul>
+
+                            <!-- Botão Contratar Atualizado -->
+                            <button id="offer-cta-btn"
+                                class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-xl transition shadow-lg shadow-brand-400/20 text-lg flex items-center justify-center gap-2">
+                                Contratar Agora <i class="ph-bold ph-arrow-right"></i>
+                            </button>
+                            <p class="text-center text-xs text-gray-400 mt-4 leading-tight max-w-sm mx-auto">
+                                Atenção: Ao clicar, você será redirecionado para o site oficial. A aprovação de crédito
+                                não é garantida e depende da análise da instituição.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA: CARTÕES (cartoes.html) -->
+        <section id="cartoes" class="page-section hidden-section fade-in">
+            <div class="bg-white border-b border-gray-200 py-12">
+                <div class="container mx-auto px-4 text-center">
+                    <h1 class="text-4xl font-bold text-black mb-4">Melhores Cartões de Crédito</h1>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Use os filtros abaixo para encontrar o cartão ideal para
+                        o seu perfil financeiro.</p>
+                </div>
+            </div>
+
+            <div class="container mx-auto px-4 py-16">
+                <!-- Filters -->
+                <div class="flex flex-wrap gap-4 justify-center mb-12">
+                    <button onclick="filterCards('todos')" id="btn-todos"
+                        class="filter-btn active px-6 py-2 bg-black text-white rounded-full text-sm font-medium transition shadow-md">Todos</button>
+                    <button onclick="filterCards('anuidade')" id="btn-anuidade"
+                        class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Sem
+                        Anuidade</button>
+                    <button onclick="filterCards('negativados')" id="btn-negativados"
+                        class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Para
+                        Negativados</button>
+                    <button onclick="filterCards('milhas')" id="btn-milhas"
+                        class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Milhas
+                        / Cashback</button>
+                </div>
+
+                <!-- Cards Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="cards-container">
+                    <!-- Cards will be injected here via JS -->
+                </div>
+
+                <div id="no-cards-msg" class="hidden text-center py-12">
+                    <div class="inline-block p-4 bg-gray-100 rounded-full mb-4 text-gray-400">
+                        <i class="ph ph-magnifying-glass text-3xl"></i>
+                    </div>
+                    <p class="text-gray-500">Nenhum cartão encontrado para este filtro.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA: BLOG LISTA (blog.html) -->
+        <section id="blog" class="page-section hidden-section fade-in">
+            <div class="bg-gray-100 py-16">
+                <div class="container mx-auto px-4">
+                    <div class="text-center max-w-3xl mx-auto mb-12">
+                        <h1 class="text-4xl font-extrabold text-black mb-4">Blog de Educação Financeira</h1>
+                        <p class="text-gray-600 text-lg">Artigos, guias e notícias para você tomar as melhores decisões
+                            com seu dinheiro.</p>
+                    </div>
+
+                    <!-- Featured Post -->
+                    <div class="bg-white rounded-3xl shadow-sm overflow-hidden flex flex-col lg:flex-row mb-12 border border-gray-100 cursor-pointer group"
+                        onclick="openArticle(1)">
+                        <div class="lg:w-1/2 bg-gray-200 h-64 lg:h-auto relative overflow-hidden">
+                            <!-- Placeholder Image -->
+                            <div
+                                class="absolute inset-0 bg-brand-400/10 flex items-center justify-center text-gray-400">
+                                <i class="ph ph-trend-up text-6xl"></i>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                                alt="Finanças"
+                                class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-8 lg:p-12 lg:w-1/2 flex flex-col justify-center">
+                            <span class="text-brand-600 font-bold text-sm uppercase tracking-wide mb-2">Destaque</span>
+                            <h2 class="text-3xl font-bold text-black mb-4 group-hover:text-brand-600 transition">Como
+                                aumentar seu Score em 30 dias: O Guia Definitivo</h2>
+                            <p class="text-gray-600 mb-6 line-clamp-3">Muitos brasileiros sofrem com score baixo mesmo
+                                pagando as contas em dia. Descubra os segredos que os bancos não te contam para elevar
+                                sua pontuação rapidamente.</p>
+                            <div class="flex items-center gap-4 text-sm text-gray-500">
+                                <span class="flex items-center gap-1"><i class="ph ph-calendar"></i> 10 Dez, 2025</span>
+                                <span class="flex items-center gap-1"><i class="ph ph-clock"></i> 5 min leitura</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Blog Grid -->
+                    <div id="blog-list-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- JS populated items -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA: BLOG POST INDIVIDUAL (Dinâmico) -->
+        <section id="blog-post" class="page-section hidden-section fade-in">
+            <div class="bg-white">
+                <!-- Article Header -->
+                <div class="bg-black text-white py-20">
+                    <div class="container mx-auto px-4 max-w-4xl text-center">
+                        <button onclick="navigateTo('blog')"
+                            class="text-gray-400 hover:text-white mb-8 flex items-center justify-center gap-2 transition">
+                            <i class="ph ph-arrow-left"></i> Voltar para o Blog
+                        </button>
+                        <span id="post-category"
+                            class="bg-brand-400/20 text-brand-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">Categoria</span>
+                        <h1 id="post-title" class="text-3xl md:text-5xl font-bold mt-4 mb-6 leading-tight">Título do
+                            Artigo</h1>
+                        <div class="flex items-center justify-center gap-4 text-gray-400 text-sm">
+                            <span id="post-author">Por Redação CrediFácil</span>
+                            <span>•</span>
+                            <span id="post-date">Data</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article Content -->
+                <article class="container mx-auto px-4 max-w-3xl py-12">
+                    <div id="post-content" class="prose prose-lg prose-gray max-w-none text-gray-700">
+                        <!-- Content injected via JS -->
+                        <p class="text-xl leading-relaxed mb-8 font-medium text-gray-800 intro-text"></p>
+                        <div class="body-content"></div>
+                    </div>
+
+                    <!-- Share -->
+                    <div class="border-t border-gray-200 mt-12 pt-8 flex justify-between items-center">
+                        <span class="font-bold text-black">Compartilhe:</span>
+                        <div class="flex gap-4">
+                            <button
+                                class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:opacity-90"><i
+                                    class="ph ph-facebook-logo text-xl"></i></button>
+                            <button
+                                class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center hover:opacity-90"><i
+                                    class="ph ph-whatsapp-logo text-xl"></i></button>
+                            <button
+                                class="w-10 h-10 rounded-full bg-sky-500 text-white flex items-center justify-center hover:opacity-90"><i
+                                    class="ph ph-twitter-logo text-xl"></i></button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- PÁGINA: SOBRE (sobre.html) -->
+        <section id="sobre" class="page-section hidden-section fade-in">
+            <div class="container mx-auto px-4 py-20">
+                <div class="max-w-4xl mx-auto text-center">
+                    <div class="inline-block p-4 rounded-full bg-brand-50 text-brand-600 mb-6">
+                        <i class="ph ph-users text-4xl"></i>
+                    </div>
+                    <h1 class="text-4xl font-bold text-black mb-6">Nossa Missão</h1>
+                    <p class="text-xl text-gray-600 leading-relaxed mb-12">
+                        O "CrediFácil" nasceu com um propósito claro: democratizar o acesso à informação financeira de
+                        qualidade. Acreditamos que todos merecem uma segunda chance e as ferramentas certas para
+                        construir um futuro próspero, longe das dívidas abusivas.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 mt-16 max-w-5xl mx-auto items-center">
+                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Equipe" class="rounded-2xl shadow-xl">
+                    <div class="space-y-6">
+                        <h2 class="text-2xl font-bold text-black">Por que confiar em nós?</h2>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i>
+                                <span class="text-gray-600">Conteúdo 100% imparcial e verificado por
+                                    especialistas.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i>
+                                <span class="text-gray-600">Recomendações transparentes com instituições financeiras
+                                    regulamentadas.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i>
+                                <span class="text-gray-600">Mais de 500 mil leitores ajudados anualmente.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA: TERMOS DE USO (terms) -->
+        <section id="terms" class="page-section hidden-section fade-in">
+            <div class="bg-white py-20">
+                <div class="container mx-auto px-4 max-w-3xl">
+                    <h1 class="text-3xl font-bold text-black mb-8">Termos de Uso</h1>
+                    <div class="prose prose-gray text-gray-700">
+                        <p>Bem-vindo ao CrediFácil. Ao acessar nosso site, você concorda com estes termos de serviço,
+                            todas as leis e regulamentos aplicáveis ​​e concorda que é responsável pelo cumprimento de
+                            todas as leis locais aplicáveis.</p>
+                        <h3>1. Uso de Licença</h3>
+                        <p>É concedida permissão para baixar temporariamente uma cópia dos materiais (informações ou
+                            software) no site CrediFácil, apenas para visualização transitória pessoal e não comercial.
+                        </p>
+                        <h3>2. Isenção de Responsabilidade</h3>
+                        <p>Os materiais no site da CrediFácil são fornecidos 'como estão'. CrediFácil não oferece
+                            garantias, expressas ou implícitas, e, por este meio, isenta e nega todas as outras
+                            garantias, incluindo, sem limitação, garantias implícitas ou condições de comercialização,
+                            adequação a um fim específico ou não violação de propriedade intelectual ou outra violação
+                            de direitos.</p>
+                        <h3>3. Limitações</h3>
+                        <p>Em nenhum caso o CrediFácil ou seus fornecedores serão responsáveis ​​por quaisquer danos
+                            (incluindo, sem limitação, danos por perda de dados ou lucro ou devido a interrupção dos
+                            negócios) decorrentes do uso ou da incapacidade de usar os materiais em CrediFácil.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA: POLÍTICA DE PRIVACIDADE (privacy) -->
+        <section id="privacy" class="page-section hidden-section fade-in">
+            <div class="bg-white py-20">
+                <div class="container mx-auto px-4 max-w-3xl">
+                    <h1 class="text-3xl font-bold text-black mb-8">Política de Privacidade</h1>
+                    <div class="prose prose-gray text-gray-700">
+                        <p>A sua privacidade é importante para nós. É política do CrediFácil respeitar a sua privacidade
+                            em relação a qualquer informação que possamos coletar no site CrediFácil, e outros sites que
+                            possuímos e operamos.</p>
+                        <h3>Coleta de Informações</h3>
+                        <p>Solicitamos informações pessoais apenas quando realmente precisamos delas para lhe fornecer
+                            um serviço. Fazemo-lo por meios justos e legais, com o seu conhecimento e consentimento.
+                            Também informamos por que estamos coletando e como será usado.</p>
+                        <h3>Uso de Cookies</h3>
+                        <p>Utilizamos cookies para armazenar informações, como as suas preferências pessoais quando
+                            visita o nosso site. Isto poderá incluir um simples popup, ou uma ligação em vários serviços
+                            que providenciamos, tais como fóruns.</p>
+                        <h3>Compromisso do Usuário</h3>
+                        <p>O usuário se compromete a fazer uso adequado dos conteúdos e da informação que o CrediFácil
+                            oferece no site e com caráter enunciativo, mas não limitativo:
+                        <ul>
+                            <li>A) Não se envolver em atividades que sejam ilegais ou contrárias à boa fé a à ordem
+                                pública;</li>
+                            <li>B) Não difundir propaganda ou conteúdo de natureza racista, xenofóbica, ou azar,
+                                qualquer tipo de pornografia ilegal, de apologia ao terrorismo ou contra os direitos
+                                humanos.</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-black text-gray-400 py-12 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 text-white mb-4">
+                        <i class="ph-fill ph-check-circle text-brand-400 text-xl"></i>
+                        <span class="font-bold text-xl">CrediFácil</span>
+                    </div>
+                    <p class="text-sm max-w-md">O site que te ajuda a sair das dívidas. Conteúdo informativo sobre
+                        finanças, cartões de crédito e empréstimos.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Links Rápidos</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" onclick="navigateTo('home')" class="hover:text-brand-400 transition">Início</a>
+                        </li>
+                        <li><a href="#" onclick="navigateTo('emprestimo')"
+                                class="hover:text-brand-400 transition">Empréstimos</a></li>
+                        <li><a href="#" onclick="navigateTo('cartoes')"
+                                class="hover:text-brand-400 transition">Cartões</a></li>
+                        <li><a href="#" onclick="navigateTo('blog')" class="hover:text-brand-400 transition">Blog</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" onclick="navigateTo('terms')"
+                                class="hover:text-brand-400 transition cursor-pointer">Termos de Uso</a></li>
+                        <li><a href="#" onclick="navigateTo('privacy')"
+                                class="hover:text-brand-400 transition cursor-pointer">Política de Privacidade</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition">Contato</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Newsletter Area -->
+            <div id="newsletter"
+                class="bg-gray-900 p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 border border-gray-800">
+                <div>
+                    <h3 class="text-white font-bold text-lg">Receba dicas financeiras grátis</h3>
+                    <p class="text-sm">Junte-se a mais de 50.000 inscritos.</p>
+                </div>
+                <form class="flex w-full md:w-auto gap-2">
+                    <input type="email" placeholder="Seu melhor e-mail"
+                        class="px-4 py-2 rounded-lg bg-black border border-gray-700 text-white focus:border-brand-400 outline-none w-full">
+                    <button
+                        class="bg-brand-400 hover:bg-brand-500 text-black px-6 py-2 rounded-lg font-bold transition">Enviar</button>
+                </form>
+            </div>
+
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-xs">
+                <p>&copy; 2025 CrediFácil. Todos os direitos reservados.</p>
+                <p class="mt-2 text-gray-500">Disclaimer: O CrediFácil não é uma instituição financeira. Nossas
+                    simulações são baseadas em recomendações.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- COOKIE BANNER -->
+    <div id="cookie-banner"
+        class="fixed bottom-0 left-0 w-full bg-black text-white p-4 z-50 flex flex-col md:flex-row justify-between items-center gap-4 border-t border-gray-800 shadow-2xl transform translate-y-full transition-transform duration-300">
+        <div class="text-sm text-gray-300 text-center md:text-left">
+            <p>Utilizamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com nossa <a
+                    href="#" onclick="navigateTo('privacy')"
+                    class="text-brand-400 underline hover:text-brand-300">política de privacidade</a>.</p>
+        </div>
+        <div class="flex gap-3">
+            <button onclick="acceptCookies()"
+                class="bg-brand-400 text-black px-6 py-2 rounded-full text-sm font-bold hover:bg-brand-500 transition shadow-lg shadow-brand-400/20">Aceitar
+                e Fechar</button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC (Funcionalidade Dinâmica) -->
+    <script>
+        // --- DADOS DOS CARTÕES DE CRÉDITO ---
+        const cardsData = [
+            {
+                id: 1,
+                name: "Santander SX",
+                bgClass: "bg-red-600",
+                iconBg: "bg-red-700",
+                rotation: "rotate-45",
+                badges: [
+                    { text: "Aprovação Alta", color: "bg-green-100 text-green-700" },
+                    { text: "Visa/Master", color: "bg-blue-100 text-blue-700" }
+                ],
+                annuity: "Grátis (gastando R$100)",
+                income: "R$ 1.045,00",
+                desc: "Ideal para quem busca o primeiro cartão ou quer recuperar crédito no mercado.",
+                link: "https://www.santander.com.br/cartao-credito-santander/sx",
+                categories: ["todos", "negativados"]
+            },
+            {
+                id: 2,
+                name: "Roxinho Nubank",
+                bgClass: "bg-purple-700",
+                iconBg: "bg-purple-800",
+                rotation: "-rotate-12",
+                badges: [
+                    { text: "Sem Anuidade", color: "bg-purple-100 text-purple-700" },
+                    { text: "Conta Digital", color: "bg-yellow-100 text-yellow-700" }
+                ],
+                annuity: "R$ 0,00",
+                income: "Não exigida",
+                desc: "Controle total pelo app e descontos se antecipar parcelas.",
+                link: "https://nubank.com.br/cartao/",
+                categories: ["todos", "anuidade", "negativados"]
+            },
+            {
+                id: 3,
+                name: "Inter Gold",
+                bgClass: "bg-orange-500",
+                iconBg: "bg-orange-400",
+                rotation: "rotate-0", // Custom style for Inter
+                isInter: true, // Special flag for styling
+                badges: [
+                    { text: "Cashback", color: "bg-orange-100 text-orange-700" },
+                    { text: "Internacional", color: "bg-blue-100 text-blue-700" }
+                ],
+                annuity: "Grátis",
+                income: "Não exigida",
+                extraInfoLabel: "Cashback",
+                extraInfoValue: "0.25% na fatura",
+                desc: "Super App completo com investimentos e shopping.",
+                link: "https://inter.co/pra-voce/cartoes/",
+                categories: ["todos", "anuidade", "milhas"]
+            },
+            {
+                id: 4,
+                name: "C6 Carbon",
+                bgClass: "bg-slate-800",
+                iconBg: "bg-black",
+                rotation: "rotate-12",
+                badges: [
+                    { text: "Pontos Átomos", color: "bg-slate-100 text-slate-700" },
+                    { text: "Mastercard Black", color: "bg-slate-900 text-white" }
+                ],
+                annuity: "12x R$ 85,00 (Isenção possível)",
+                income: "R$ 5.000,00",
+                desc: "2.5 pontos por dólar e acesso a salas VIP em aeroportos.",
+                link: "https://www.c6bank.com.br/cartao-c6-carbon",
+                categories: ["todos", "milhas"]
+            },
+            {
+                id: 5,
+                name: "Neon",
+                bgClass: "bg-cyan-500",
+                iconBg: "bg-cyan-600",
+                rotation: "-rotate-6",
+                badges: [
+                    { text: "Sem Anuidade", color: "bg-cyan-100 text-cyan-700" },
+                    { text: "Débito e Crédito", color: "bg-blue-100 text-blue-700" }
+                ],
+                annuity: "Grátis",
+                income: "Não exigida",
+                desc: "Cartão virtual na hora e investimentos que rendem mais que a poupança.",
+                link: "https://neon.com.br/",
+                categories: ["todos", "anuidade", "negativados"]
+            },
+            {
+                id: 6,
+                name: "Azul Itaú",
+                bgClass: "bg-blue-600",
+                iconBg: "bg-blue-800",
+                rotation: "rotate-3",
+                badges: [
+                    { text: "Milhas Aéreas", color: "bg-blue-100 text-blue-700" },
+                    { text: "Descontos", color: "bg-yellow-100 text-yellow-700" }
+                ],
+                annuity: "12x R$ 30,00",
+                income: "R$ 1.500,00",
+                desc: "Ganhe pontos TudoAzul em todas as compras e descontos em passagens.",
+                link: "https://www.itau.com.br/cartoes/escolha/azul-itau-internacional-visa-msg",
+                categories: ["todos", "milhas"]
+            }
+        ];
+
+
+        // --- DADOS DO BLOG (Fallback se não carregar o JSON) ---
+        let blogPosts = [
+            {
+                id: 1,
+                title: "Como aumentar seu Score em 30 dias: O Guia Definitivo",
+                category: "Score",
+                date: "10 Dez, 2025",
+                author: "Ana Silva",
+                image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                intro: "Muitos brasileiros sofrem com score baixo mesmo pagando as contas em dia. Descubra os segredos que os bancos não te contam.",
+                content: `O score de crédito é um dos fatores mais importantes da sua vida financeira.
+Ele influencia diretamente a aprovação de cartões de crédito, empréstimos, financiamentos e até contratos de aluguel.
+
+A boa notícia é que <strong>é possível aumentar seu score em apenas 30 dias</strong>, desde que você siga as estratégias corretas.
+
+<span style="background:#e8f5e9; padding:10px; display:block; border-left:4px solid #2e7d32; margin:20px 0;"> <strong>Resumo rápido:</strong><br> Organização financeira, pagamento em dia e uso consciente do crédito são os principais fatores para elevar sua pontuação. </span>
+O que é Score de Crédito e por que ele é tão importante?
+
+O score de crédito é uma pontuação que normalmente varia entre <strong>0 e 1000</strong>.
+
+Essa pontuação indica para bancos e empresas a probabilidade de você pagar suas contas em dia.
+
+Quanto maior o score, maior a confiança do mercado em você como consumidor.
+
+Um bom score pode garantir:
+
+• Juros mais baixos
+• Maior limite no cartão de crédito
+• Aprovação mais rápida de financiamentos
+• Mais poder de negociação
+
+É realmente possível aumentar o score em 30 dias?
+
+Sim, é possível.
+
+Embora o aumento exato dependa do seu histórico financeiro, muitas pessoas conseguem melhorar significativamente a pontuação em apenas um mês.
+
+Isso acontece principalmente quando hábitos negativos são corrigidos.
+
+Passo a Passo para Aumentar seu Score em 30 Dias
+1. Pague todas as contas em dia (sem exceções)
+
+O histórico de pagamentos é o fator que mais impacta o score.
+
+Qualquer atraso, mesmo pequeno, pode reduzir sua pontuação.
+
+Inclua no controle:
+
+• Água
+• Luz
+• Internet
+• Telefone
+• Fatura do cartão de crédito
+• Boletos e parcelas
+
+2. Quite ou negocie dívidas negativadas
+
+Dívidas registradas em órgãos de proteção ao crédito reduzem drasticamente o score.
+
+Negociar e quitar essas pendências pode gerar uma melhora rápida na pontuação.
+
+Isso é ainda mais comum quando a dívida é recente.
+
+3. Use o cartão de crédito com moderação
+
+Evite utilizar mais de <strong>30% do limite disponível</strong>.
+
+Um uso elevado do limite passa a impressão de risco financeiro para as instituições.
+
+<span style="background:#fff3e0; padding:10px; display:block; border-left:4px solid #ef6c00; margin:20px 0;"> <strong>Atenção:</strong><br> Pagar apenas o valor mínimo da fatura pode prejudicar seu score. Sempre que possível, pague o valor total. </span>
+4. Mantenha seus dados atualizados
+
+Manter informações como renda, endereço e telefone atualizadas ajuda as empresas de crédito a entenderem melhor seu perfil financeiro.
+
+Isso pode contribuir positivamente para o aumento do score.
+
+5. Evite muitas consultas ao CPF
+
+Solicitar crédito várias vezes em um curto período pode reduzir temporariamente sua pontuação.
+
+Durante esse processo, evite pedidos desnecessários.
+
+O que NÃO fazer se quiser aumentar o score rápido
+
+• Acreditar em promessas milagrosas
+• Comprar score ou usar serviços ilegais
+• Abrir vários cartões ao mesmo tempo
+• Ignorar pequenas dívidas
+
+Conclusão
+
+Aumentar o score em 30 dias é totalmente possível quando você adota hábitos financeiros saudáveis e consistentes.
+
+Mais do que um número, o score representa sua responsabilidade financeira.
+
+Comece hoje mesmo aplicando essas dicas e construa uma relação mais positiva com o crédito.
+
+<span style="font-size:14px; color:#666;"> Este artigo tem caráter informativo e não substitui orientação financeira profissional. </span>`
+            },
+            {
+                id: 2,
+                title: "5 Cartões de Crédito que aprovam Negativados em 2025",
+                category: "Cartões",
+                date: "08 Dez, 2025",
+                author: "Carlos Souza",
+                image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                intro: "Estar com o nome sujo não significa o fim da linha. Bancos digitais estão apostando nesse público com limites iniciais.",
+                content: "Estar com o nome negativado não significa ficar sem opções de cartão de crédito em 2025, pois hoje diversas instituições oferecem alternativas acessíveis, principalmente por meio de bancos digitais. Esses cartões utilizam critérios como movimentação da conta, limite garantido ou análise alternativa, permitindo aprovação mesmo com score baixo. A aprovação pode variar conforme o perfil do cliente, mas essas opções são conhecidas por terem análise mais flexível. O Will Bank é uma das opções mais populares entre pessoas negativadas, pois sua análise não depende exclusivamente do score de crédito tradicional, além de não ter anuidade, oferecer aprovação facilitada pelo aplicativo e permitir aumento de limite com o uso contínuo. O RecargaPay oferece cartão com limite baseado no saldo disponível na conta, o que torna a aprovação acessível inclusive para negativados, além de permitir compras online e físicas e oferecer cashback em algumas operações. O Neon realiza uma análise mais flexível considerando o relacionamento do cliente com a conta digital, e movimentar a conta aumenta as chances de liberação de crédito, contando ainda com anuidade zero, cartão físico e virtual e liberação gradual de limite. O PagBank é indicado para quem possui score baixo ou restrições no CPF, podendo aprovar com base no uso frequente da conta e outros produtos do banco, além de não cobrar anuidade e oferecer limite ajustável conforme o uso. Já o PicPay Card é uma opção moderna que pode aprovar negativados, especialmente quem movimenta a conta regularmente, oferecendo aceitação internacional, possibilidade de cashback e controle total pelo aplicativo. É importante evitar solicitar vários cartões ao mesmo tempo, pois muitas consultas ao CPF em um curto período podem prejudicar ainda mais o score. Mesmo negativado, é possível ter acesso a cartão de crédito em 2025, e o segredo está em escolher opções adequadas ao seu perfil e usar o crédito de forma consciente. Conteúdo informativo que não constitui recomendação financeira profissional."
+            },
+            {
+                id: 3,
+                title: "Empréstimo Pessoal vs Consignado: Qual escolher?",
+                category: "Empréstimos",
+                date: "05 Dez, 2025",
+                author: "Redação",
+                image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                intro: "Entenda as taxas de juros e os riscos de cada modalidade antes de assinar o contrato.",
+                content: "<p>Empréstimo Pessoal vs Consignado: Qual escolher? Antes de escolher entre um empréstimo pessoal e um consignado, é importante entender as diferenças básicas entre os dois. O empréstimo pessoal é um crédito livre concedido por bancos e fintechs sem vínculo direto com o salário ou benefício, o que significa que o valor das parcelas desconta diretamente da sua conta corrente ou é pago por débito automático. Já o consignado é um tipo de empréstimo com parcelas descontadas diretamente do salário, aposentadoria ou pensão, o que reduz o risco para a instituição financeira e costuma resultar em taxas de juros mais baixas. A principal vantagem do consignado é justamente o custo menor, pois as taxas de juros são mais atrativas e as parcelas ficam automaticamente vinculadas à sua renda mensal, diminuindo a chance de atraso. No entanto, como o desconto é automático, ele compromete parte da sua renda disponível, o que pode reduzir sua margem de manobra financeira ao final do mês. Por outro lado, o empréstimo pessoal, apesar de ter juros mais altos, oferece mais flexibilidade, pois o valor e número de parcelas não ficam automaticamente amarrados ao seu salário, permitindo um controle maior sobre seu orçamento. O empréstimo pessoal também pode ser aprovado por pessoas que não têm margem consignável ou que desejam evitar comprometer diretamente sua renda. Para escolher entre um e outro, é essencial comparar as taxas de juros, o Custo Efetivo Total (CET), o prazo de pagamento e o impacto no seu orçamento mensal. Se você busca juros menores e já tem renda estável com margem consignável, o consignado pode ser mais vantajoso, mas se prefere mais flexibilidade ou não tem margem consignável disponível, o empréstimo pessoal pode ser a melhor opção. Independentemente da escolha, planejar cuidadosamente o uso do dinheiro e entender todos os encargos é fundamental para evitar endividamento descontrolado.</p>"
+            },
+            {
+                id: 4,
+                title: "Como renegociar dívidas com até 90% de desconto",
+                category: "Dívidas",
+                date: "01 Dez, 2025",
+                author: "Ana Silva",
+                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                intro: "Feirões Limpa Nome são a melhor oportunidade do ano. Saiba como se preparar.",
+                content: "<p>Como renegociar dívidas com até 90% de desconto. Renegociar dívidas pode parecer difícil, mas é totalmente possível conseguir descontos que chegam a até 90%, especialmente quando a dívida está atrasada há algum tempo. O primeiro passo é entender exatamente quais dívidas você possui, identificando o valor total, o credor e há quanto tempo estão em atraso, pois dívidas mais antigas costumam ter maiores chances de desconto. Em seguida, é fundamental procurar os canais oficiais do credor, como bancos, financeiras ou plataformas de negociação, evitando intermediários que prometem milagres. Muitas empresas preferem conceder grandes descontos para receber parte do valor do que manter a dívida em aberto por anos. Ter dinheiro disponível para pagamento à vista aumenta significativamente o poder de negociação, já que os maiores descontos costumam ser oferecidos nessa modalidade. Caso não seja possível pagar à vista, ainda assim é possível negociar parcelamentos com abatimentos relevantes. Durante a negociação, seja firme, demonstre interesse real em quitar a dívida e informe claramente sua condição financeira atual, pois isso ajuda o credor a apresentar propostas mais adequadas. É importante também comparar diferentes ofertas e não aceitar a primeira proposta sem avaliar se ela realmente cabe no seu orçamento. Após fechar o acordo, certifique-se de que todas as condições estejam registradas por escrito e acompanhe a baixa da negativação após o pagamento. Renegociar dívidas com desconto é uma oportunidade de recomeço financeiro, mas exige organização, planejamento e compromisso para não voltar a se endividar. Conteúdo informativo que não constitui recomendação financeira profissional.</p>"
+            }
+              
+        ];
+
+        // --- NAVEGAÇÃO ---
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.add('hidden-section');
+            });
+            const targetSection = document.getElementById(pageId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden-section');       
+                targetSection.classList.remove('fade-in');
+                void targetSection.offsetWidth;
+                targetSection.classList.add('fade-in');
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- LÓGICA DE CARTÕES (FILTRO E RENDERIZAÇÃO) ---
+        function renderCards(filter = 'todos') {
+            const container = document.getElementById('cards-container');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            // Filtrar dados
+            const filteredCards = cardsData.filter(card => card.categories.includes(filter));
+
+            if (filteredCards.length === 0) {
+                document.getElementById('no-cards-msg').classList.remove('hidden');
+            } else {
+                document.getElementById('no-cards-msg').classList.add('hidden');
+            }
+
+            filteredCards.forEach(card => {
+                // Build Badges
+                let badgesHtml = card.badges.map(b =>
+                    `<span class="text-xs font-semibold ${b.color} px-2 py-1 rounded">${b.text}</span>`
+                ).join('');
+
+                // Custom Visual for Card Image
+                let cardVisual = '';
+                if (card.isInter) {
+                    cardVisual = `<div class="absolute w-20 h-20 ${card.iconBg} rounded-full top-0 right-0 opacity-50"></div>`;
+                } else {
+                    cardVisual = `<div class="absolute inset-0 ${card.iconBg} opacity-50 transform ${card.rotation} translate-y-10"></div>`;
+                }
+
+                const cardHtml = `
+                    <div class="card-enter bg-white rounded-2xl shadow-sm hover:shadow-xl transition overflow-hidden border border-gray-100 flex flex-col">
+                        <div class="p-6 flex flex-col items-center bg-gradient-to-b from-gray-50 to-white">
+                            <div class="w-full h-40 ${card.bgClass} rounded-xl mb-6 shadow-md relative flex items-center justify-center text-white overflow-hidden">
+                                <span class="font-bold text-2xl relative z-10">${card.name}</span>
+                                ${cardVisual}
+                            </div>
+                            <h3 class="text-xl font-bold text-black">${card.name}</h3>
+                            <div class="flex flex-wrap justify-center gap-2 mt-2">
+                                ${badgesHtml}
+                            </div>
+                        </div>
+                        <div class="px-6 py-4 space-y-3 flex-1">
+                            <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
+                                <span class="text-gray-500">Anuidade</span>
+                                <span class="font-medium text-black">${card.annuity}</span>
+                            </div>
+                            <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
+                                <span class="text-gray-500">${card.extraInfoLabel || 'Renda Mínima'}</span>
+                                <span class="font-medium text-black">${card.extraInfoValue || card.income}</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-4">${card.desc}</p>
+                        </div>
+                        <div class="p-6 pt-0 mt-auto">
+                            <a href="${card.link}" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-brand-400 hover:bg-brand-500 text-black font-bold py-3 rounded-lg transition">Solicitar Cartão <i class="ph ph-arrow-up-right"></i></a>
+                            <p class="text-[10px] text-gray-400 text-center mt-2 leading-tight">Aprovação sujeita a análise da instituição. O CrediFácil não garante crédito.</p>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHtml;
+            });
+        }
+
+        function filterCards(category) {
+            // Update UI Buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                // Reset styles to default
+                btn.className = "filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition cursor-pointer";
+            });
+
+            // Set active style
+            const activeBtn = document.getElementById('btn-' + category);
+            if (activeBtn) {
+                activeBtn.className = "filter-btn px-6 py-2 bg-black text-white rounded-full text-sm font-medium transition shadow-md cursor-pointer";
+            }
+
+            renderCards(category);
+        }
+
+        // --- LÓGICA DO SIMULADOR INTELIGENTE (ATUALIZADA) ---
+
+        // 1. Definição de Parceiros de Empréstimo
+        const loanPartners = [
+            {
+                name: "Nubank",
+                color: "text-purple-600",
+                bg: "bg-purple-100",
+                hoverBg: "group-hover:bg-purple-600",
+                hoverText: "group-hover:text-white",
+                letter: "N",
+                url: "https://nubank.com.br/emprestimo/"
+            },
+            {
+                name: "Banco Inter",
+                color: "text-orange-600",
+                bg: "bg-orange-100",
+                hoverBg: "group-hover:bg-orange-600",
+                hoverText: "group-hover:text-white",
+                letter: "I",
+                url: "https://inter.co/pra-voce/emprestimo/"
+            },
+            {
+                name: "Santander",
+                color: "text-red-600",
+                bg: "bg-red-100",
+                hoverBg: "group-hover:bg-red-600",
+                hoverText: "group-hover:text-white",
+                letter: "S",
+                url: "https://www.santander.com.br/emprestimos"
+            },
+            {
+                name: "Itaú",
+                color: "text-blue-600",
+                bg: "bg-blue-100",
+                hoverBg: "group-hover:bg-blue-600",
+                hoverText: "group-hover:text-white",
+                letter: "I",
+                url: "https://www.itau.com.br/emprestimos"
+            },
+            {
+                name: "C6 Bank",
+                color: "text-gray-800",
+                bg: "bg-gray-200",
+                hoverBg: "group-hover:bg-black",
+                hoverText: "group-hover:text-white",
+                letter: "C",
+                url: "https://www.c6bank.com.br/emprestimos"
+            }
+        ];
+
+        function updateLiveCalculation() {
+            const amount = parseFloat(document.getElementById('loan-amount').value);
+            const term = parseInt(document.getElementById('loan-term').value);
+            const rate = 0.035; // 3.5% monthly interest rate approximation
+
+            const previewBox = document.getElementById('live-preview');
+            const resultElement = document.getElementById('live-installment');
+
+            if (!amount || amount < 500) {
+                previewBox.classList.add('hidden');
+                return;
+            }
+
+            // PMT Formula: P * (r * (1 + r)^n) / ((1 + r)^n - 1)
+            const numerator = amount * rate * Math.pow(1 + rate, term);
+            const denominator = Math.pow(1 + rate, term) - 1;
+            const installment = numerator / denominator;
+
+            // Format Currency
+            const formatted = installment.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+            resultElement.textContent = formatted;
+            previewBox.classList.remove('hidden');
+        }
+
+        function calculateFinalLoan(event) {
+            event.preventDefault();
+            const resultBox = document.getElementById('loan-result');
+            const container = document.getElementById('loan-recommendations-container');
+
+            // 2. Limpar resultados anteriores
+            container.innerHTML = '';
+
+            // 3. Embaralhar e selecionar parceiros aleatórios (entre 2 e 3)
+            const shuffled = [...loanPartners].sort(() => 0.5 - Math.random());
+            const count = Math.floor(Math.random() * 2) + 2; // 2 ou 3
+            const selected = shuffled.slice(0, count);
+
+            // 4. Gerar HTML para os parceiros selecionados
+            selected.forEach(partner => {
+                const partnerHTML = `
+                <div onclick="openOffer('${partner.name}', '${partner.url}')" class="flex justify-between items-center p-3 bg-white border border-gray-200 rounded-lg hover:border-brand-400 transition cursor-pointer shadow-sm group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 ${partner.bg} rounded-full flex items-center justify-center ${partner.color} font-bold ${partner.hoverBg} ${partner.hoverText} transition">${partner.letter}</div>
+                        <span class="font-semibold text-black">${partner.name}</span>
+                    </div>
+                    <span class="text-brand-600 font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition">Ver oferta <i class="ph-bold ph-caret-right"></i></span>
+                </div>`;
+                container.innerHTML += partnerHTML;
+            });
+
+            resultBox.classList.remove('hidden');
+
+            // Scroll to result nicely
+            resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // --- LÓGICA DA TELA DE OFERTA (ATUALIZADA COM LINK) ---
+        function openOffer(partnerName, linkUrl) {
+            // Get simulation values
+            const amount = document.getElementById('loan-amount').value;
+            const term = document.getElementById('loan-term').value;
+            const installmentText = document.getElementById('live-installment').textContent;
+
+            // Simple validation or default if empty
+            const finalAmount = amount ? parseFloat(amount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 'R$ 5.000,00';
+            const finalInstallment = installmentText !== 'R$ 0,00' ? installmentText : 'R$ 520,00';
+
+            // Populate offer screen
+            document.getElementById('offer-partner-name').textContent = partnerName;
+            document.getElementById('offer-value').textContent = finalAmount;
+            document.getElementById('offer-installments').textContent = `${term}x ${finalInstallment}`;
+
+            // Configure CTA Button Link
+            const ctaBtn = document.getElementById('offer-cta-btn');
+            ctaBtn.onclick = function () {
+                window.open(linkUrl, '_blank');
+            };
+
+            // Navigate
+            navigateTo('offer-screen');
+        }
+
+
+        // --- LÓGICA DO BLOG (Com suporte a JSON) ---
+        async function fetchBlogPosts() {
+            try {
+                // Tenta carregar o arquivo JSON externo
+                const response = await fetch('posts.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.posts && Array.isArray(data.posts)) {
+                        blogPosts = data.posts; // Atualiza a variável global
+                    }
+                }
+            } catch (error) {
+                console.log("Usando posts padrão (fallback). Para usar posts.json, rode em um servidor local.");
+            }
+            renderBlog(); // Renderiza com os dados (novos ou padrão)
+        }
+
+        function renderBlog() {
+            const homeGrid = document.getElementById('home-blog-grid');
+            const blogListGrid = document.getElementById('blog-list-container');
+
+            if (homeGrid) homeGrid.innerHTML = '';
+            if (blogListGrid) blogListGrid.innerHTML = '';
+
+            blogPosts.forEach((post, index) => {
+                const cardHTML = `
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col h-full" onclick="openArticle(${post.id})">
+                        <div class="h-48 overflow-hidden relative">
+                             <div class="absolute inset-0 bg-black/10 hover:bg-transparent transition z-10"></div>
+                             <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
+                             <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-black z-20">${post.category}</span>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <span class="text-xs text-gray-500 mb-2 block">${post.date}</span>
+                            <h3 class="text-xl font-bold text-black mb-3 hover:text-brand-600 transition">${post.title}</h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-1">${post.intro}</p>
+                            <span class="text-brand-600 font-semibold text-sm flex items-center gap-1 mt-auto">Ler artigo <i class="ph-bold ph-arrow-right"></i></span>
+                        </div>
+                    </div>
+                `;
+
+                if (index < 3 && homeGrid) homeGrid.innerHTML += cardHTML;
+                if (blogListGrid) blogListGrid.innerHTML += cardHTML;
+            });
+        }
+
+        function openArticle(id) {
+            const post = blogPosts.find(p => p.id === id);
+            if (!post) return;
+            document.getElementById('post-category').textContent = post.category;
+            document.getElementById('post-title').textContent = post.title;
+            document.getElementById('post-author').textContent = 'Por ' + post.author;
+            document.getElementById('post-date').textContent = post.date;
+            const contentDiv = document.getElementById('post-content');
+            contentDiv.querySelector('.intro-text').textContent = post.intro;
+            contentDiv.querySelector('.body-content').innerHTML = post.content;
+            navigateTo('blog-post');
+        }
+
+        // --- COOKIE LOGIC ---
+        function checkCookies() {
+            if (!localStorage.getItem('cookiesAccepted')) {
+                const banner = document.getElementById('cookie-banner');
+                banner.classList.remove('translate-y-full'); // Remove classe que esconde para baixo
+            }
+        }
+
+        function acceptCookies() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            const banner = document.getElementById('cookie-banner');
+            banner.classList.add('translate-y-full');
+        }
+
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchBlogPosts(); // Tenta carregar do JSON
+            renderCards('todos'); // Initial render
+            navigateTo('home');
+
+            // Delay cookie banner slightly for effect
+            setTimeout(checkCookies, 1500);
+        });
+
+    </script>
+</body>
+
+</html>

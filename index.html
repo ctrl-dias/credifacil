@@ -8,9 +8,11 @@
     <meta name="author" content="CrediFácil">
     
     <!-- Google AdSense (Script Principal) -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017585624443150" crossorigin="anonymous"></script>
+    <!-- Carrega a biblioteca do AdSense uma única vez -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017585624443150"
+     crossorigin="anonymous"></script>
 
-    <!-- FIREBASE SDKs -->
+    <!-- FIREBASE SDKs (Compat version for easier HTML integration) -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
@@ -38,8 +40,8 @@
                         brand: {
                             50: '#FEFCE8',
                             100: '#FEF9C3',
-                            400: '#FACC15', // Amarelo Principal
-                            500: '#EAB308', // Amarelo Escuro
+                            400: '#FACC15', // Amarelo Principal (Botões)
+                            500: '#EAB308', // Amarelo Escuro (Hover)
                             600: '#CA8A04',
                             900: '#713F12',
                         },
@@ -64,8 +66,9 @@
         .card-enter { animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         
+        /* Container de Anúncio Otimizado para AdSense */
         .ad-slot {
-            display: block; 
+            display: block; /* Importante: block funciona melhor que flex para ads responsivos */
             margin: 2rem auto;
             background-color: transparent; 
             min-height: 90px; 
@@ -73,7 +76,10 @@
             text-align: center;
             overflow: hidden;
         }
-        .ad-slot:empty { background-color: #f9fafb; }
+        
+        .ad-slot:empty {
+            background-color: #f9fafb;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 page-wrapper">
@@ -705,21 +711,28 @@
     <script>
         // --- 1. CONFIGURAÇÃO DO FIREBASE (IMPORTANTE: SUBSTITUA COM SEUS DADOS) ---
         // Você pega esses dados no console do Firebase: Project Settings > General > Your apps
-        const firebaseConfig = {
-            apiKey: "AIzaSyAM-jEpYxbOLHA9yGCQtKFS3P_xdbMYPNI",
-    authDomain: "credifacil-5af35.firebaseapp.com",
-    projectId: "credifacil-5af35",
-    storageBucket: "credifacil-5af35.firebasestorage.app",
-    messagingSenderId: "491592064222",
-    appId: "1:491592064222:web:a93a975bd912012359b64f",
-        };
+        // Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAM-jEpYxbOLHA9yGCQtKFS3P_xdbMYPNI",
+  authDomain: "credifacil-5af35.firebaseapp.com",
+  projectId: "credifacil-5af35",
+  storageBucket: "credifacil-5af35.firebasestorage.app",
+  messagingSenderId: "491592064222",
+  appId: "1:491592064222:web:a93a975bd912012359b64f",
+  measurementId: "G-CXHTDD45DJ"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
         // --- INICIALIZAÇÃO DO FIREBASE COM FALLBACK ---
         let db, auth;
         let isFirebaseInitialized = false;
 
         // Verifica se a config ainda tem placeholders
-        const hasPlaceholders = firebaseConfig.projectId === "credifacil-5af35";
+        const hasPlaceholders = firebaseConfig.projectId === "SEU_PROJECT_ID";
 
         if (!hasPlaceholders) {
             try {
@@ -1023,7 +1036,19 @@
 
             auth.signInWithEmailAndPassword(email, password)
                 .catch((error) => {
-                    errorMsg.textContent = "Erro: " + error.message;
+                    let message = "Erro ao fazer login.";
+                    // Tradução básica de erros comuns
+                    if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+                        message = "E-mail ou senha incorretos.";
+                    } else if (error.code === 'auth/user-not-found') {
+                        message = "Usuário não encontrado.";
+                    } else if (error.code === 'auth/too-many-requests') {
+                        message = "Muitas tentativas. Tente mais tarde.";
+                    } else {
+                        message = "Erro: " + error.message;
+                    }
+                    
+                    errorMsg.textContent = message;
                     errorMsg.classList.remove('hidden');
                 });
         }

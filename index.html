@@ -81,22 +81,34 @@
         }
         .rich-editor-btn:hover { background: #e5e7eb; color: #000; }
         
+        /* Aplica os mesmos estilos do artigo ao editor para o admin ver como vai ficar */
         .rich-editor-content {
             min-height: 350px; padding: 20px; border: 1px solid #d1d5db; border-top: none;
             border-radius: 0 0 8px 8px; outline: none; background: white; overflow-y: auto;
             font-family: 'Merriweather', serif; line-height: 1.8;
         }
         .rich-editor-content:focus { border-color: #FACC15; box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.1); }
+        .rich-editor-content h2 { font-family: 'Inter', sans-serif; font-size: 1.5em; font-weight: 700; margin: 1em 0 0.5em; border-left: 4px solid #FACC15; padding-left: 1rem; }
+        .rich-editor-content h3 { font-family: 'Inter', sans-serif; font-size: 1.25em; font-weight: 600; margin: 1em 0 0.5em; }
+        .rich-editor-content ul { list-style-type: disc; padding-left: 1.5em; }
+        .rich-editor-content ol { list-style-type: decimal; padding-left: 1.5em; }
+        .rich-editor-content b, .rich-editor-content strong { font-weight: 700; }
+        .rich-editor-content i, .rich-editor-content em { font-style: italic; }
+        .rich-editor-content blockquote { border-left: 4px solid #FACC15; padding: 1rem; background: #fffbeb; font-style: italic; margin: 1em 0; }
 
-        /* --- ESTILOS DO ARTIGO --- */
+        /* --- ESTILOS DO ARTIGO (Reforçado) --- */
+        .rich-content { font-family: 'Merriweather', serif; color: #374151; }
         .rich-content h1 { font-family: 'Inter', sans-serif; font-size: 2.25em; font-weight: 800; margin: 1.5em 0 0.5em; color: #111; line-height: 1.2; }
         .rich-content h2 { font-family: 'Inter', sans-serif; font-size: 1.75em; font-weight: 700; margin: 1.5em 0 0.5em; color: #1f2937; border-left: 4px solid #FACC15; padding-left: 1rem; }
         .rich-content h3 { font-family: 'Inter', sans-serif; font-size: 1.4em; font-weight: 600; margin: 1.25em 0 0.5em; color: #374151; }
-        .rich-content p { margin-bottom: 1.25em; line-height: 1.8; color: #374151; font-family: 'Merriweather', serif; font-size: 1.1rem; }
-        .rich-content ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1.25em; color: #374151; font-family: 'Merriweather', serif; }
-        .rich-content ol { list-style-type: decimal; padding-left: 1.5em; margin-bottom: 1.25em; color: #374151; font-family: 'Merriweather', serif; }
-        .rich-content blockquote { border-left: 4px solid #FACC15; padding: 1.5rem; margin: 1.5em 0; background: #fffbeb; font-style: italic; color: #4b5563; font-family: 'Merriweather', serif; border-radius: 0 8px 8px 0; }
-        .rich-content b, .rich-content strong { font-weight: 700; color: #000; }
+        .rich-content p { margin-bottom: 1.25em; line-height: 1.8; font-size: 1.1rem; }
+        .rich-content ul { list-style-type: disc !important; padding-left: 1.5em !important; margin-bottom: 1.25em; }
+        .rich-content ol { list-style-type: decimal !important; padding-left: 1.5em !important; margin-bottom: 1.25em; }
+        .rich-content li { margin-bottom: 0.5em; }
+        .rich-content blockquote { border-left: 4px solid #FACC15; padding: 1.5rem; margin: 1.5em 0; background: #fffbeb; font-style: italic; color: #4b5563; border-radius: 0 8px 8px 0; }
+        .rich-content b, .rich-content strong { font-weight: 700 !important; color: #000; }
+        .rich-content i, .rich-content em { font-style: italic !important; }
+        .rich-content u { text-decoration: underline; }
         .rich-content a { color: #CA8A04; text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
         .rich-content img { max-width: 100%; height: auto; border-radius: 12px; margin: 2em 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
     </style>
@@ -428,9 +440,10 @@
 
                             <h4 class="text-lg font-bold mb-6 flex items-center gap-2"><i class="ph-bold ph-chat-circle-text"></i> Comentários (<span id="comment-count">0</span>)</h4>
                             
-                            <div id="comments-list" class="space-y-4 mb-8 max-h-[400px] overflow-y-auto custom-scrollbar"></div>
+                            <div id="comments-list" class="space-y-4 mb-8 max-h-[600px] overflow-y-auto custom-scrollbar pr-2"></div>
 
-                            <form onsubmit="submitComment(event)" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                            <form onsubmit="submitComment(event)" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm mt-6">
+                                <h5 class="text-sm font-bold mb-4">Deixe seu comentário</h5>
                                 <div class="mb-4">
                                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Seu Nome</label>
                                     <input type="text" id="comment-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-black focus:ring-1 focus:ring-black outline-none transition" required>
@@ -1288,23 +1301,69 @@
              setTimeout(() => document.getElementById('like-icon').classList.remove('animate-pulse-custom'), 500);
         }
 
+        // --- SISTEMA DE COMENTÁRIOS E RESPOSTAS ---
         function loadComments(id) {
             const list = document.getElementById('comments-list');
             const count = document.getElementById('comment-count');
+            const currentUser = auth.currentUser;
+
             db.collection("posts").doc(id).collection("comments").orderBy("timestamp", "desc").onSnapshot(snap => {
                 count.textContent = snap.size;
                 if(snap.empty) { list.innerHTML = '<p class="text-gray-400 text-sm italic">Nenhum comentário ainda.</p>'; return; }
+                
                 list.innerHTML = '';
                 snap.forEach(d => {
                     const c = d.data();
+                    const replies = c.replies || [];
+                    const deleteBtn = currentUser ? 
+                        `<button onclick="deleteComment('${id}', '${d.id}')" class="text-red-400 hover:text-red-600 ml-2" title="Excluir Comentário"><i class="ph-bold ph-trash"></i></button>` : '';
+                    
+                    let repliesHtml = '';
+                    if(replies.length > 0) {
+                        repliesHtml = replies.map(r => `
+                            <div class="ml-8 mt-2 pl-4 border-l-2 border-gray-200">
+                                <div class="flex justify-between items-center text-xs">
+                                    <span class="font-bold ${r.isAdmin ? 'text-brand-600' : 'text-gray-800'}">${r.name} ${r.isAdmin ? '<span class="bg-brand-100 text-brand-700 px-1 rounded ml-1 text-[10px]">Admin</span>' : ''}</span>
+                                    <span class="text-gray-400">Resposta</span>
+                                </div>
+                                <p class="text-sm text-gray-700 mt-1">${r.text}</p>
+                            </div>
+                        `).join('');
+                    }
+
                     list.innerHTML += `
-                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                            <div class="flex justify-between mb-1"><span class="font-bold text-sm">${c.name}</span><span class="text-xs text-gray-400">Recente</span></div>
-                            <p class="text-sm text-gray-700">${c.text}</p>
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-3 relative group">
+                            <div class="flex justify-between mb-1">
+                                <span class="font-bold text-sm text-gray-900">${c.name}</span>
+                                <div class="flex items-center text-xs text-gray-400 gap-2">
+                                    <span>Recente</span>
+                                    ${deleteBtn}
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-700 leading-relaxed">${c.text}</p>
+                            
+                            <!-- Área de Respostas -->
+                            ${repliesHtml}
+                            
+                            <!-- Botão de Responder -->
+                            <div class="mt-3 pt-2 border-t border-gray-100">
+                                <button onclick="toggleReplyForm('${d.id}')" class="text-xs font-bold text-gray-500 hover:text-brand-600 flex items-center gap-1 transition">
+                                    <i class="ph-bold ph-arrow-bend-down-right"></i> Responder
+                                </button>
+                                <form id="reply-form-${d.id}" onsubmit="submitReply(event, '${id}', '${d.id}')" class="hidden mt-2 flex gap-2">
+                                    <input type="text" id="reply-input-${d.id}" placeholder="Escreva uma resposta..." class="flex-1 text-xs px-3 py-2 border rounded-lg outline-none focus:border-brand-400" required>
+                                    <button type="submit" class="bg-brand-400 text-black text-xs font-bold px-3 py-2 rounded-lg hover:bg-brand-500 transition">Enviar</button>
+                                </form>
+                            </div>
                         </div>
                     `;
                 });
             });
+        }
+
+        function toggleReplyForm(commentId) {
+            const form = document.getElementById(`reply-form-${commentId}`);
+            form.classList.toggle('hidden');
         }
 
         function submitComment(e) {
@@ -1316,8 +1375,38 @@
             const t = document.getElementById('comment-text');
             
             db.collection("posts").doc(id).collection("comments").add({
-                name: n.value, text: t.value, timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                name: n.value, 
+                text: t.value, 
+                replies: [],
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => { n.value=''; t.value=''; });
+        }
+
+        function submitReply(e, postId, commentId) {
+            e.preventDefault();
+            const input = document.getElementById(`reply-input-${commentId}`);
+            const text = input.value;
+            const currentUser = auth.currentUser;
+            const name = currentUser ? "Admin CrediFácil" : "Usuário"; // Simples identificação para o exemplo
+
+            db.collection("posts").doc(postId).collection("comments").doc(commentId).update({
+                replies: firebase.firestore.FieldValue.arrayUnion({
+                    name: name,
+                    text: text,
+                    isAdmin: !!currentUser,
+                    timestamp: new Date()
+                })
+            }).then(() => {
+                input.value = '';
+                document.getElementById(`reply-form-${commentId}`).classList.add('hidden');
+            });
+        }
+
+        function deleteComment(postId, commentId) {
+            if(confirm('Tem certeza que deseja excluir este comentário?')) {
+                db.collection("posts").doc(postId).collection("comments").doc(commentId).delete()
+                    .catch(err => alert("Erro ao excluir: " + err.message));
+            }
         }
 
     </script>

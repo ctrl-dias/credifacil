@@ -232,6 +232,7 @@
                     <button onclick="filterCards('todos')" id="btn-todos" class="filter-btn active px-6 py-2 bg-black text-white rounded-full text-sm font-medium transition shadow-md">Todos</button>
                     <button onclick="filterCards('anuidade')" id="btn-anuidade" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Sem Anuidade</button>
                     <button onclick="filterCards('negativados')" id="btn-negativados" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Para Negativados</button>
+                    <button onclick="filterCards('milhas')" id="btn-milhas" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Milhas / Cashback</button>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="cards-container"></div>
             </div>
@@ -286,9 +287,15 @@
                 <div class="container mx-auto px-4 max-w-xl">
                     <h1 class="text-3xl font-bold text-black mb-8 text-center border-b border-gray-200 pb-4">Painel Administrativo</h1>
                     
-                    <div id="demo-warning" class="hidden mb-6 p-4 bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg text-sm">
-                        <strong>Modo de Demonstração:</strong> Cole suas chaves do Firebase no código (linha ~750) para salvar no banco de dados real.
+                    <div id="demo-warning" class="hidden mb-6 p-4 bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg text-sm flex items-start gap-3">
+                        <i class="ph-fill ph-warning text-xl text-yellow-600 mt-1"></i>
+                        <div>
+                            <strong>Modo de Demonstração Ativo</strong>
+                            <p>As chaves do Firebase não foram detectadas ou são inválidas. O sistema está salvando dados apenas no seu navegador.</p>
+                        </div>
                     </div>
+                    
+                    <div id="connection-error" class="hidden mb-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm"></div>
 
                     <div id="admin-login" class="bg-gray-50 p-8 rounded-xl border border-gray-200 shadow-sm">
                         <h2 class="text-xl font-bold text-black mb-6 text-center">Login Seguro</h2>
@@ -475,13 +482,6 @@
         // =========================================================================
         // ⚠️ ATENÇÃO: COLE SUAS CREDENCIAIS DO FIREBASE AQUI EMBAIXO
         // =========================================================================
-        // 1. Aceda a https://console.firebase.google.com/ e crie um novo projeto.
-        // 2. Registre uma aplicação Web (ícone </>) para obter as chaves abaixo.
-        // 3. No menu "Criação" > "Authentication", ative o método "E-mail/Senha".
-        // 4. No menu "Criação" > "Firestore Database", crie um banco de dados.
-        // 5. Substitua os valores abaixo (mantendo as aspas ""):
-        // =========================================================================
-        
          const firebaseConfig = {
           apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
   authDomain: "credifacil-ddb17.firebaseapp.com",
@@ -491,7 +491,6 @@
   appId: "1:473150441862:web:8f7b1945fa27c519c90407",
   measurementId: "G-RSHX4BZRG0"
         };
-        
         
         // =========================================================================
 
@@ -505,7 +504,11 @@
             { id: 3, name: "Inter Gold", bgClass: "bg-orange-500", iconBg: "bg-orange-400", rotation: "rotate-0", isInter: true, badges: [{ text: "Cashback", color: "bg-orange-100 text-orange-700" }, { text: "Internacional", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Não exigida", extraInfoLabel: "Cashback", extraInfoValue: "0.25% na fatura", desc: "Super App completo com investimentos e shopping.", link: "https://inter.co/pra-voce/cartoes/", categories: ["todos", "anuidade", "milhas"] },
              { id: 4, name: "C6 Carbon", bgClass: "bg-slate-800", iconBg: "bg-black", rotation: "rotate-12", badges: [{ text: "Pontos Átomos", color: "bg-slate-100 text-slate-700" }, { text: "Mastercard Black", color: "bg-slate-900 text-white" }], annuity: "12x R$ 85,00 (Isenção possível)", income: "R$ 5.000,00", desc: "2.5 pontos por dólar e acesso a salas VIP em aeroportos.", link: "https://www.c6bank.com.br/cartao-c6-carbon", categories: ["todos", "milhas"] },
              { id: 5, name: "Neon", bgClass: "bg-cyan-500", iconBg: "bg-cyan-600", rotation: "-rotate-6", badges: [{ text: "Sem Anuidade", color: "bg-cyan-100 text-cyan-700" }, { text: "Débito e Crédito", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Não exigida", desc: "Cartão virtual na hora e investimentos que rendem mais que a poupança.", link: "https://neon.com.br/", categories: ["todos", "anuidade", "negativados"] },
-             { id: 6, name: "Azul Itaú", bgClass: "bg-blue-600", iconBg: "bg-blue-800", rotation: "rotate-3", badges: [{ text: "Milhas Aéreas", color: "bg-blue-100 text-blue-700" }, { text: "Descontos", color: "bg-yellow-100 text-yellow-700" }], annuity: "12x R$ 30,00", income: "R$ 1.500,00", desc: "Ganhe pontos TudoAzul em todas as compras e descontos em passagens.", link: "https://www.itau.com.br/cartoes/escolha/azul-itau-internacional-visa-msg", categories: ["todos", "milhas"] }
+             { id: 6, name: "Azul Itaú", bgClass: "bg-blue-600", iconBg: "bg-blue-800", rotation: "rotate-3", badges: [{ text: "Milhas Aéreas", color: "bg-blue-100 text-blue-700" }, { text: "Descontos", color: "bg-yellow-100 text-yellow-700" }], annuity: "12x R$ 30,00", income: "R$ 1.500,00", desc: "Ganhe pontos TudoAzul em todas as compras e descontos em passagens.", link: "https://www.itau.com.br/cartoes/escolha/azul-itau-internacional-visa-msg", categories: ["todos", "milhas"] },
+             { id: 7, name: "Will Bank", bgClass: "bg-yellow-400", iconBg: "bg-yellow-500", rotation: "rotate-12", badges: [{ text: "Sem Anuidade", color: "bg-black text-white" }, { text: "Aprovação Fácil", color: "bg-green-100 text-green-700" }], annuity: "Grátis", income: "Não exigida", desc: "Cartão de crédito sem anuidade e conta digital completa.", link: "https://www.willbank.com.br/", categories: ["todos", "anuidade", "negativados"] },
+             { id: 8, name: "Digio", bgClass: "bg-blue-800", iconBg: "bg-blue-900", rotation: "-rotate-3", badges: [{ text: "Sem Juros Rotativos", color: "bg-blue-100 text-blue-700" }, { text: "Visa", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Salário Mínimo", desc: "Cartão sem anuidade e sem juros rotativos.", link: "https://www.digio.com.br/", categories: ["todos", "anuidade"] },
+             { id: 9, name: "PAN Zero", bgClass: "bg-cyan-600", iconBg: "bg-cyan-700", rotation: "rotate-6", badges: [{ text: "Sem Anuidade", color: "bg-cyan-100 text-cyan-700" }, { text: "Conta Digital", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Salário Mínimo", desc: "Cartão zero anuidade e conta digital grátis.", link: "https://www.bancopan.com.br/produtos/cartao-de-credito/", categories: ["todos", "anuidade", "negativados"] },
+             { id: 10, name: "XP Visa Infinite", bgClass: "bg-gray-900", iconBg: "bg-black", rotation: "-rotate-6", badges: [{ text: "Investback", color: "bg-yellow-100 text-yellow-700" }, { text: "Sala VIP", color: "bg-gray-100 text-gray-700" }], annuity: "Grátis (com investimentos)", income: "R$ 5.000,00", desc: "Cartão premium com investback e acesso a salas VIP.", link: "https://www.xpi.com.br/produtos/cartao-de-credito/", categories: ["todos", "milhas"] }
         ];
 
         // Posts de Fallback (Caso Firebase falhe ou esteja vazio)
@@ -526,7 +529,7 @@
         });
 
         function initFirebase() {
-            // Verifica se o usuário preencheu as credenciais reais
+            // Verifica se o usuário substituiu o placeholder
             if (firebaseConfig.apiKey !== "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk") {
                 try {
                     firebase.initializeApp(firebaseConfig);
@@ -540,27 +543,34 @@
                         const loginForm = document.getElementById('admin-login');
                         const panel = document.getElementById('admin-panel');
                         const demoWarning = document.getElementById('demo-warning');
+                        const connError = document.getElementById('connection-error');
                         
                         if (user) { 
                             loginForm.classList.add('hidden'); 
                             panel.classList.remove('hidden'); 
                             if(demoWarning) demoWarning.classList.add('hidden');
+                            if(connError) connError.classList.add('hidden');
                         } else { 
                             loginForm.classList.remove('hidden'); 
                             panel.classList.add('hidden'); 
                         }
                     });
 
-                    fetchBlogPosts(); // Tenta buscar do servidor
+                    fetchBlogPosts();
                 } catch (e) {
-                    console.error("Erro Firebase:", e);
-                    // Não mostra alerta para o usuário final, apenas usa fallback silenciosamente
+                    console.error("Erro na inicialização:", e);
+                    // Mostra erro visual no admin se falhar
+                    const connError = document.getElementById('connection-error');
+                    if(connError) {
+                        connError.textContent = "Erro ao conectar: " + e.message;
+                        connError.classList.remove('hidden');
+                    }
                 }
             } else {
-                console.warn("Modo Demo: Configure o Firebase no código para salvar dados.");
+                console.warn("Usando Modo Demo (Dados Locais).");
                 const demoWarning = document.getElementById('demo-warning');
                 if(demoWarning) demoWarning.classList.remove('hidden');
-                renderBlog(); // Renderiza fallback
+                renderBlog();
             }
         }
 
@@ -569,16 +579,15 @@
             try {
                 const snap = await db.collection("posts").orderBy("createdAt", "desc").limit(10).get();
                 if (!snap.empty) {
-                    blogPosts = []; // Limpa fallback se tiver dados reais
+                    blogPosts = [];
                     snap.forEach(doc => blogPosts.push({ id: doc.id, ...doc.data() }));
                     renderBlog();
                 }
             } catch (e) {
-                console.warn("Falha ao buscar posts. Usando fallback.");
+                console.warn("Erro ao buscar posts (verifique regras ou internet). Usando fallback.");
             }
         }
 
-        // RENDERIZAÇÃO DO BLOG
         function renderBlog() {
             const grids = [document.getElementById('home-blog-grid'), document.getElementById('blog-list-container')];
             grids.forEach(grid => {
@@ -616,53 +625,32 @@
             `).join('');
         }
 
-        // LÓGICA DE LOGIN COM TIMEOUT E FEEDBACK
+        // LÓGICA DE LOGIN COM FEEDBACK
         function handleLogin(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button');
-            const errorMsg = document.getElementById('login-error');
             const email = document.getElementById('login-email').value;
             const pass = document.getElementById('login-password').value;
 
             btn.innerText = "Processando...";
             btn.disabled = true;
-            btn.classList.add('opacity-50', 'cursor-not-allowed');
-            errorMsg.classList.add('hidden');
+            btn.classList.add('opacity-50');
 
             if (!isFirebaseInitialized) {
-                // Modo Demo
                 setTimeout(() => { 
-                    alert("Modo Demo: Login simulado (sem banco de dados)."); 
+                    alert("MODO DEMO: Login simulado com sucesso! (Configure o Firebase para usar login real)"); 
                     document.getElementById('admin-login').classList.add('hidden'); 
                     document.getElementById('admin-panel').classList.remove('hidden'); 
-                    btn.innerText = "Entrar"; 
-                    btn.disabled = false; 
-                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                }, 1000);
+                    btn.innerText = "Entrar"; btn.disabled = false; btn.classList.remove('opacity-50');
+                }, 800);
                 return;
             }
 
-            // Race condition: Timeout de 10s
-            const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error("Tempo limite excedido. Verifique sua conexão.")), 10000));
-            const login = auth.signInWithEmailAndPassword(email, pass);
-
-            Promise.race([login, timeout])
-                .then(() => { 
-                    btn.innerText = "Sucesso!";
-                    // O AuthStateListener cuidará da troca de tela
-                }) 
+            auth.signInWithEmailAndPassword(email, pass)
+                .then(() => { btn.innerText = "Sucesso!"; }) 
                 .catch(err => {
-                    console.error(err);
-                    let msg = "Erro desconhecido.";
-                    if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') msg = "E-mail ou senha incorretos.";
-                    else if (err.code === 'auth/too-many-requests') msg = "Muitas tentativas. Aguarde um momento.";
-                    else msg = err.message;
-
-                    errorMsg.textContent = "Erro: " + msg;
-                    errorMsg.classList.remove('hidden');
-                    btn.innerText = "Entrar";
-                    btn.disabled = false;
-                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    alert("Erro no Login: " + err.message);
+                    btn.innerText = "Entrar"; btn.disabled = false; btn.classList.remove('opacity-50');
                 });
         }
 
@@ -670,7 +658,6 @@
 
         function addNewPost(e) {
             e.preventDefault();
-            if(!db) { alert("Modo Demo: Post salvo localmente (não persistente)."); return; }
             const post = {
                 title: document.getElementById('admin-title').value,
                 category: document.getElementById('admin-category').value,
@@ -678,35 +665,31 @@
                 image: document.getElementById('admin-image').value,
                 intro: document.getElementById('admin-intro').value,
                 content: document.getElementById('admin-content').value,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 date: new Date().toLocaleDateString('pt-BR')
             };
-            db.collection("posts").add(post).then(() => { alert("Postado com sucesso!"); e.target.reset(); fetchBlogPosts(); }).catch(err => alert("Erro ao salvar: " + err.message));
+
+            if(!db) { 
+                alert("Modo Demo: Post salvo localmente."); 
+                post.id = Date.now().toString();
+                blogPosts.unshift(post);
+                renderBlog();
+                e.target.reset();
+                return; 
+            }
+            
+            post.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+            db.collection("posts").add(post).then(() => { alert("Postado!"); e.target.reset(); fetchBlogPosts(); }).catch(err => alert("Erro: " + err.message));
         }
 
-        // NAVEGAÇÃO E ANÚNCIOS (SEM TRAVAMENTOS)
         function navigateTo(id) {
             document.querySelectorAll('.page-section').forEach(s => s.classList.add('hidden-section'));
             const section = document.getElementById(id);
             if(section) {
                 section.classList.remove('hidden-section');
                 section.classList.remove('fade-in');
-                void section.offsetWidth; // Trigger reflow
+                void section.offsetWidth; 
                 section.classList.add('fade-in');
                 window.scrollTo(0,0);
-                
-                // Lógica Simplificada de AdSense para evitar erros de renderização
-                // Apenas tenta dar push se o slot estiver visível
-                setTimeout(() => {
-                    try {
-                        const slots = section.querySelectorAll('ins.adsbygoogle');
-                        slots.forEach(slot => {
-                            if (slot.innerHTML === "") { // Só carrega se estiver vazio
-                                (adsbygoogle = window.adsbygoogle || []).push({});
-                            }
-                        });
-                    } catch (e) { console.log("AdSense info: ", e); }
-                }, 500);
             }
         }
         
@@ -715,26 +698,9 @@
             if(!post) return;
             document.getElementById('post-title').textContent = post.title;
             document.getElementById('post-category').textContent = post.category;
-            // Autor pode não existir no objeto post, verificar antes
-            document.getElementById('post-author').textContent = 'Por ' + (post.author || 'Redação');
             document.getElementById('post-date').textContent = post.date;
-            
-            // Limpa conteúdo anterior
-            const contentDiv = document.getElementById('post-content');
-            contentDiv.innerHTML = '';
-            
-            // Cria elementos para evitar injeção direta de strings mal formadas
-            const introP = document.createElement('p');
-            introP.className = 'text-xl leading-relaxed mb-8 font-medium text-gray-800 intro-text';
-            introP.textContent = post.intro;
-            
-            const bodyDiv = document.createElement('div');
-            bodyDiv.className = 'body-content';
-            bodyDiv.innerHTML = post.content; // HTML permitido para o corpo
-            
-            contentDiv.appendChild(introP);
-            contentDiv.appendChild(bodyDiv);
-            
+            document.querySelector('#post-content .intro-text').textContent = post.intro;
+            document.querySelector('#post-content .body-content').innerHTML = post.content;
             navigateTo('blog-post');
         }
 
@@ -761,11 +727,8 @@
             navigateTo('offer-screen');
         }
         function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
-
-        // COOKIES
         function checkCookies() { if (!localStorage.getItem('cookiesAccepted')) document.getElementById('cookie-banner').classList.remove('translate-y-full'); }
         function acceptCookies() { localStorage.setItem('cookiesAccepted', 'true'); document.getElementById('cookie-banner').classList.add('translate-y-full'); }
     </script>
 </body>
 </html>
-

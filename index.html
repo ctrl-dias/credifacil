@@ -9,6 +9,7 @@
     
     <!-- Google AdSense (Script Principal) -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017585624443150" crossorigin="anonymous"></script>
+    
 
     <!-- FIREBASE SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -42,6 +43,28 @@
         }
     </script>
 
+    <script>
+
+                // =========================================================================
+        // ⚠️ ATENÇÃO: COLE SUAS CREDENCIAIS DO FIREBASE AQUI EMBAIXO
+        // =========================================================================
+
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
+  authDomain: "credifacil-ddb17.firebaseapp.com",
+  projectId: "credifacil-ddb17",
+  storageBucket: "credifacil-ddb17.firebasestorage.app",
+  messagingSenderId: "473150441862",
+  appId: "1:473150441862:web:8f7b1945fa27c519c90407",
+            
+        };
+
+        // =========================================================================
+
+        let db, auth;
+        let isFirebaseInitialized = false;
+    </script>
     <style>
         body { -webkit-font-smoothing: antialiased; }
         .fade-in { animation: fadeIn 0.4s ease-in-out; }
@@ -472,24 +495,7 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // =========================================================================
-        // ⚠️ ATENÇÃO: COLE SUAS CREDENCIAIS DO FIREBASE AQUI EMBAIXO
-        // =========================================================================
 
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
-  authDomain: "credifacil-ddb17.firebaseapp.com",
-  projectId: "credifacil-ddb17",
-  storageBucket: "credifacil-ddb17.firebasestorage.app",
-  messagingSenderId: "473150441862",
-  appId: "1:473150441862:web:8f7b1945fa27c519c90407",
-            
-        };
-        // =========================================================================
-
-        let db, auth;
-        let isFirebaseInitialized = false;
 
         // DADOS DOS CARTÕES (Estático) - Restaurado cardsData
         const cardsData = [
@@ -761,5 +767,6 @@
     </script>
 </body>
 </html>
+
 
 

@@ -25,7 +25,95 @@
     
     <!-- Ícones -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+<!-- Firebase Imports -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDoc, getDocs, doc, onSnapshot, updateDoc, setDoc, query, orderBy, where, deleteDoc, arrayUnion, arrayRemove, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        window.firebaseApp = null;
+        window.auth = null;
+        window.db = null;
+        window.appId = typeof __app_id !== 'undefined' ? __app_id : 'meu-app-id';
+
+        // --- DEFINA SEU EMAIL DE ADMIN AQUI ---
+        window.adminEmail = "admin@admin.com"; 
+
+        async function initFirebase() {
+            try {
+                let firebaseConfig;
+                if (typeof __firebase_config !== 'undefined') {
+                    firebaseConfig = JSON.parse(__firebase_config);
+                } else {
+                    // --- COLE SUAS CHAVES AQUI ---
+                    firebaseConfig = {
+                        apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
+  authDomain: "credifacil-ddb17.firebaseapp.com",
+  projectId: "credifacil-ddb17",
+  storageBucket: "credifacil-ddb17.firebasestorage.app",
+  messagingSenderId: "473150441862",
+  appId: "1:473150441862:web:8f7b1945fa27c519c90407",
+                    };
+                }
+
+                window.firebaseApp = initializeApp(firebaseConfig);
+                window.auth = getAuth(window.firebaseApp);
+                window.db = getFirestore(window.firebaseApp);
+
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(window.auth, __initial_auth_token);
+                } else {
+                    onAuthStateChanged(window.auth, (user) => {
+                        if (!user) {
+                            signInAnonymously(window.auth).catch(e => console.warn("Modo Visitante não disponível", e.code));
+                        }
+                    });
+                }
+
+                onAuthStateChanged(window.auth, async (user) => {
+                    if (user && !user.isAnonymous) {
+                        window.currentUser = user;
+                        await loadUserProfile(user);
+                        setupNotificationListener(user.uid);
+                    } else {
+                        window.currentUser = null;
+                        renderGuestUI();
+                    }
+                });
+                
+                if (typeof setupFeedListener === 'function') setupFeedListener();
+
+            } catch (e) {
+                console.error("Erro Firebase:", e);
+                if(e.code === 'app/no-app') alert("Configure as chaves do Firebase!");
+            }
+        }
+        
+        window.initFirebase = initFirebase;
+        window.getFirestore = getFirestore;
+        window.collection = collection;
+        window.addDoc = addDoc;
+        window.doc = doc;
+        window.getDoc = getDoc;
+        window.updateDoc = updateDoc;
+        window.deleteDoc = deleteDoc;
+        window.setDoc = setDoc;
+        window.arrayUnion = arrayUnion;
+        window.arrayRemove = arrayRemove;
+        window.increment = increment;
+        window.serverTimestamp = serverTimestamp;
+        window.query = query;
+        window.orderBy = orderBy;
+        window.where = where;
+        window.onSnapshot = onSnapshot;
+        window.updateProfile = updateProfile;
+        
+        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.signOut = signOut;
+        
+        initFirebase();
+    </script>
     <script>
         tailwind.config = {
             theme: {
@@ -477,21 +565,11 @@
         </div>
     </div>
 
+
+    
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // =========================================================================
-        // ⚠️ ATENÇÃO: COLE SUAS CREDENCIAIS DO FIREBASE AQUI EMBAIXO
-        // =========================================================================
-         const firebaseConfig = {
-          apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
-  authDomain: "credifacil-ddb17.firebaseapp.com",
-  projectId: "credifacil-ddb17",
-  storageBucket: "credifacil-ddb17.firebasestorage.app",
-  messagingSenderId: "473150441862",
-  appId: "1:473150441862:web:8f7b1945fa27c519c90407",
-  measurementId: "G-RSHX4BZRG0"
-        };
-        
+
         // =========================================================================
 
         let db, auth;
@@ -732,3 +810,4 @@
     </script>
 </body>
 </html>
+

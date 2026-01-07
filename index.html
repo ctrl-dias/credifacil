@@ -53,8 +53,8 @@
         .fade-in { animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        .animate-heart { animation: heart-pulse 0.3s ease-in-out; color: #ef4444; }
-        @keyframes heart-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+        .animate-pulse-custom { animation: pulse-custom 0.3s ease-in-out; }
+        @keyframes pulse-custom { 0% { transform: scale(1); } 50% { transform: scale(1.3) rotate(-10deg); } 100% { transform: scale(1); } }
 
         .hidden-section { display: none !important; }
         .page-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
@@ -395,27 +395,28 @@
                 <div class="container mx-auto px-4 py-16 flex flex-col lg:flex-row gap-16">
                     <!-- Conteúdo Principal -->
                     <article class="lg:w-[65%] mx-auto">
-                        <!-- Share Bar (Sticky) -->
-                        <div class="flex gap-4 mb-8 border-b border-gray-100 pb-8 overflow-x-auto">
-                            <span class="text-sm font-bold text-gray-500 uppercase tracking-wide flex items-center mr-2">Compartilhar:</span>
-                            <button onclick="sharePost('whatsapp')" class="bg-[#25D366] text-white p-2 rounded-full hover:opacity-90 transition"><i class="ph-fill ph-whatsapp-logo text-xl"></i></button>
-                            <button onclick="sharePost('facebook')" class="bg-[#1877F2] text-white p-2 rounded-full hover:opacity-90 transition"><i class="ph-fill ph-facebook-logo text-xl"></i></button>
-                            <button onclick="sharePost('twitter')" class="bg-black text-white p-2 rounded-full hover:opacity-90 transition"><i class="ph-fill ph-x-logo text-xl"></i></button>
-                        </div>
-
+                        
                         <div id="post-content" class="rich-content text-lg text-gray-800">
                             <!-- Injetado via JS -->
                         </div>
+
+                         <!-- Share Bar (Bottom) -->
+                         <div class="mt-12 mb-8 border-t border-b border-gray-100 py-6 flex flex-wrap items-center gap-4 justify-center">
+                            <span class="text-sm font-bold text-gray-500 uppercase tracking-wide flex items-center mr-2">Compartilhar Artigo:</span>
+                            <button onclick="sharePost('whatsapp')" class="bg-[#25D366] text-white p-3 rounded-full hover:opacity-90 transition shadow-sm"><i class="ph-fill ph-whatsapp-logo text-xl"></i></button>
+                            <button onclick="sharePost('facebook')" class="bg-[#1877F2] text-white p-3 rounded-full hover:opacity-90 transition shadow-sm"><i class="ph-fill ph-facebook-logo text-xl"></i></button>
+                            <button onclick="sharePost('twitter')" class="bg-black text-white p-3 rounded-full hover:opacity-90 transition shadow-sm"><i class="ph-fill ph-x-logo text-xl"></i></button>
+                        </div>
                         
                         <!-- Engagement Box -->
-                        <div class="mt-16 bg-gray-50 rounded-2xl p-8 border border-gray-200">
+                        <div class="mt-8 bg-gray-50 rounded-2xl p-8 border border-gray-200">
                             <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8 border-b border-gray-200 pb-8">
                                 <div>
                                     <h3 class="text-xl font-bold text-black mb-1">Gostou da leitura?</h3>
-                                    <p class="text-gray-500 text-sm">Deixe seu like para sabermos que este conteúdo ajudou.</p>
+                                    <p class="text-gray-500 text-sm">Deixe seu joinha para sabermos que este conteúdo ajudou.</p>
                                 </div>
-                                <button id="like-btn" onclick="toggleLike()" class="flex items-center gap-3 px-8 py-3 bg-white border border-gray-200 hover:border-red-200 hover:bg-red-50 rounded-full transition group shadow-sm">
-                                    <i id="like-icon" class="ph-fill ph-heart text-2xl text-gray-300 group-hover:text-red-500 transition duration-300"></i>
+                                <button id="like-btn" onclick="toggleLike()" class="flex items-center gap-3 px-8 py-3 bg-white border border-gray-200 hover:border-brand-200 hover:bg-brand-50 rounded-full transition group shadow-sm">
+                                    <i id="like-icon" class="ph-fill ph-thumbs-up text-2xl text-gray-300 group-hover:text-brand-500 transition duration-300"></i>
                                     <span id="like-count" class="font-bold text-gray-700 text-lg">0</span>
                                 </button>
                             </div>
@@ -528,6 +529,7 @@
                                         <button type="button" class="rich-editor-btn" onclick="formatDoc('insertUnorderedList')" title="Lista">• Lista</button>
                                         <button type="button" class="rich-editor-btn" onclick="formatDoc('insertOrderedList')" title="Numerada">1. Lista</button>
                                         <button type="button" class="rich-editor-btn" onclick="addLink()" title="Link">Link</button>
+                                        <button type="button" class="rich-editor-btn font-bold text-brand-600" onclick="insertImage()" title="Inserir Imagem"><i class="ph-bold ph-image"></i> IMG</button>
                                     </div>
                                     <div id="admin-content-rich" contenteditable="true" class="rich-editor-content"></div>
                                 </div>
@@ -730,7 +732,7 @@
         let allBlogPosts = []; 
         let currentEditingId = null; // Para edição no Admin
 
-        // Dados de Cartões
+        // Dados de Cartões (Categorias alinhadas com os filtros)
         const cardsData = [
             { id: 1, name: "Santander SX", bgClass: "bg-red-600", iconBg: "bg-red-700", rotation: "rotate-45", badges: [{ text: "Aprovação Alta", color: "bg-green-100 text-green-700" }, { text: "Visa/Master", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis (gastando R$100)", income: "R$ 1.045,00", desc: "Ideal para quem busca o primeiro cartão ou quer recuperar crédito.", link: "https://www.santander.com.br/cartao-credito-santander/sx", categories: ["todos", "negativados"] },
             { id: 2, name: "Roxinho Nubank", bgClass: "bg-purple-700", iconBg: "bg-purple-800", rotation: "-rotate-12", badges: [{ text: "Sem Anuidade", color: "bg-purple-100 text-purple-700" }], annuity: "R$ 0,00", income: "Não exigida", desc: "Controle total pelo app e atendimento humanizado.", link: "https://nubank.com.br/cartao/", categories: ["todos", "anuidade"] },
@@ -910,16 +912,16 @@
                 <div class="body-content">${post.content}</div>
             `;
             
-            // Likes
+            // Likes (AGORA JOINHA)
             const likeCountEl = document.getElementById('like-count');
             const likeIcon = document.getElementById('like-icon');
             if(likeCountEl) likeCountEl.textContent = post.likes || 0;
             
             if(localStorage.getItem(`liked_${id}`)) {
-                likeIcon.classList.add('text-red-500', 'ph-fill');
+                likeIcon.classList.add('text-brand-500', 'ph-fill');
                 likeIcon.classList.remove('text-gray-300');
             } else {
-                likeIcon.classList.remove('text-red-500', 'ph-fill');
+                likeIcon.classList.remove('text-brand-500', 'ph-fill');
                 likeIcon.classList.add('text-gray-300');
             }
 
@@ -958,18 +960,36 @@
             if(url) document.execCommand("createLink", false, url);
         }
 
+        function insertImage() {
+            const url = prompt("Insira a URL da imagem:");
+            if(url) document.execCommand("insertImage", false, url);
+        }
+
         // Carrega lista lateral para edição
         function loadAdminPostsList() {
             const list = document.getElementById('admin-posts-list');
             list.innerHTML = allBlogPosts.map(p => `
-                <div onclick="loadPostForEdit('${p.id}')" class="p-3 bg-gray-50 hover:bg-brand-50 border border-gray-100 rounded-lg cursor-pointer transition text-sm group">
-                    <p class="font-bold text-gray-800 group-hover:text-brand-900 truncate">${p.title}</p>
-                    <div class="flex justify-between mt-1 text-xs text-gray-400">
-                        <span>${p.date}</span>
-                        <span class="text-brand-600 font-bold group-hover:underline">Editar</span>
+                <div class="flex items-center gap-2 mb-2 group">
+                    <div onclick="loadPostForEdit('${p.id}')" class="flex-1 p-3 bg-gray-50 hover:bg-brand-50 border border-gray-100 rounded-lg cursor-pointer transition text-sm">
+                        <p class="font-bold text-gray-800 group-hover:text-brand-900 truncate">${p.title}</p>
+                        <div class="flex justify-between mt-1 text-xs text-gray-400">
+                            <span>${p.date}</span>
+                            <span class="text-brand-600 font-bold group-hover:underline">Editar</span>
+                        </div>
                     </div>
+                    <button onclick="deletePost('${p.id}')" class="bg-white hover:bg-red-50 text-gray-400 hover:text-red-500 border border-gray-200 p-3 rounded-lg transition" title="Excluir"><i class="ph-bold ph-trash"></i></button>
                 </div>
             `).join('');
+        }
+
+        function deletePost(id) {
+            if(confirm("Tem certeza que deseja excluir este post permanentemente?")) {
+                db.collection("posts").doc(id).delete().then(() => {
+                    alert("Post excluído com sucesso.");
+                    resetAdminForm();
+                    fetchBlogPosts();
+                }).catch(err => alert("Erro ao excluir: " + err.message));
+            }
         }
 
         function resetAdminForm() {
@@ -1120,10 +1140,15 @@
 
             const filtered = (filter === 'todos') ? cardsData : cardsData.filter(c => c.categories.includes(filter));
             
-            container.innerHTML = filtered.map(card => `
-                <div class="bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group overflow-hidden">
+            container.innerHTML = filtered.map(card => {
+                const annuityTag = card.annuity.includes('Grátis') || card.annuity === 'R$ 0,00' 
+                    ? `<div class="absolute top-4 right-4 text-[10px] font-extrabold bg-green-100 text-green-700 border border-green-200 px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Zero Anuidade</div>`
+                    : `<div class="absolute top-4 right-4 text-[10px] font-extrabold bg-orange-100 text-orange-700 border border-orange-200 px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Com Anuidade</div>`;
+
+                return `
+                <div class="bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group overflow-hidden relative">
                     <div class="p-8 flex flex-col items-center bg-gradient-to-b from-gray-50 to-white relative">
-                         <div class="absolute top-4 right-4 text-xs font-bold bg-white border px-2 py-1 rounded text-gray-500">${card.annuity === 'Grátis' ? 'ZERO ANUIDADE' : 'COM ANUIDADE'}</div>
+                        ${annuityTag}
                         <div class="w-full h-44 ${card.bgClass} rounded-2xl mb-6 shadow-xl relative flex items-center justify-center text-white overflow-hidden transform group-hover:scale-105 transition duration-500">
                             <span class="font-bold text-2xl relative z-10 tracking-widest drop-shadow-md">${card.name}</span>
                             ${card.isInter ? '' : `<div class="absolute inset-0 ${card.iconBg} opacity-30 transform ${card.rotation} translate-y-12 scale-150"></div>`}
@@ -1142,7 +1167,7 @@
                         <a href="${card.link}" target="_blank" class="block w-full text-center bg-black hover:bg-brand-500 hover:text-black text-white font-bold py-4 rounded-xl transition shadow-lg flex items-center justify-center gap-2">Solicitar Agora <i class="ph-bold ph-arrow-up-right"></i></a>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         // Mobile Menu
@@ -1180,15 +1205,15 @@
              if(isLiked) {
                  localStorage.removeItem(`liked_${id}`);
                  ref.update({ likes: firebase.firestore.FieldValue.increment(-1) });
-                 document.getElementById('like-icon').classList.remove('text-red-500', 'ph-fill');
+                 document.getElementById('like-icon').classList.remove('text-brand-500', 'ph-fill');
                  document.getElementById('like-icon').classList.add('text-gray-300');
              } else {
                  localStorage.setItem(`liked_${id}`, 'true');
                  ref.update({ likes: firebase.firestore.FieldValue.increment(1) });
-                 document.getElementById('like-icon').classList.add('text-red-500', 'ph-fill');
+                 document.getElementById('like-icon').classList.add('text-brand-500', 'ph-fill');
              }
-             document.getElementById('like-icon').classList.add('animate-heart');
-             setTimeout(() => document.getElementById('like-icon').classList.remove('animate-heart'), 500);
+             document.getElementById('like-icon').classList.add('animate-pulse-custom');
+             setTimeout(() => document.getElementById('like-icon').classList.remove('animate-pulse-custom'), 500);
         }
 
         function loadComments(id) {

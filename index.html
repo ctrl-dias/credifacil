@@ -25,95 +25,7 @@
     
     <!-- Ícones -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-<!-- Firebase Imports -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDoc, getDocs, doc, onSnapshot, updateDoc, setDoc, query, orderBy, where, deleteDoc, arrayUnion, arrayRemove, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        window.firebaseApp = null;
-        window.auth = null;
-        window.db = null;
-        window.appId = typeof __app_id !== 'undefined' ? __app_id : 'meu-app-id';
-
-        // --- DEFINA SEU EMAIL DE ADMIN AQUI ---
-        window.adminEmail = "admin@admin.com"; 
-
-        async function initFirebase() {
-            try {
-                let firebaseConfig;
-                if (typeof __firebase_config !== 'undefined') {
-                    firebaseConfig = JSON.parse(__firebase_config);
-                } else {
-                    // --- COLE SUAS CHAVES AQUI ---
-                    firebaseConfig = {
-                        apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
-  authDomain: "credifacil-ddb17.firebaseapp.com",
-  projectId: "credifacil-ddb17",
-  storageBucket: "credifacil-ddb17.firebasestorage.app",
-  messagingSenderId: "473150441862",
-  appId: "1:473150441862:web:8f7b1945fa27c519c90407",
-                    };
-                }
-
-                window.firebaseApp = initializeApp(firebaseConfig);
-                window.auth = getAuth(window.firebaseApp);
-                window.db = getFirestore(window.firebaseApp);
-
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(window.auth, __initial_auth_token);
-                } else {
-                    onAuthStateChanged(window.auth, (user) => {
-                        if (!user) {
-                            signInAnonymously(window.auth).catch(e => console.warn("Modo Visitante não disponível", e.code));
-                        }
-                    });
-                }
-
-                onAuthStateChanged(window.auth, async (user) => {
-                    if (user && !user.isAnonymous) {
-                        window.currentUser = user;
-                        await loadUserProfile(user);
-                        setupNotificationListener(user.uid);
-                    } else {
-                        window.currentUser = null;
-                        renderGuestUI();
-                    }
-                });
-                
-                if (typeof setupFeedListener === 'function') setupFeedListener();
-
-            } catch (e) {
-                console.error("Erro Firebase:", e);
-                if(e.code === 'app/no-app') alert("Configure as chaves do Firebase!");
-            }
-        }
-        
-        window.initFirebase = initFirebase;
-        window.getFirestore = getFirestore;
-        window.collection = collection;
-        window.addDoc = addDoc;
-        window.doc = doc;
-        window.getDoc = getDoc;
-        window.updateDoc = updateDoc;
-        window.deleteDoc = deleteDoc;
-        window.setDoc = setDoc;
-        window.arrayUnion = arrayUnion;
-        window.arrayRemove = arrayRemove;
-        window.increment = increment;
-        window.serverTimestamp = serverTimestamp;
-        window.query = query;
-        window.orderBy = orderBy;
-        window.where = where;
-        window.onSnapshot = onSnapshot;
-        window.updateProfile = updateProfile;
-        
-        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-        window.signOut = signOut;
-        
-        initFirebase();
-    </script>
     <script>
         tailwind.config = {
             theme: {
@@ -191,6 +103,12 @@
     </header>
 
     <main id="app-content" class="relative">
+        
+        <!-- ALERTA DE CONFIGURAÇÃO (VISÍVEL SE FALTAR CHAVES) -->
+        <div id="config-alert" class="hidden bg-red-600 text-white text-center p-4 font-bold sticky top-20 z-40 shadow-lg">
+            ⚠️ ATENÇÃO: As chaves do Firebase não foram configuradas! Edite o código e insira suas credenciais para o site funcionar.
+        </div>
+
         <!-- HOME -->
         <section id="home" class="page-section fade-in">
             <div class="bg-black text-white relative overflow-hidden">
@@ -221,7 +139,7 @@
                     <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
                         <div class="bg-gray-900 w-14 h-14 rounded-xl flex items-center justify-center text-brand-400 mb-6 group-hover:scale-110 transition"><i class="ph ph-credit-card text-3xl"></i></div>
                         <h3 class="text-xl font-bold text-black mb-3">Cartões Aprovados</h3>
-                        <p class="text-gray-600">Analisamos centenas de cartões para encontrar os que realmente aprovam negativados e pessoas com score baixo.</p>
+                        <p class="text-gray-600">Análises centenas de cartões para encontrar os que realmente aprovam negativados e pessoas com score baixo.</p>
                     </div>
                     <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
                         <div class="bg-brand-50 w-14 h-14 rounded-xl flex items-center justify-center text-brand-600 mb-6 group-hover:scale-110 transition"><i class="ph ph-currency-dollar text-3xl"></i></div>
@@ -310,8 +228,8 @@
         <section id="cartoes" class="page-section hidden-section fade-in">
             <div class="bg-white border-b border-gray-200 py-12">
                 <div class="container mx-auto px-4 text-center">
-                    <h1 class="text-4xl font-bold text-black mb-4">Melhores Cartões de Crédito</h1>
-                    <p class="text-gray-600 max-w-2xl mx-auto">Use os filtros abaixo para encontrar o cartão ideal para o seu perfil financeiro.</p>
+                    <h1 class="text-4xl font-bold text-black mb-4">Catálogo de Cartões</h1>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Encontre o cartão ideal para o seu perfil financeiro.</p>
                 </div>
             </div>
             <div class="container mx-auto px-4 py-16">
@@ -320,7 +238,6 @@
                     <button onclick="filterCards('todos')" id="btn-todos" class="filter-btn active px-6 py-2 bg-black text-white rounded-full text-sm font-medium transition shadow-md">Todos</button>
                     <button onclick="filterCards('anuidade')" id="btn-anuidade" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Sem Anuidade</button>
                     <button onclick="filterCards('negativados')" id="btn-negativados" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Para Negativados</button>
-                    <button onclick="filterCards('milhas')" id="btn-milhas" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Milhas / Cashback</button>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="cards-container"></div>
             </div>
@@ -375,15 +292,7 @@
                 <div class="container mx-auto px-4 max-w-xl">
                     <h1 class="text-3xl font-bold text-black mb-8 text-center border-b border-gray-200 pb-4">Painel Administrativo</h1>
                     
-                    <div id="demo-warning" class="hidden mb-6 p-4 bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg text-sm flex items-start gap-3">
-                        <i class="ph-fill ph-warning text-xl text-yellow-600 mt-1"></i>
-                        <div>
-                            <strong>Modo de Demonstração Ativo</strong>
-                            <p>As chaves do Firebase não foram detectadas ou são inválidas. O sistema está salvando dados apenas no seu navegador.</p>
-                        </div>
-                    </div>
-                    
-                    <div id="connection-error" class="hidden mb-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm"></div>
+                    <div id="connection-error" class="hidden mb-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm font-bold text-center"></div>
 
                     <div id="admin-login" class="bg-gray-50 p-8 rounded-xl border border-gray-200 shadow-sm">
                         <h2 class="text-xl font-bold text-black mb-6 text-center">Login Seguro</h2>
@@ -565,15 +474,22 @@
         </div>
     </div>
 
-
-    
     <!-- JAVASCRIPT LOGIC -->
     <script>
-
+        // =========================================================================
+        // ⚠️ ATENÇÃO: COLE SUAS CREDENCIAIS DO FIREBASE AQUI EMBAIXO
+        // =========================================================================
+        const firebaseConfig = {
+apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
+  authDomain: "credifacil-ddb17.firebaseapp.com",
+  projectId: "credifacil-ddb17",
+  storageBucket: "credifacil-ddb17.firebasestorage.app",
+  messagingSenderId: "473150441862",
+  appId: "1:473150441862:web:8f7b1945fa27c519c90407",
+        };
         // =========================================================================
 
         let db, auth;
-        let isFirebaseInitialized = false;
 
         // DADOS DOS CARTÕES (Estático) - Restaurado cardsData
         const cardsData = [
@@ -589,14 +505,7 @@
              { id: 10, name: "XP Visa Infinite", bgClass: "bg-gray-900", iconBg: "bg-black", rotation: "-rotate-6", badges: [{ text: "Investback", color: "bg-yellow-100 text-yellow-700" }, { text: "Sala VIP", color: "bg-gray-100 text-gray-700" }], annuity: "Grátis (com investimentos)", income: "R$ 5.000,00", desc: "Cartão premium com investback e acesso a salas VIP.", link: "https://www.xpi.com.br/produtos/cartao-de-credito/", categories: ["todos", "milhas"] }
         ];
 
-        // Posts de Fallback (Caso Firebase falhe ou esteja vazio)
-        const fallbackPosts = [
-            { id: 'f1', title: "Como aumentar seu Score em 30 dias: O Guia Definitivo", category: "Score", date: "10 Dez, 2025", image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=500", intro: "Muitos brasileiros sofrem com score baixo mesmo pagando as contas em dia. Descubra os segredos que os bancos não te contam.", content: "<p class='mb-4'>O Score de crédito é a porta de entrada para financiamentos e cartões com limites altos...</p>" },
-            { id: 'f2', title: "5 Cartões de Crédito que aprovam Negativados em 2025", category: "Cartões", date: "08 Dez, 2025", image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=500", intro: "Estar com o nome sujo não significa o fim da linha. Bancos digitais estão apostando nesse público com limites iniciais.", content: "<p>Se você tem restrições no CPF, os grandes bancos tradicionais provavelmente vão te negar...</p>" },
-            { id: 'f3', title: "Empréstimo Pessoal vs Consignado: Qual escolher?", category: "Empréstimos", date: "05 Dez, 2025", image: "https://images.unsplash.com/photo-1565514020179-0c2235c8227a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", intro: "Entenda as taxas de juros e os riscos de cada modalidade antes de assinar o contrato.", content: "<p>A principal diferença está na garantia de pagamento.</p>" }
-        ];
-
-        let blogPosts = [...fallbackPosts];
+        let blogPosts = [];
 
         // INICIALIZAÇÃO
         document.addEventListener('DOMContentLoaded', () => {
@@ -607,48 +516,44 @@
         });
 
         function initFirebase() {
-            // Verifica se o usuário substituiu o placeholder
-            if (firebaseConfig.apiKey !== "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk") {
-                try {
-                    firebase.initializeApp(firebaseConfig);
-                    db = firebase.firestore();
-                    auth = firebase.auth();
-                    isFirebaseInitialized = true;
-                    console.log("Firebase conectado.");
-                    
-                    // Listener de Auth
-                    auth.onAuthStateChanged(user => {
-                        const loginForm = document.getElementById('admin-login');
-                        const panel = document.getElementById('admin-panel');
-                        const demoWarning = document.getElementById('demo-warning');
-                        const connError = document.getElementById('connection-error');
-                        
-                        if (user) { 
-                            loginForm.classList.add('hidden'); 
-                            panel.classList.remove('hidden'); 
-                            if(demoWarning) demoWarning.classList.add('hidden');
-                            if(connError) connError.classList.add('hidden');
-                        } else { 
-                            loginForm.classList.remove('hidden'); 
-                            panel.classList.add('hidden'); 
-                        }
-                    });
+            // VERIFICA SE CHAVES SÃO VÁLIDAS
+            if (firebaseConfig.apiKey === "SUA_API_KEY_AQUI") {
+                 // MOSTRAR ALERTA VISUAL NO ADMIN SE ESTIVER COM CHAVES DE EXEMPLO
+                 const connError = document.getElementById('config-alert');
+                 if(connError) connError.classList.remove('hidden');
+                 return;
+            }
 
-                    fetchBlogPosts();
-                } catch (e) {
-                    console.error("Erro na inicialização:", e);
-                    // Mostra erro visual no admin se falhar
+            try {
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.firestore();
+                auth = firebase.auth();
+                console.log("Firebase conectado.");
+                
+                // Listener de Auth
+                auth.onAuthStateChanged(user => {
+                    const loginForm = document.getElementById('admin-login');
+                    const panel = document.getElementById('admin-panel');
                     const connError = document.getElementById('connection-error');
-                    if(connError) {
-                        connError.textContent = "Erro ao conectar: " + e.message;
-                        connError.classList.remove('hidden');
+                    
+                    if (user) { 
+                        loginForm.classList.add('hidden'); 
+                        panel.classList.remove('hidden'); 
+                        if(connError) connError.classList.add('hidden');
+                    } else { 
+                        loginForm.classList.remove('hidden'); 
+                        panel.classList.add('hidden'); 
                     }
+                });
+
+                fetchBlogPosts();
+            } catch (e) {
+                console.error("Erro na inicialização:", e);
+                const connError = document.getElementById('connection-error');
+                if(connError) {
+                    connError.textContent = "Erro ao conectar: " + e.message;
+                    connError.classList.remove('hidden');
                 }
-            } else {
-                console.warn("Usando Modo Demo (Dados Locais).");
-                const demoWarning = document.getElementById('demo-warning');
-                if(demoWarning) demoWarning.classList.remove('hidden');
-                renderBlog();
             }
         }
 
@@ -660,12 +565,19 @@
                     blogPosts = [];
                     snap.forEach(doc => blogPosts.push({ id: doc.id, ...doc.data() }));
                     renderBlog();
+                } else {
+                    console.log("Nenhum post encontrado no Firebase.");
+                    const grids = [document.getElementById('home-blog-grid'), document.getElementById('blog-list-container')];
+                    grids.forEach(grid => {
+                        if(grid) grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Nenhum post encontrado. Adicione no Admin.</p>';
+                    });
                 }
             } catch (e) {
-                console.warn("Erro ao buscar posts (verifique regras ou internet). Usando fallback.");
+                console.warn("Erro ao buscar posts (verifique regras ou internet).", e);
             }
         }
 
+        // RENDERIZAÇÃO DO BLOG
         function renderBlog() {
             const grids = [document.getElementById('home-blog-grid'), document.getElementById('blog-list-container')];
             grids.forEach(grid => {
@@ -707,28 +619,41 @@
         function handleLogin(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button');
+            const errorMsg = document.getElementById('login-error');
             const email = document.getElementById('login-email').value;
             const pass = document.getElementById('login-password').value;
 
             btn.innerText = "Processando...";
             btn.disabled = true;
-            btn.classList.add('opacity-50');
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            errorMsg.classList.add('hidden');
 
-            if (!isFirebaseInitialized) {
-                setTimeout(() => { 
-                    alert("MODO DEMO: Login simulado com sucesso! (Configure o Firebase para usar login real)"); 
-                    document.getElementById('admin-login').classList.add('hidden'); 
-                    document.getElementById('admin-panel').classList.remove('hidden'); 
-                    btn.innerText = "Entrar"; btn.disabled = false; btn.classList.remove('opacity-50');
-                }, 800);
-                return;
+            if (!auth) {
+                 errorMsg.textContent = "Erro: Firebase não configurado. Verifique as chaves.";
+                 errorMsg.classList.remove('hidden');
+                 btn.innerText = "Entrar";
+                 btn.disabled = false;
+                 btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                 return;
             }
 
             auth.signInWithEmailAndPassword(email, pass)
-                .then(() => { btn.innerText = "Sucesso!"; }) 
+                .then(() => { 
+                    btn.innerText = "Sucesso!";
+                    // O AuthStateListener cuidará da troca de tela
+                }) 
                 .catch(err => {
-                    alert("Erro no Login: " + err.message);
-                    btn.innerText = "Entrar"; btn.disabled = false; btn.classList.remove('opacity-50');
+                    console.error(err);
+                    let msg = "Erro desconhecido.";
+                    if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') msg = "E-mail ou senha incorretos.";
+                    else if (err.code === 'auth/too-many-requests') msg = "Muitas tentativas. Aguarde um momento.";
+                    else msg = err.message;
+
+                    errorMsg.textContent = "Erro: " + msg;
+                    errorMsg.classList.remove('hidden');
+                    btn.innerText = "Entrar";
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
                 });
         }
 
@@ -736,6 +661,7 @@
 
         function addNewPost(e) {
             e.preventDefault();
+            if(!db) { alert("Erro: Banco de dados não inicializado."); return; }
             const post = {
                 title: document.getElementById('admin-title').value,
                 category: document.getElementById('admin-category').value,
@@ -743,20 +669,11 @@
                 image: document.getElementById('admin-image').value,
                 intro: document.getElementById('admin-intro').value,
                 content: document.getElementById('admin-content').value,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 date: new Date().toLocaleDateString('pt-BR')
             };
 
-            if(!db) { 
-                alert("Modo Demo: Post salvo localmente."); 
-                post.id = Date.now().toString();
-                blogPosts.unshift(post);
-                renderBlog();
-                e.target.reset();
-                return; 
-            }
-            
-            post.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-            db.collection("posts").add(post).then(() => { alert("Postado!"); e.target.reset(); fetchBlogPosts(); }).catch(err => alert("Erro: " + err.message));
+            db.collection("posts").add(post).then(() => { alert("Postado com sucesso!"); e.target.reset(); fetchBlogPosts(); }).catch(err => alert("Erro ao salvar: " + err.message));
         }
 
         function navigateTo(id) {
@@ -776,9 +693,26 @@
             if(!post) return;
             document.getElementById('post-title').textContent = post.title;
             document.getElementById('post-category').textContent = post.category;
+            // Autor pode não existir no objeto post, verificar antes
+            document.getElementById('post-author').textContent = 'Por ' + (post.author || 'Redação');
             document.getElementById('post-date').textContent = post.date;
-            document.querySelector('#post-content .intro-text').textContent = post.intro;
-            document.querySelector('#post-content .body-content').innerHTML = post.content;
+            
+            // Limpa conteúdo anterior
+            const contentDiv = document.getElementById('post-content');
+            contentDiv.innerHTML = '';
+            
+            // Cria elementos para evitar injeção direta de strings mal formadas
+            const introP = document.createElement('p');
+            introP.className = 'text-xl leading-relaxed mb-8 font-medium text-gray-800 intro-text';
+            introP.textContent = post.intro;
+            
+            const bodyDiv = document.createElement('div');
+            bodyDiv.className = 'body-content';
+            bodyDiv.innerHTML = post.content; // HTML permitido para o corpo
+            
+            contentDiv.appendChild(introP);
+            contentDiv.appendChild(bodyDiv);
+            
             navigateTo('blog-post');
         }
 
@@ -810,4 +744,3 @@
     </script>
 </body>
 </html>
-

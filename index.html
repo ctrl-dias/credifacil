@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="O site que te ajuda a sair das dívidas e recuperar o seu crédito. Quer reorganizar sua vida financeira? Nós temos o conteúdo certo para ajudar.">
-    <meta name="keywords" content="empréstimo, cartão de crédito, nome sujo, score, finanças, limpar nome">
+    <meta name="description" content="CrediFácil - O seu guia definitivo para sair das dívidas, conseguir cartões de crédito e empréstimos com as melhores taxas.">
+    <meta name="keywords" content="empréstimo, cartão de crédito, nome sujo, score, finanças, limpar nome, educação financeira">
     <meta name="author" content="CrediFácil">
+    <meta name="robots" content="index, follow">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017585624443150" crossorigin="anonymous"></script>
@@ -21,7 +22,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
     
     <!-- Ícones -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -30,7 +31,10 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
                     colors: {
                         brand: {
                             50: '#FEFCE8', 100: '#FEF9C3', 400: '#FACC15', 500: '#EAB308', 600: '#CA8A04', 900: '#713F12',
@@ -44,426 +48,491 @@
 
     <style>
         body { -webkit-font-smoothing: antialiased; }
-        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        
+        /* Animações de Transição */
+        .fade-in { animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Animação do Coração */
-        @keyframes heart-pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.3); }
-            100% { transform: scale(1); }
-        }
         .animate-heart { animation: heart-pulse 0.3s ease-in-out; color: #ef4444; }
+        @keyframes heart-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
 
-        .hidden-section { display: none; }
+        .hidden-section { display: none !important; }
         .page-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
         main { flex: 1; }
         
-        /* Ad Slot fixo */
+        /* Ad Slot */
         .ad-slot { 
-            display: block; 
-            margin: 2rem auto; 
-            background-color: #f9fafb; 
-            min-height: 90px; 
-            width: 100%; 
-            max-width: 100%;
-            text-align: center; 
-            overflow: hidden; 
+            display: block; margin: 2rem auto; background-color: #f3f4f6; 
+            min-height: 90px; width: 100%; text-align: center; overflow: hidden; 
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
         }
+        .ad-slot::before { content: 'Publicidade'; color: #9ca3af; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
 
-        .input-simulator {
-            transition: all 0.3s;
-        }
-        .input-simulator:focus {
-            border-color: #FACC15;
-            box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.3);
-        }
+        .input-simulator:focus { border-color: #FACC15; box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.3); }
 
-        /* --- ESTILOS DO BLOG E EDITOR --- */
-        
-        /* Barra de Ferramentas do Editor */
+        /* --- EDITOR RICO --- */
         .rich-editor-toolbar {
-            border-bottom: 1px solid #e5e7eb;
-            padding: 8px;
-            background: #f9fafb;
-            border-radius: 8px 8px 0 0;
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
+            border-bottom: 1px solid #e5e7eb; padding: 10px; background: #f9fafb;
+            border-radius: 8px 8px 0 0; display: flex; gap: 6px; flex-wrap: wrap;
         }
         .rich-editor-btn {
-            background: white;
-            border: 1px solid #d1d5db;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            color: #374151;
-            transition: all 0.2s;
+            background: white; border: 1px solid #d1d5db; padding: 6px 10px;
+            border-radius: 6px; cursor: pointer; font-size: 14px; color: #374151; font-weight: 600;
         }
-        .rich-editor-btn:hover {
-            background: #f3f4f6;
-            border-color: #9ca3af;
-        }
+        .rich-editor-btn:hover { background: #e5e7eb; color: #000; }
         
-        /* Área de Edição e Visualização do Conteúdo */
         .rich-editor-content {
-            min-height: 300px;
-            padding: 16px;
-            border: 1px solid #d1d5db;
-            border-top: none;
-            border-radius: 0 0 8px 8px;
-            outline: none;
-            background: white;
-            overflow-y: auto;
+            min-height: 350px; padding: 20px; border: 1px solid #d1d5db; border-top: none;
+            border-radius: 0 0 8px 8px; outline: none; background: white; overflow-y: auto;
+            font-family: 'Merriweather', serif; line-height: 1.8;
         }
-        .rich-editor-content:focus {
-            border-color: #FACC15;
-            box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.1);
-        }
+        .rich-editor-content:focus { border-color: #FACC15; box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.1); }
 
-        /* Estilos Globais para Conteúdo Rico (Editor + Post Final) */
-        .rich-content h1 { font-size: 2em; font-weight: 800; margin-top: 1.5em; margin-bottom: 0.5em; color: #111827; }
-        .rich-content h2 { font-size: 1.5em; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; color: #1f2937; }
-        .rich-content h3 { font-size: 1.25em; font-weight: 600; margin-top: 1.25em; margin-bottom: 0.5em; color: #374151; }
-        .rich-content p { margin-bottom: 1em; line-height: 1.7; color: #4b5563; font-size: 1.05rem; }
-        .rich-content ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1em; color: #4b5563; }
-        .rich-content ol { list-style-type: decimal; padding-left: 1.5em; margin-bottom: 1em; color: #4b5563; }
-        .rich-content blockquote { border-left: 4px solid #FACC15; padding: 1rem; margin: 1.5em 0; background: #ffffec; font-style: italic; color: #555; }
-        .rich-content b, .rich-content strong { font-weight: 700; color: #111; }
-        .rich-content i, .rich-content em { font-style: italic; }
-        .rich-content a { color: #CA8A04; text-decoration: underline; font-weight: 500; }
-        .rich-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 1em 0; }
+        /* --- ESTILOS DO ARTIGO --- */
+        .rich-content h1 { font-family: 'Inter', sans-serif; font-size: 2.25em; font-weight: 800; margin: 1.5em 0 0.5em; color: #111; line-height: 1.2; }
+        .rich-content h2 { font-family: 'Inter', sans-serif; font-size: 1.75em; font-weight: 700; margin: 1.5em 0 0.5em; color: #1f2937; border-left: 4px solid #FACC15; padding-left: 1rem; }
+        .rich-content h3 { font-family: 'Inter', sans-serif; font-size: 1.4em; font-weight: 600; margin: 1.25em 0 0.5em; color: #374151; }
+        .rich-content p { margin-bottom: 1.25em; line-height: 1.8; color: #374151; font-family: 'Merriweather', serif; font-size: 1.1rem; }
+        .rich-content ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1.25em; color: #374151; font-family: 'Merriweather', serif; }
+        .rich-content ol { list-style-type: decimal; padding-left: 1.5em; margin-bottom: 1.25em; color: #374151; font-family: 'Merriweather', serif; }
+        .rich-content blockquote { border-left: 4px solid #FACC15; padding: 1.5rem; margin: 1.5em 0; background: #fffbeb; font-style: italic; color: #4b5563; font-family: 'Merriweather', serif; border-radius: 0 8px 8px 0; }
+        .rich-content b, .rich-content strong { font-weight: 700; color: #000; }
+        .rich-content a { color: #CA8A04; text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+        .rich-content img { max-width: 100%; height: auto; border-radius: 12px; margin: 2em 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 page-wrapper">
 
     <!-- HEADER -->
-    <header class="bg-black shadow-sm sticky top-0 z-50 border-b border-gray-800">
+    <header class="bg-black shadow-lg sticky top-0 z-50 border-b border-gray-800">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 cursor-pointer" onclick="navigateTo('home')">
+                <!-- Logo -->
+                <a href="#home" class="flex-shrink-0 group">
                     <div class="flex items-center gap-2">
-                        <div class="bg-brand-400 text-black p-2 rounded-lg"><i class="ph-fill ph-coins text-2xl"></i></div>
+                        <div class="bg-brand-400 text-black p-2 rounded-lg group-hover:bg-brand-500 transition"><i class="ph-fill ph-coins text-2xl"></i></div>
                         <span class="font-bold text-2xl text-white tracking-tight">Credi<span class="text-brand-400">Fácil</span></span>
                     </div>
-                </div>
+                </a>
+                
+                <!-- Desktop Nav -->
                 <nav class="hidden md:flex space-x-8">
-                    <a href="#" onclick="navigateTo('home')" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition">Início</a>
-                    <a href="#" onclick="navigateTo('emprestimo')" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition">Empréstimos</a>
-                    <a href="#" onclick="navigateTo('cartoes')" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition">Cartões</a>
-                    <a href="#" onclick="navigateTo('blog')" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition">Blog</a>
-                    <a href="#" onclick="navigateTo('sobre')" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition">Sobre</a>
+                    <a href="#home" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition text-sm uppercase tracking-wide">Início</a>
+                    <a href="#emprestimo" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition text-sm uppercase tracking-wide">Empréstimos</a>
+                    <a href="#cartoes" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition text-sm uppercase tracking-wide">Cartões</a>
+                    <a href="#blog" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition text-sm uppercase tracking-wide">Blog</a>
+                    <a href="#sobre" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition text-sm uppercase tracking-wide">Sobre</a>
                 </nav>
+                
+                <!-- CTA Button -->
                 <div class="hidden md:flex">
-                    <button onclick="navigateTo('emprestimo')" class="bg-brand-400 hover:bg-brand-500 text-black px-6 py-2.5 rounded-full font-bold transition shadow-lg flex items-center gap-2">
-                        <span>Solicitar Empréstimo</span><i class="ph-bold ph-hand-coins"></i>
-                    </button>
+                    <a href="#emprestimo" class="bg-brand-400 hover:bg-brand-500 text-black px-6 py-2.5 rounded-full font-bold transition shadow-lg flex items-center gap-2 transform hover:-translate-y-0.5">
+                        <span>Simular Agora</span><i class="ph-bold ph-lightning"></i>
+                    </a>
                 </div>
+                
+                <!-- Mobile Menu Button -->
                 <div class="md:hidden">
                     <button onclick="toggleMobileMenu()" class="text-white hover:text-brand-400 p-2"><i class="ph ph-list text-3xl"></i></button>
                 </div>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-zinc-900 border-t border-gray-800 absolute w-full left-0 shadow-lg">
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-zinc-900 border-t border-gray-800 absolute w-full left-0 shadow-2xl">
             <div class="px-4 pt-2 pb-6 space-y-2">
-                <a href="#" onclick="navigateTo('home'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Início</a>
-                <a href="#" onclick="navigateTo('emprestimo'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Empréstimos</a>
-                <a href="#" onclick="navigateTo('cartoes'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Cartões</a>
-                <a href="#" onclick="navigateTo('blog'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Blog</a>
-                <a href="#" onclick="navigateTo('admin'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-brand-400 font-bold hover:bg-black rounded-md">Área Admin</a>
+                <a href="#home" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Início</a>
+                <a href="#emprestimo" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Simulador</a>
+                <a href="#cartoes" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Cartões</a>
+                <a href="#blog" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Blog</a>
+                <a href="#admin" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-brand-400 font-bold hover:bg-black rounded-md">Área Admin</a>
             </div>
         </div>
     </header>
 
     <main id="app-content" class="relative">
         
-        <!-- HOME -->
+        <!-- ================= HOME ================= -->
         <section id="home" class="page-section fade-in">
-            <div class="bg-black text-white relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-1/2 h-full bg-brand-400 opacity-10 skew-x-12 transform translate-x-20"></div>
+            <!-- Hero Section -->
+            <div class="bg-black text-white relative overflow-hidden border-b border-gray-800">
+                <div class="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-brand-900/20 to-transparent pointer-events-none"></div>
                 <div class="container mx-auto px-4 py-20 lg:py-32 relative z-10">
-                    <div class="max-w-3xl">
-                        <span class="bg-brand-400/20 text-brand-400 px-4 py-1 rounded-full text-sm font-bold tracking-wide uppercase mb-6 inline-block border border-brand-400/20">Sua liberdade financeira</span>
-                        <h1 class="text-4xl lg:text-6xl font-extrabold leading-tight mb-6">Saia das dívidas e recupere seu <span class="text-brand-400">Crédito</span> hoje.</h1>
-                        <p class="text-lg text-gray-400 mb-8 max-w-2xl">
-                            Conteúdo gratuito, análises de cartões para negativados e as melhores taxas de empréstimo. Tudo para você reorganizar sua vida financeira.
+                    <div class="max-w-4xl mx-auto text-center">
+                        <span class="bg-brand-400/10 text-brand-400 px-4 py-1.5 rounded-full text-sm font-bold tracking-wider uppercase mb-8 inline-block border border-brand-400/20">Liberdade Financeira ao seu alcance</span>
+                        <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-8">Saia do vermelho e recupere o seu <span class="text-brand-400 inline-block transform hover:scale-105 transition cursor-default">Crédito</span>.</h1>
+                        <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+                            Acesse nosso comparador de cartões para negativados, simule empréstimos com taxas justas e aprenda a investir com nosso conteúdo educativo.
                         </p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <button onclick="navigateTo('blog')" class="bg-brand-400 hover:bg-brand-500 text-black px-8 py-4 rounded-lg font-bold text-lg transition shadow-lg">Ver Artigos Gratuitos</button>
-                            <button onclick="navigateTo('cartoes')" class="bg-white/5 hover:bg-white/10 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-lg font-bold text-lg transition">Melhores Cartões</button>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="#blog" class="bg-brand-400 hover:bg-brand-500 text-black px-8 py-4 rounded-xl font-bold text-lg transition shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)]">Ler Artigos</a>
+                            <a href="#cartoes" class="bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-xl font-bold text-lg transition flex items-center justify-center gap-2">Buscar Cartão <i class="ph-bold ph-credit-card"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="container mx-auto px-4">
-                <div class="ad-slot w-full">
+            <div class="container mx-auto px-4 -mt-8 relative z-20">
+                <div class="ad-slot shadow-lg bg-white rounded-lg border border-gray-200">
                     <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 </div>
             </div>
 
-            <div class="container mx-auto px-4 py-20">
+            <div class="container mx-auto px-4 py-24">
                 <div class="grid md:grid-cols-3 gap-8">
-                    <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
-                        <div class="bg-gray-900 w-14 h-14 rounded-xl flex items-center justify-center text-brand-400 mb-6 group-hover:scale-110 transition"><i class="ph ph-credit-card text-3xl"></i></div>
-                        <h3 class="text-xl font-bold text-black mb-3">Cartões Aprovados</h3>
-                        <p class="text-gray-600">Analisamos centenas de cartões para encontrar os que realmente aprovam negativados e pessoas com score baixo.</p>
-                    </div>
-                    <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
-                        <div class="bg-brand-50 w-14 h-14 rounded-xl flex items-center justify-center text-brand-600 mb-6 group-hover:scale-110 transition"><i class="ph ph-currency-dollar text-3xl"></i></div>
-                        <h3 class="text-xl font-bold text-black mb-3">Empréstimo Rápido</h3>
-                        <p class="text-gray-600">Simule empréstimos em recomendações confiáveis. Dinheiro na conta rápido e com parcelas que cabem no bolso.</p>
-                    </div>
-                    <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
-                        <div class="bg-gray-100 w-14 h-14 rounded-xl flex items-center justify-center text-gray-700 mb-6 group-hover:scale-110 transition"><i class="ph ph-graduation-cap text-3xl"></i></div>
-                        <h3 class="text-xl font-bold text-black mb-3">Educação Financeira</h3>
-                        <p class="text-gray-600">Aprenda a negociar dívidas, aumentar seu score e investir seu dinheiro com nossos guias completos.</p>
-                    </div>
+                    <a href="#cartoes" class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group flex flex-col items-center text-center">
+                        <div class="bg-gray-900 w-16 h-16 rounded-2xl flex items-center justify-center text-brand-400 mb-6 group-hover:scale-110 group-hover:rotate-3 transition duration-300 shadow-lg"><i class="ph-fill ph-cards text-3xl"></i></div>
+                        <h3 class="text-2xl font-bold text-black mb-3">Cartões Aprovados</h3>
+                        <p class="text-gray-600 leading-relaxed">Ranking atualizado de cartões que aprovam negativados e oferecem limites iniciais altos.</p>
+                    </a>
+                    <a href="#emprestimo" class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group flex flex-col items-center text-center">
+                        <div class="bg-brand-50 w-16 h-16 rounded-2xl flex items-center justify-center text-brand-600 mb-6 group-hover:scale-110 group-hover:-rotate-3 transition duration-300 shadow-lg"><i class="ph-fill ph-calculator text-3xl"></i></div>
+                        <h3 class="text-2xl font-bold text-black mb-3">Simulador Rápido</h3>
+                        <p class="text-gray-600 leading-relaxed">Calcule parcelas reais. Saiba exatamente quanto vai pagar antes de contratar qualquer crédito.</p>
+                    </a>
+                    <a href="#blog" class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group flex flex-col items-center text-center">
+                        <div class="bg-gray-100 w-16 h-16 rounded-2xl flex items-center justify-center text-gray-700 mb-6 group-hover:scale-110 transition duration-300 shadow-lg"><i class="ph-fill ph-trend-up text-3xl"></i></div>
+                        <h3 class="text-2xl font-bold text-black mb-3">Aumente seu Score</h3>
+                        <p class="text-gray-600 leading-relaxed">Estratégias comprovadas para subir sua pontuação no Serasa e Boa Vista em tempo recorde.</p>
+                    </a>
                 </div>
             </div>
 
-            <div class="bg-gray-50 py-20 border-t border-gray-200">
+            <!-- Home Blog Feed -->
+            <div class="bg-gray-50 py-24 border-t border-gray-200">
                 <div class="container mx-auto px-4">
-                    <div class="flex justify-between items-end mb-12">
-                        <div><h2 class="text-3xl font-bold text-black mb-2">Últimas do Blog</h2><p class="text-gray-600">Fique por dentro das novidades do mercado financeiro.</p></div>
-                        <a href="#" onclick="navigateTo('blog')" class="hidden md:flex text-brand-600 font-semibold items-center gap-1 hover:gap-2 transition-all">Ver todos <i class="ph ph-arrow-right"></i></a>
+                    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+                        <div>
+                            <span class="text-brand-600 font-bold uppercase tracking-wider text-sm">Blog & Notícias</span>
+                            <h2 class="text-3xl md:text-4xl font-bold text-black mt-2">Últimas Atualizações</h2>
+                        </div>
+                        <a href="#blog" class="px-6 py-3 bg-white border border-gray-300 hover:border-black rounded-full text-black font-semibold transition flex items-center gap-2 group">
+                            Ver todos os artigos <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition"></i>
+                        </a>
                     </div>
-                    <div id="home-blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                    <!-- Grid limitado a 4 posts -->
+                    <div id="home-blog-grid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Carregado via JS -->
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- EMPRÉSTIMOS -->
+        <!-- ================= EMPRÉSTIMOS ================= -->
         <section id="emprestimo" class="page-section hidden-section fade-in">
-            <div class="bg-black text-white py-16">
-                <div class="container mx-auto px-4 text-center">
-                    <h1 class="text-4xl font-bold mb-4">Simulador de Empréstimo Inteligente</h1>
-                    <p class="text-gray-400 max-w-2xl mx-auto">Encontre a melhor taxa para o seu perfil e veja na hora o valor estimado da parcela.</p>
+            <div class="bg-black text-white py-20 relative overflow-hidden">
+                <div class="absolute inset-0 bg-brand-600/10"></div>
+                <div class="container mx-auto px-4 text-center relative z-10">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">Simulador de Empréstimo</h1>
+                    <p class="text-gray-400 max-w-2xl mx-auto text-lg">Compare taxas, prazos e encontre a parcela que cabe no seu bolso sem comprometer sua renda.</p>
                 </div>
             </div>
+            
             <div class="container mx-auto px-4 py-16">
-                <div class="ad-slot w-full"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
-                <div class="grid lg:grid-cols-2 gap-12 items-start">
-                    <!-- Formulário -->
-                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 relative overflow-hidden">
-                         <div class="absolute top-0 left-0 w-full h-1 bg-brand-400"></div>
-                        <h3 class="text-2xl font-bold text-black mb-6 flex items-center gap-2"><i class="ph-fill ph-calculator text-brand-500"></i> Simule Agora</h3>
+                <div class="grid lg:grid-cols-12 gap-12 items-start">
+                    <!-- Coluna Principal (Formulário) -->
+                    <div class="lg:col-span-7 bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-gray-100 relative overflow-hidden">
+                         <div class="absolute top-0 left-0 w-full h-2 bg-brand-400"></div>
+                        <div class="flex items-center gap-3 mb-8">
+                            <div class="bg-brand-100 p-3 rounded-xl text-brand-600"><i class="ph-fill ph-calculator text-2xl"></i></div>
+                            <h3 class="text-2xl font-bold text-black">Faça sua Simulação</h3>
+                        </div>
                         
-                        <form id="loan-form" onsubmit="calculateFinalLoan(event)" class="space-y-6">
+                        <form id="loan-form" onsubmit="calculateFinalLoan(event)" class="space-y-8">
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Quanto você precisa? (R$)</label>
-                                <input type="number" id="loan-amount" oninput="updateLiveCalculation()" class="input-simulator w-full pl-4 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none transition text-lg font-bold text-black" placeholder="5000" min="500" step="100">
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Parcelas</label>
-                                    <select id="loan-term" onchange="updateLiveCalculation()" class="input-simulator w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none bg-white text-black font-medium"><option value="12">12x</option><option value="24">24x</option><option value="36">36x</option><option value="48">48x</option><option value="60">60x</option></select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">CPF</label>
-                                    <input type="text" id="loan-cpf" class="input-simulator w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="000.000.000-00">
+                                <label class="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">Valor Desejado (R$)</label>
+                                <div class="relative">
+                                    <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 font-bold">R$</span>
+                                    <input type="number" id="loan-amount" oninput="updateLiveCalculation()" class="input-simulator w-full pl-12 pr-4 py-4 border border-gray-300 rounded-xl focus:outline-none transition text-xl font-bold text-black placeholder-gray-300" placeholder="5.000,00" min="500" step="100" required>
                                 </div>
                             </div>
-                            <div id="live-preview" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hidden">
-                                <p class="text-sm text-gray-500 mb-1">Estimativa de parcela:</p>
-                                <div class="flex items-end gap-1"><span class="text-2xl font-bold text-brand-600" id="live-installment">R$ 0,00</span><span class="text-sm text-gray-400 mb-1">/mês*</span></div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">Prazo de Pagamento</label>
+                                    <select id="loan-term" onchange="updateLiveCalculation()" class="input-simulator w-full px-4 py-4 border border-gray-300 rounded-xl focus:outline-none bg-white text-black font-medium text-lg cursor-pointer">
+                                        <option value="12">12 meses</option>
+                                        <option value="24">24 meses</option>
+                                        <option value="36">36 meses</option>
+                                        <option value="48">48 meses</option>
+                                        <option value="60">60 meses</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">CPF (Apenas números)</label>
+                                    <input type="text" id="loan-cpf" class="input-simulator w-full px-4 py-4 border border-gray-300 rounded-xl focus:outline-none text-lg" placeholder="000.000.000-00">
+                                </div>
                             </div>
-                            <button type="submit" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-lg transition transform hover:-translate-y-1 shadow-md flex items-center justify-center gap-2">
-                                Ver Ofertas Disponíveis <i class="ph-bold ph-arrow-right"></i>
+
+                            <!-- Live Preview Box -->
+                            <div id="live-preview" class="bg-gray-50 p-6 rounded-2xl border border-gray-200 hidden transition-all duration-300">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-500 font-medium">Estimativa Mensal:</span>
+                                    <div class="text-right">
+                                        <span class="text-3xl font-bold text-brand-600 block" id="live-installment">R$ 0,00</span>
+                                        <span class="text-xs text-gray-400">Taxa estimada de 3.5% a.m.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full bg-black hover:bg-gray-800 text-white font-bold py-5 rounded-xl transition transform hover:-translate-y-1 shadow-lg flex items-center justify-center gap-3 text-lg">
+                                Buscar Ofertas <i class="ph-bold ph-magnifying-glass"></i>
                             </button>
-                            <p class="text-[10px] text-center text-gray-400 mt-4">* Simulação estimada com taxa média de 3.5% a.m. A aprovação de crédito não é garantida.</p>
                         </form>
                         
                         <!-- Resultado da Simulação -->
-                        <div id="loan-result" class="hidden mt-6 pt-6 border-t border-gray-200 animate-fade-in">
-                            <div class="bg-brand-50 border border-brand-100 rounded-xl p-5 mb-4">
-                                <div class="flex items-start gap-3">
-                                    <div class="bg-brand-100 p-2 rounded-full text-brand-900"><i class="ph-fill ph-check-circle text-xl"></i></div>
-                                    <div><h4 class="font-bold text-gray-900 text-lg">Pré-aprovação Disponível!</h4><p class="text-gray-700 text-sm mt-1">Encontramos recomendações para seu perfil.</p></div>
+                        <div id="loan-result" class="hidden mt-10 pt-10 border-t border-gray-100 animate-fade-in">
+                            <div class="bg-green-50 border border-green-200 rounded-2xl p-6 mb-6">
+                                <div class="flex items-start gap-4">
+                                    <div class="bg-green-100 p-2 rounded-full text-green-700 mt-1"><i class="ph-fill ph-check-circle text-xl"></i></div>
+                                    <div>
+                                        <h4 class="font-bold text-green-900 text-lg">Pré-aprovação Encontrada!</h4>
+                                        <p class="text-green-800 text-sm mt-1">Baseado no seu perfil, selecionamos os parceiros abaixo.</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div id="loan-recommendations-container" class="space-y-3">
-                                <!-- Conteúdo inserido via JS -->
+                            <div id="loan-recommendations-container" class="space-y-4">
+                                <!-- Cards inseridos via JS -->
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Informações Laterais -->
-                    <div class="space-y-8">
-                        <div><h2 class="text-3xl font-bold text-black mb-4">Como funciona?</h2><p class="text-gray-600">Nosso algoritmo busca as melhores taxas em mais de 15 instituições financeiras simultaneamente. Mesmo se você estiver negativado, temos recomendações especializadas.</p></div>
-                        <div class="grid grid-cols-1 gap-4">
-                            <div class="flex gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-brand-400 transition items-start">
-                                <div class="bg-gray-100 text-black w-12 h-12 flex items-center justify-center rounded-lg flex-shrink-0 mt-1"><i class="ph ph-lightning text-2xl"></i></div>
-                                <div><h4 class="font-bold text-black">Aprovação Rápida</h4><p class="text-sm text-gray-600 mt-1">Algumas recomendações depositam o dinheiro via PIX em até 30 minutos.</p></div>
-                            </div>
-                            <div class="flex gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-brand-400 transition items-start">
-                                <div class="bg-gray-100 text-black w-12 h-12 flex items-center justify-center rounded-lg flex-shrink-0 mt-1"><i class="ph ph-shield-check text-2xl"></i></div>
-                                <div><h4 class="font-bold text-black">Segurança 100%</h4><p class="text-sm text-gray-600 mt-1">Seus dados são criptografados. Nunca pedimos depósitos antecipados para liberar crédito.</p></div>
-                            </div>
+                    <!-- Sidebar Informativa -->
+                    <div class="lg:col-span-5 space-y-8">
+                        <div class="bg-gray-50 p-8 rounded-3xl border border-gray-200">
+                            <h3 class="text-xl font-bold text-black mb-6">Por que simular conosco?</h3>
+                            <ul class="space-y-6">
+                                <li class="flex gap-4">
+                                    <div class="bg-white p-2 rounded-lg shadow-sm h-10 w-10 flex items-center justify-center text-brand-600"><i class="ph-fill ph-shield-check text-xl"></i></div>
+                                    <div><h4 class="font-bold text-gray-900">Segurança Total</h4><p class="text-sm text-gray-600 mt-1">Seus dados são criptografados e nunca compartilhados sem permissão.</p></div>
+                                </li>
+                                <li class="flex gap-4">
+                                    <div class="bg-white p-2 rounded-lg shadow-sm h-10 w-10 flex items-center justify-center text-brand-600"><i class="ph-fill ph-clock text-xl"></i></div>
+                                    <div><h4 class="font-bold text-gray-900">Resposta Rápida</h4><p class="text-sm text-gray-600 mt-1">Receba o dinheiro na conta em até 24h após a aprovação.</p></div>
+                                </li>
+                                <li class="flex gap-4">
+                                    <div class="bg-white p-2 rounded-lg shadow-sm h-10 w-10 flex items-center justify-center text-brand-600"><i class="ph-fill ph-percent text-xl"></i></div>
+                                    <div><h4 class="font-bold text-gray-900">Juros Competitivos</h4><p class="text-sm text-gray-600 mt-1">Buscamos as taxas mais baixas do mercado para seu CPF.</p></div>
+                                </li>
+                            </ul>
                         </div>
+                        <div class="ad-slot bg-white rounded-2xl shadow-sm border border-gray-100"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CARTOES -->
+        <!-- ================= CARTOES ================= -->
         <section id="cartoes" class="page-section hidden-section fade-in">
-            <div class="bg-white border-b border-gray-200 py-12">
+            <div class="bg-gray-50 border-b border-gray-200 py-16">
                 <div class="container mx-auto px-4 text-center">
-                    <h1 class="text-4xl font-bold text-black mb-4">Catálogo de Cartões</h1>
-                    <p class="text-gray-600 max-w-2xl mx-auto">Encontre o cartão ideal para o seu perfil financeiro.</p>
+                    <h1 class="text-4xl font-bold text-black mb-4">Escolha seu Cartão Ideal</h1>
+                    <p class="text-gray-600 max-w-2xl mx-auto text-lg">Use nossos filtros inteligentes para encontrar o cartão que aprova o seu perfil.</p>
                 </div>
             </div>
-            <div class="container mx-auto px-4 py-16">
-                <div class="ad-slot w-full"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
-                <div class="flex flex-wrap gap-4 justify-center mb-12">
-                    <button onclick="filterCards('todos')" id="btn-todos" class="filter-btn active px-6 py-2 bg-black text-white rounded-full text-sm font-medium transition shadow-md">Todos</button>
-                    <button onclick="filterCards('anuidade')" id="btn-anuidade" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Sem Anuidade</button>
-                    <button onclick="filterCards('negativados')" id="btn-negativados" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Para Negativados</button>
-                    <button onclick="filterCards('milhas')" id="btn-milhas" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Milhas / Cashback</button>
+            
+            <div class="container mx-auto px-4 py-12">
+                <!-- Filtros -->
+                <div class="flex flex-wrap gap-3 justify-center mb-16">
+                    <button onclick="filterCards('todos')" id="btn-todos" class="filter-btn active px-6 py-3 bg-black text-white rounded-xl text-sm font-bold transition shadow-lg transform hover:-translate-y-0.5">Todos</button>
+                    <button onclick="filterCards('anuidade')" id="btn-anuidade" class="filter-btn px-6 py-3 bg-white border border-gray-200 text-gray-600 hover:border-brand-400 hover:text-black rounded-xl text-sm font-bold transition shadow-sm hover:shadow-md">Sem Anuidade</button>
+                    <button onclick="filterCards('negativados')" id="btn-negativados" class="filter-btn px-6 py-3 bg-white border border-gray-200 text-gray-600 hover:border-brand-400 hover:text-black rounded-xl text-sm font-bold transition shadow-sm hover:shadow-md">Para Negativados</button>
+                    <button onclick="filterCards('milhas')" id="btn-milhas" class="filter-btn px-6 py-3 bg-white border border-gray-200 text-gray-600 hover:border-brand-400 hover:text-black rounded-xl text-sm font-bold transition shadow-sm hover:shadow-md">Milhas e Cashback</button>
                 </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="cards-container"></div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="cards-container">
+                    <!-- Cards via JS -->
+                </div>
             </div>
         </section>
 
-        <!-- BLOG -->
+        <!-- ================= BLOG (Completo) ================= -->
         <section id="blog" class="page-section hidden-section fade-in">
-            <div class="bg-gray-100 py-16">
+            <div class="bg-white py-16 border-b border-gray-100">
+                <div class="container mx-auto px-4 text-center">
+                    <span class="text-brand-600 font-bold tracking-widest text-xs uppercase mb-2 block">Educação Financeira</span>
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-black mb-6">Blog CrediFácil</h1>
+                    <p class="text-gray-500 max-w-2xl mx-auto text-lg">Conteúdo aprofundado para você dominar seu dinheiro.</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 min-h-screen py-12">
                 <div class="container mx-auto px-4">
-                    <div class="text-center max-w-3xl mx-auto mb-12">
-                        <h1 class="text-4xl font-extrabold text-black mb-4">Blog de Educação Financeira</h1>
-                        <p class="text-gray-600 text-lg">Artigos, guias e notícias para você tomar as melhores decisões com seu dinheiro.</p>
-                    </div>
-                    
-                    <!-- Filtros do Blog -->
-                    <div class="flex flex-wrap gap-3 justify-center mb-12">
-                        <button onclick="filterBlog('todos')" class="blog-filter-btn px-5 py-2 bg-black text-white rounded-full text-sm font-medium transition cursor-pointer">Todos</button>
-                        <button onclick="filterBlog('Score')" class="blog-filter-btn px-5 py-2 bg-white border text-gray-600 hover:border-black hover:text-black rounded-full text-sm font-medium transition cursor-pointer">Score</button>
-                        <button onclick="filterBlog('Cartões')" class="blog-filter-btn px-5 py-2 bg-white border text-gray-600 hover:border-black hover:text-black rounded-full text-sm font-medium transition cursor-pointer">Cartões</button>
-                        <button onclick="filterBlog('Empréstimos')" class="blog-filter-btn px-5 py-2 bg-white border text-gray-600 hover:border-black hover:text-black rounded-full text-sm font-medium transition cursor-pointer">Empréstimos</button>
-                         <button onclick="filterBlog('Dívidas')" class="blog-filter-btn px-5 py-2 bg-white border text-gray-600 hover:border-black hover:text-black rounded-full text-sm font-medium transition cursor-pointer">Dívidas</button>
+                    <!-- Filtros Categoria -->
+                    <div class="flex flex-wrap gap-2 justify-center mb-12">
+                        <button onclick="filterBlog('todos')" class="blog-filter-btn px-4 py-2 bg-black text-white rounded-lg text-sm font-bold">Todos</button>
+                        <button onclick="filterBlog('Score')" class="blog-filter-btn px-4 py-2 bg-white border border-gray-200 hover:border-black text-gray-600 hover:text-black rounded-lg text-sm font-medium transition">Score</button>
+                        <button onclick="filterBlog('Cartões')" class="blog-filter-btn px-4 py-2 bg-white border border-gray-200 hover:border-black text-gray-600 hover:text-black rounded-lg text-sm font-medium transition">Cartões</button>
+                        <button onclick="filterBlog('Empréstimos')" class="blog-filter-btn px-4 py-2 bg-white border border-gray-200 hover:border-black text-gray-600 hover:text-black rounded-lg text-sm font-medium transition">Empréstimos</button>
+                        <button onclick="filterBlog('Dívidas')" class="blog-filter-btn px-4 py-2 bg-white border border-gray-200 hover:border-black text-gray-600 hover:text-black rounded-lg text-sm font-medium transition">Dívidas</button>
                     </div>
 
-                    <div class="ad-slot bg-white rounded-lg w-full"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
-                    <div id="blog-list-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                    <div id="blog-list-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Renderização completa via JS -->
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- BLOG POST -->
+        <!-- ================= POST INDIVIDUAL ================= -->
         <section id="blog-post" class="page-section hidden-section fade-in">
-            <div class="bg-white">
-                <div class="bg-black text-white py-20">
-                    <div class="container mx-auto px-4 max-w-4xl text-center">
-                        <button onclick="navigateTo('blog')" class="text-gray-400 hover:text-white mb-8 flex items-center justify-center gap-2 transition"><i class="ph ph-arrow-left"></i> Voltar para o Blog</button>
-                        <span id="post-category" class="bg-brand-400/20 text-brand-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">Categoria</span>
-                        <h1 id="post-title" class="text-3xl md:text-5xl font-bold mt-4 mb-6 leading-tight">Título do Artigo</h1>
-                        <div class="flex items-center justify-center gap-4 text-gray-400 text-sm"><span id="post-author">Por Redação CrediFácil</span> • <span id="post-date">Data</span></div>
+            <div class="bg-white min-h-screen">
+                <!-- Cabeçalho do Artigo -->
+                <div class="bg-black text-white py-24 relative overflow-hidden">
+                     <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80 z-10"></div>
+                     <!-- Imagem de fundo opcional aqui se quiser -->
+                    <div class="container mx-auto px-4 max-w-4xl text-center relative z-20">
+                        <a href="#blog" class="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition font-medium"><i class="ph-bold ph-arrow-left"></i> Voltar para o Blog</a>
+                        <div class="mb-6"><span id="post-category" class="bg-brand-400 text-black px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider shadow-lg">Categoria</span></div>
+                        <h1 id="post-title" class="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-8 leading-tight font-serif text-white">Título do Artigo</h1>
+                        <div class="flex flex-wrap items-center justify-center gap-6 text-gray-400 text-sm font-medium border-t border-gray-800 pt-8 mt-8 w-full max-w-lg mx-auto">
+                            <div class="flex items-center gap-2"><i class="ph-fill ph-user-circle text-brand-400 text-lg"></i> <span id="post-author">Autor</span></div>
+                            <div class="flex items-center gap-2"><i class="ph-fill ph-calendar-blank text-brand-400 text-lg"></i> <span id="post-date">Data</span></div>
+                        </div>
                     </div>
                 </div>
-                <div class="container mx-auto px-4 py-12 flex flex-col lg:flex-row gap-12">
-                    <article class="lg:w-2/3">
-                        <!-- Conteúdo do post, agora renderiza HTML -->
-                        <div id="post-content" class="prose prose-lg prose-gray max-w-none text-gray-700 rich-content">
+
+                <div class="container mx-auto px-4 py-16 flex flex-col lg:flex-row gap-16">
+                    <!-- Conteúdo Principal -->
+                    <article class="lg:w-[65%] mx-auto">
+                        <!-- Share Bar (Sticky) -->
+                        <div class="flex gap-4 mb-8 border-b border-gray-100 pb-8 overflow-x-auto">
+                            <span class="text-sm font-bold text-gray-500 uppercase tracking-wide flex items-center mr-2">Compartilhar:</span>
+                            <button onclick="sharePost('whatsapp')" class="bg-[#25D366] text-white p-2 rounded-full hover:opacity-90 transition"><i class="ph-fill ph-whatsapp-logo text-xl"></i></button>
+                            <button onclick="sharePost('facebook')" class="bg-[#1877F2] text-white p-2 rounded-full hover:opacity-90 transition"><i class="ph-fill ph-facebook-logo text-xl"></i></button>
+                            <button onclick="sharePost('twitter')" class="bg-black text-white p-2 rounded-full hover:opacity-90 transition"><i class="ph-fill ph-x-logo text-xl"></i></button>
+                        </div>
+
+                        <div id="post-content" class="rich-content text-lg text-gray-800">
                             <!-- Injetado via JS -->
                         </div>
                         
-                        <!-- ÁREA DE INTERAÇÃO (LIKES E COMENTÁRIOS) -->
-                        <div class="mt-12 pt-8 border-t border-gray-200">
-                            <div class="flex items-center justify-between mb-8">
-                                <h3 class="text-xl font-bold text-black">Gostou deste artigo?</h3>
-                                <button id="like-btn" onclick="toggleLike()" class="flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-red-50 rounded-full transition group">
-                                    <i id="like-icon" class="ph-fill ph-heart text-2xl text-gray-400 group-hover:text-red-500 transition"></i>
-                                    <span id="like-count" class="font-bold text-gray-700">0</span>
+                        <!-- Engagement Box -->
+                        <div class="mt-16 bg-gray-50 rounded-2xl p-8 border border-gray-200">
+                            <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8 border-b border-gray-200 pb-8">
+                                <div>
+                                    <h3 class="text-xl font-bold text-black mb-1">Gostou da leitura?</h3>
+                                    <p class="text-gray-500 text-sm">Deixe seu like para sabermos que este conteúdo ajudou.</p>
+                                </div>
+                                <button id="like-btn" onclick="toggleLike()" class="flex items-center gap-3 px-8 py-3 bg-white border border-gray-200 hover:border-red-200 hover:bg-red-50 rounded-full transition group shadow-sm">
+                                    <i id="like-icon" class="ph-fill ph-heart text-2xl text-gray-300 group-hover:text-red-500 transition duration-300"></i>
+                                    <span id="like-count" class="font-bold text-gray-700 text-lg">0</span>
                                 </button>
                             </div>
 
-                            <div class="bg-gray-50 rounded-2xl p-6">
-                                <h4 class="text-lg font-bold mb-6">Comentários (<span id="comment-count">0</span>)</h4>
-                                
-                                <!-- Lista de Comentários -->
-                                <div id="comments-list" class="space-y-6 mb-8 max-h-96 overflow-y-auto pr-2">
-                                    <!-- Comentários via JS -->
+                            <h4 class="text-lg font-bold mb-6 flex items-center gap-2"><i class="ph-bold ph-chat-circle-text"></i> Comentários (<span id="comment-count">0</span>)</h4>
+                            
+                            <div id="comments-list" class="space-y-4 mb-8 max-h-[400px] overflow-y-auto custom-scrollbar"></div>
+
+                            <form onsubmit="submitComment(event)" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                                <div class="mb-4">
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Seu Nome</label>
+                                    <input type="text" id="comment-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-black focus:ring-1 focus:ring-black outline-none transition" required>
                                 </div>
-
-                                <!-- Form de Comentário -->
-                                <form onsubmit="submitComment(event)" class="mt-6 border-t border-gray-200 pt-6">
-                                    <div class="grid md:grid-cols-2 gap-4 mb-4">
-                                        <input type="text" id="comment-name" placeholder="Seu nome" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black" required>
-                                    </div>
-                                    <textarea id="comment-text" rows="3" placeholder="Escreva seu comentário..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black mb-4" required></textarea>
-                                    <button type="submit" class="bg-black text-white px-6 py-2 rounded-lg font-bold hover:bg-gray-800 transition">Comentar</button>
-                                </form>
-                            </div>
+                                <div class="mb-4">
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Comentário</label>
+                                    <textarea id="comment-text" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-black focus:ring-1 focus:ring-black outline-none transition resize-none" required></textarea>
+                                </div>
+                                <button type="submit" class="bg-black text-white px-6 py-2 rounded-lg font-bold hover:bg-gray-800 transition text-sm">Publicar Comentário</button>
+                            </form>
                         </div>
-
-                        <div class="ad-slot my-8 w-full"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                     </article>
-                    <aside class="lg:w-1/3 space-y-8">
-                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                            <h4 class="font-bold text-black mb-4">Publicidade</h4>
-                            <div class="ad-slot w-full bg-white rounded-lg"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+
+                    <!-- Sidebar -->
+                    <aside class="lg:w-[30%] space-y-8 hidden lg:block">
+                        <div class="sticky top-24 space-y-8">
+                            <div class="bg-brand-50 p-6 rounded-2xl border border-brand-100">
+                                <h4 class="font-bold text-brand-900 mb-2">Simulação Rápida</h4>
+                                <p class="text-sm text-brand-800 mb-4">Precisa de dinheiro urgente? Simule sem compromisso.</p>
+                                <a href="#emprestimo" class="block w-full text-center bg-brand-500 hover:bg-brand-600 text-white font-bold py-3 rounded-lg transition shadow-md">Simular Agora</a>
+                            </div>
+                            <div class="ad-slot bg-white rounded-xl shadow-sm border border-gray-200"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                         </div>
                     </aside>
                 </div>
             </div>
         </section>
 
-        <!-- ADMIN -->
+        <!-- ================= ADMIN ================= -->
         <section id="admin" class="page-section hidden-section fade-in">
-            <div class="bg-white py-20">
-                <div class="container mx-auto px-4 max-w-xl">
-                    <h1 class="text-3xl font-bold text-black mb-8 text-center border-b border-gray-200 pb-4">Painel Administrativo</h1>
+            <div class="bg-gray-100 min-h-screen py-16">
+                <div class="container mx-auto px-4 max-w-5xl">
+                    <div class="flex justify-between items-center mb-8">
+                        <h1 class="text-3xl font-bold text-black">Painel Administrativo</h1>
+                        <div id="admin-user-info" class="hidden flex items-center gap-4">
+                            <span class="text-sm text-gray-600 font-medium bg-white px-3 py-1 rounded-full border">Admin Logado</span>
+                            <button onclick="handleLogout()" class="text-sm text-red-600 font-bold hover:underline">Sair</button>
+                        </div>
+                    </div>
                     
-                    <div id="connection-error" class="hidden mb-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm font-bold text-center"></div>
-
-                    <div id="admin-login" class="bg-gray-50 p-8 rounded-xl border border-gray-200 shadow-sm">
-                        <h2 class="text-xl font-bold text-black mb-6 text-center">Login Seguro</h2>
-                        <form onsubmit="handleLogin(event)" class="space-y-6">
-                            <div><label class="block text-sm font-bold text-gray-700 mb-2">E-mail</label><input type="email" id="login-email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required></div>
-                            <div><label class="block text-sm font-bold text-gray-700 mb-2">Senha</label><input type="password" id="login-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required></div>
-                            <button type="submit" class="w-full bg-black text-white hover:bg-gray-800 font-bold py-3 rounded-lg transition disabled:opacity-50">Entrar</button>
-                            <p id="login-error" class="text-red-500 text-sm text-center hidden font-bold mt-4"></p>
+                    <!-- Login Form -->
+                    <div id="admin-login" class="bg-white p-10 rounded-2xl border border-gray-200 shadow-xl max-w-md mx-auto">
+                        <div class="text-center mb-8">
+                            <div class="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-600"><i class="ph-fill ph-lock-key text-3xl"></i></div>
+                            <h2 class="text-2xl font-bold text-black">Acesso Restrito</h2>
+                        </div>
+                        <form onsubmit="handleLogin(event)" class="space-y-5">
+                            <div><label class="block text-sm font-bold text-gray-700 mb-2">E-mail</label><input type="email" id="login-email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none transition" required></div>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-2">Senha</label><input type="password" id="login-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none transition" required></div>
+                            <button type="submit" class="w-full bg-black text-white hover:bg-gray-800 font-bold py-3 rounded-lg transition shadow-lg">Entrar no Painel</button>
+                            <p id="login-error" class="text-red-500 text-sm text-center hidden font-bold bg-red-50 p-2 rounded-lg"></p>
                         </form>
                     </div>
 
-                    <div id="admin-panel" class="hidden">
-                        <div class="flex justify-between items-center mb-6">
-                            <span class="text-green-600 font-bold flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> Logado</span>
-                            <button onclick="handleLogout()" class="text-sm text-red-500 hover:underline">Sair</button>
+                    <!-- Dashboard -->
+                    <div id="admin-panel" class="hidden grid lg:grid-cols-3 gap-8">
+                        <!-- Coluna 1: Lista de Posts -->
+                        <div class="lg:col-span-1 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col h-[800px]">
+                            <div class="p-6 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+                                <h3 class="font-bold text-gray-800">Gerenciar Posts</h3>
+                                <button onclick="resetAdminForm()" class="text-xs bg-brand-400 px-2 py-1 rounded font-bold hover:bg-brand-500 transition" title="Novo Post"><i class="ph-bold ph-plus"></i> Novo</button>
+                            </div>
+                            <div id="admin-posts-list" class="overflow-y-auto p-2 space-y-2 flex-1">
+                                <!-- Lista de posts preenchida via JS -->
+                                <p class="text-center text-gray-400 text-sm py-4">Carregando posts...</p>
+                            </div>
                         </div>
-                        <div class="bg-gray-50 p-8 rounded-xl border border-gray-200 mb-12">
-                            <h2 class="text-xl font-bold text-black mb-6">Adicionar Novo Post</h2>
-                            <form onsubmit="addNewPost(event)" class="space-y-6">
-                                <div><label class="block text-sm font-bold text-gray-700 mb-2">Título</label><input type="text" id="admin-title" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required></div>
-                                <div class="grid grid-cols-2 gap-6">
-                                    <div><label class="block text-sm font-bold text-gray-700 mb-2">Categoria</label><select id="admin-category" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"><option>Score</option><option>Cartões</option><option>Empréstimos</option><option>Dívidas</option><option>Educação</option></select></div>
-                                    <div><label class="block text-sm font-bold text-gray-700 mb-2">Autor</label><input type="text" id="admin-author" value="Redação CrediFácil" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"></div>
-                                </div>
-                                <div><label class="block text-sm font-bold text-gray-700 mb-2">Imagem URL</label><input type="text" id="admin-image" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required></div>
-                                <div><label class="block text-sm font-bold text-gray-700 mb-2">Resumo</label><textarea id="admin-intro" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"></textarea></div>
+
+                        <!-- Coluna 2: Formulário de Edição -->
+                        <div class="lg:col-span-2 bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
+                            <h2 class="text-xl font-bold text-black mb-6 flex items-center gap-2" id="form-title">
+                                <i class="ph-fill ph-pencil-simple text-brand-500"></i> Adicionar Novo Artigo
+                            </h2>
+                            <form onsubmit="savePost(event)" class="space-y-6">
+                                <input type="hidden" id="admin-post-id"> <!-- ID oculto para edição -->
                                 
-                                <!-- Editor Rico Simples -->
+                                <div><label class="block text-sm font-bold text-gray-700 mb-2">Título do Post</label><input type="text" id="admin-title" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-brand-500 outline-none transition" required></div>
+                                
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div><label class="block text-sm font-bold text-gray-700 mb-2">Categoria</label><select id="admin-category" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-brand-500 outline-none bg-white"><option>Score</option><option>Cartões</option><option>Empréstimos</option><option>Dívidas</option><option>Educação</option></select></div>
+                                    <div><label class="block text-sm font-bold text-gray-700 mb-2">Autor</label><input type="text" id="admin-author" value="Redação CrediFácil" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-brand-500 outline-none"></div>
+                                </div>
+                                
+                                <div><label class="block text-sm font-bold text-gray-700 mb-2">URL da Imagem de Capa</label><input type="text" id="admin-image" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-brand-500 outline-none" placeholder="https://..." required></div>
+                                
+                                <div><label class="block text-sm font-bold text-gray-700 mb-2">Resumo (Intro)</label><textarea id="admin-intro" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-brand-500 outline-none resize-none"></textarea></div>
+                                
+                                <!-- Editor Rico -->
                                 <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Conteúdo do Artigo</label>
-                                    <div class="rich-editor-toolbar border border-gray-300 rounded-t-lg border-b-0">
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">Conteúdo Completo</label>
+                                    <div class="rich-editor-toolbar">
                                         <button type="button" class="rich-editor-btn" onclick="formatDoc('bold')" title="Negrito"><b>B</b></button>
                                         <button type="button" class="rich-editor-btn" onclick="formatDoc('italic')" title="Itálico"><i>I</i></button>
                                         <button type="button" class="rich-editor-btn" onclick="formatDoc('underline')" title="Sublinhado"><u>U</u></button>
                                         <div class="w-px h-6 bg-gray-300 mx-1"></div>
-                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('formatBlock', 'h2')" title="Título H2">H2</button>
-                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('formatBlock', 'h3')" title="Título H3">H3</button>
+                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('formatBlock', 'h2')" title="Subtítulo H2">H2</button>
+                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('formatBlock', 'h3')" title="Subtítulo H3">H3</button>
                                         <button type="button" class="rich-editor-btn" onclick="formatDoc('formatBlock', 'p')" title="Parágrafo">P</button>
+                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('formatBlock', 'blockquote')" title="Citação">“</button>
                                         <div class="w-px h-6 bg-gray-300 mx-1"></div>
-                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('insertUnorderedList')" title="Lista com marcadores">• Lista</button>
-                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('insertOrderedList')" title="Lista numerada">1. Lista</button>
+                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('insertUnorderedList')" title="Lista">• Lista</button>
+                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('insertOrderedList')" title="Numerada">1. Lista</button>
+                                        <button type="button" class="rich-editor-btn" onclick="addLink()" title="Link">Link</button>
                                     </div>
                                     <div id="admin-content-rich" contenteditable="true" class="rich-editor-content"></div>
-                                    <input type="hidden" id="admin-content">
                                 </div>
 
-                                <button type="submit" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-3 rounded-lg transition shadow-md">Publicar</button>
+                                <button type="submit" id="admin-submit-btn" class="w-full bg-black hover:bg-gray-800 text-white font-bold py-4 rounded-xl transition shadow-lg text-lg">Publicar Artigo</button>
                             </form>
                         </div>
                     </div>
@@ -471,81 +540,94 @@
             </div>
         </section>
 
-        <!-- OFFER SCREEN -->
+        <!-- ================= OFFER SCREEN ================= -->
         <section id="offer-screen" class="page-section hidden-section fade-in">
-            <div class="min-h-screen bg-gray-50 flex flex-col">
-                <div class="bg-black text-white py-12">
-                    <div class="container mx-auto px-4 text-center">
-                        <button onclick="navigateTo('emprestimo')" class="text-gray-400 hover:text-white mb-6 flex items-center justify-center gap-2 transition mx-auto"><i class="ph ph-arrow-left"></i> Voltar para Simulação</button>
-                        <h1 class="text-3xl font-bold mb-2">Detalhes da Recomendação</h1>
-                        <p class="text-gray-400">Você será redirecionado para o site oficial.</p>
-                    </div>
-                </div>
-                <div class="container mx-auto px-4 -mt-8 pb-16 flex-1">
-                    <div class="ad-slot bg-white rounded-lg w-full"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
-                    <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
-                        <div class="p-8 border-b border-gray-100">
-                            <div class="flex justify-between items-start mb-6">
-                                <div><p class="text-sm text-gray-500 mb-1">Instituição Recomendada</p><h2 id="offer-partner-name" class="text-2xl font-bold text-black">Banco</h2></div>
-                                <div class="bg-brand-100 text-brand-900 px-3 py-1 rounded-full text-xs font-bold uppercase border border-brand-200">Pré-Aprovado</div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-8 mb-6">
-                                <div><p class="text-sm text-gray-500 mb-1">Valor Solicitado</p><p id="offer-value" class="text-2xl font-bold text-black">R$ 0,00</p></div>
-                                <div><p class="text-sm text-gray-500 mb-1">Condição de Pagamento</p><p id="offer-installments" class="text-2xl font-bold text-brand-600">12x R$ 0,00</p></div>
-                            </div>
+            <div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12">
+                <div class="container mx-auto px-4 max-w-xl">
+                    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200">
+                        <div class="bg-black p-8 text-center text-white">
+                            <h2 class="text-2xl font-bold mb-2">Oferta Selecionada</h2>
+                            <p class="text-gray-400 text-sm">Parceiro Oficial CrediFácil</p>
                         </div>
-                        <div class="p-8 bg-white">
-                            <h3 class="font-bold text-black mb-4">Vantagens desta oferta:</h3>
-                            <ul class="space-y-3 mb-8">
-                                <li class="flex items-center gap-3 text-gray-700"><i class="ph-fill ph-check-circle text-brand-500 text-xl"></i><span>Sem necessidade de garantia de bens.</span></li>
-                                <li class="flex items-center gap-3 text-gray-700"><i class="ph-fill ph-check-circle text-brand-500 text-xl"></i><span>Processo 100% digital e sem burocracia.</span></li>
-                                <li class="flex items-center gap-3 text-gray-700"><i class="ph-fill ph-check-circle text-brand-500 text-xl"></i><span>Dinheiro na conta em até 24 horas úteis.</span></li>
+                        <div class="p-8">
+                            <div class="text-center mb-8">
+                                <h3 id="offer-partner-name" class="text-3xl font-extrabold text-brand-600 mb-2">Banco Parceiro</h3>
+                                <p class="text-gray-500">Crédito Pré-Aprovado</p>
+                            </div>
+                            
+                            <div class="bg-gray-50 rounded-xl p-6 mb-8 border border-gray-100">
+                                <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
+                                    <span class="text-gray-600 font-medium">Valor Solicitado</span>
+                                    <span id="offer-value" class="text-xl font-bold text-black">R$ 0,00</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600 font-medium">Condições</span>
+                                    <span id="offer-installments" class="text-xl font-bold text-brand-600">12x R$ 0,00</span>
+                                </div>
+                            </div>
+
+                            <ul class="space-y-3 mb-8 text-sm text-gray-600">
+                                <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-green-500"></i> Sem taxa de adesão antecipada.</li>
+                                <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-green-500"></i> Análise 100% digital.</li>
                             </ul>
-                            <button id="offer-cta-btn" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-xl transition shadow-lg text-lg flex items-center justify-center gap-2">Continuar no Site Oficial <i class="ph-bold ph-arrow-right"></i></button>
-                            <p class="text-center text-xs text-gray-400 mt-4 leading-tight">Atenção: Ao clicar, você será redirecionado para o site oficial. A aprovação de crédito não é garantida e depende da análise da instituição.</p>
+
+                            <button id="offer-cta-btn" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-xl transition transform hover:-translate-y-1 shadow-lg text-lg flex items-center justify-center gap-2 mb-4">
+                                Concluir no Site Oficial <i class="ph-bold ph-arrow-right"></i>
+                            </button>
+                            <a href="#emprestimo" class="block text-center text-gray-400 hover:text-black text-sm font-medium">Cancelar e Voltar</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SOBRE -->
+        <!-- ================= SOBRE ================= -->
         <section id="sobre" class="page-section hidden-section fade-in">
-            <div class="container mx-auto px-4 py-20">
-                <div class="max-w-4xl mx-auto text-center">
-                    <div class="inline-block p-4 rounded-full bg-brand-50 text-brand-600 mb-6"><i class="ph ph-users text-4xl"></i></div>
-                    <h1 class="text-4xl font-bold text-black mb-6">Nossa Missão</h1>
-                    <div class="text-xl text-gray-600 leading-relaxed mb-12 space-y-6">
-                        <p>Você sabia que mais de 60 milhões de brasileiros estão endividados e com o nome sujo no mercado?</p>
-                        <p>Isso significa que eles não conseguem obter crédito, financiar um carro ou uma casa, abrir uma conta em banco ou fazer compras parceladas.</p>
-                        <p>Além disso, eles sofrem com o estresse, a ansiedade e a baixa autoestima causados pela situação financeira.</p>
-                        <p>Mas criamos este site porque acreditamos que não precisa ser assim. O <strong>CrediFácil</strong> é um site que oferece ferramentas, tecnologia e conteúdo gratuito para ajudar você a regularizar a sua vida financeira, quitando as suas dívidas e limpando o seu nome.</p>
+            <div class="bg-white py-24">
+                <div class="container mx-auto px-4 max-w-4xl text-center">
+                    <div class="inline-block p-5 rounded-3xl bg-brand-50 text-brand-600 mb-8"><i class="ph-fill ph-users-three text-5xl"></i></div>
+                    <h1 class="text-4xl md:text-5xl font-bold text-black mb-8">Nossa Missão</h1>
+                    <div class="prose prose-lg mx-auto text-gray-600 leading-relaxed space-y-6 text-left md:text-center">
+                        <p>O <strong>CrediFácil</strong> nasceu de uma necessidade real: simplificar o acesso ao crédito no Brasil. Sabemos que mais de 60 milhões de brasileiros enfrentam restrições financeiras e a falta de informação clara apenas agrava o problema.</p>
+                        <p>Não somos um banco. Somos uma plataforma de tecnologia e educação que conecta você às melhores oportunidades do mercado, filtrando burocracias e traduzindo o "economês" para o português claro.</p>
                     </div>
-                </div>
-                <div class="grid md:grid-cols-2 gap-12 mt-16 max-w-5xl mx-auto items-center">
-                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Equipe" class="rounded-2xl shadow-xl">
-                    <div class="space-y-6">
-                        <h2 class="text-2xl font-bold text-black">Por que confiar em nós?</h2>
-                        <ul class="space-y-4">
-                            <li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i><span class="text-gray-600">Conteúdo 100% imparcial e verificado por especialistas.</span></li>
-                            <li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i><span class="text-gray-600">Recomendações transparentes com instituições financeiras regulamentadas.</span></li>
-                            <li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i><span class="text-gray-600">Mais de 500 mil leitores ajudados anualmente.</span></li>
-                        </ul>
+                    
+                    <div class="grid md:grid-cols-3 gap-8 mt-16 text-left">
+                        <div class="p-6 bg-gray-50 rounded-2xl border border-gray-100">
+                            <h3 class="font-bold text-black text-xl mb-2">Transparência</h3>
+                            <p class="text-gray-600 text-sm">Nunca cobramos valores antecipados. Nossas simulações mostram custos reais.</p>
+                        </div>
+                        <div class="p-6 bg-gray-50 rounded-2xl border border-gray-100">
+                            <h3 class="font-bold text-black text-xl mb-2">Segurança</h3>
+                            <p class="text-gray-600 text-sm">Seguimos rigorosamente a LGPD. Seus dados são usados apenas para a simulação.</p>
+                        </div>
+                        <div class="p-6 bg-gray-50 rounded-2xl border border-gray-100">
+                            <h3 class="font-bold text-black text-xl mb-2">Imparcialidade</h3>
+                            <p class="text-gray-600 text-sm">Nossas análises de cartões e empréstimos são baseadas em fatos, não apenas em comissões.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- TERMOS E PRIVACIDADE -->
+        <!-- ================= LEGAL (TERMOS & PRIVACIDADE) ================= -->
         <section id="terms" class="page-section hidden-section fade-in">
             <div class="bg-white py-20">
                 <div class="container mx-auto px-4 max-w-3xl">
-                    <h1 class="text-3xl font-bold text-black mb-8">Termos de Uso</h1>
-                    <div class="prose prose-gray text-gray-700 text-sm">
-                        <p class="mb-4"><strong>1. Aceitação:</strong> Ao acessar o CrediFácil, você concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis.</p>
-                        <p class="mb-4"><strong>2. Natureza do Serviço:</strong> O CrediFácil é um portal estritamente informativo. Não somos uma instituição financeira, não realizamos empréstimos, não emitimos cartões e não garantimos aprovação de crédito. As simulações são estimativas baseadas em dados de mercado.</p>
-                        <p class="mb-4"><strong>3. Precisão dos Materiais:</strong> Os materiais exibidos no site do CrediFácil podem incluir erros técnicos, tipográficos ou fotográficos. Não garantimos que qualquer material em seu site seja preciso, completo ou atual, embora nos esforcemos para tal.</p>
-                        <p class="mb-4"><strong>4. Links:</strong> O CrediFácil não analisou todos os sites vinculados ao seu site e não é responsável pelo conteúdo de nenhum site vinculado (links externos para bancos/parceiros). A inclusão de qualquer link não implica endosso por CrediFácil.</p>
+                    <h1 class="text-3xl font-bold text-black mb-8 pb-4 border-b border-gray-200">Termos de Uso</h1>
+                    <div class="prose prose-gray text-gray-700 space-y-4">
+                        <p><strong>Última atualização: Janeiro de 2025</strong></p>
+                        <p>Bem-vindo ao CrediFácil. Ao acessar e utilizar este website, você concorda em cumprir e vincular-se aos seguintes termos e condições de uso.</p>
+                        
+                        <h3 class="font-bold text-black text-xl mt-6">1. Natureza Informativa</h3>
+                        <p>O CrediFácil é um portal de conteúdo e comparação de produtos financeiros. <strong>Não somos uma instituição financeira</strong>, não concedemos empréstimos, não emitimos cartões de crédito e não realizamos aprovações de crédito diretamente.</p>
+                        
+                        <h3 class="font-bold text-black text-xl mt-6">2. Isenção de Responsabilidade</h3>
+                        <p>As simulações apresentadas são estimativas baseadas em dados de mercado. A aprovação final, taxas de juros exatas e limites de crédito são de responsabilidade exclusiva dos parceiros anunciantes (bancos e financeiras), sujeitos à análise de crédito do usuário.</p>
+                        <p>O CrediFácil não se responsabiliza por eventuais divergências entre os valores simulados aqui e os valores finais ofertados pela instituição financeira.</p>
+
+                        <h3 class="font-bold text-black text-xl mt-6">3. Uso de Links Externos</h3>
+                        <p>Nosso site contém links para sites de terceiros. Ao clicar nestes links, você estará sujeito aos termos de uso e políticas de privacidade daquele site específico. Não controlamos o conteúdo de terceiros.</p>
                     </div>
                 </div>
             </div>
@@ -554,13 +636,27 @@
         <section id="privacy" class="page-section hidden-section fade-in">
             <div class="bg-white py-20">
                 <div class="container mx-auto px-4 max-w-3xl">
-                    <h1 class="text-3xl font-bold text-black mb-8">Política de Privacidade</h1>
-                    <div class="prose prose-gray text-gray-700 text-sm">
-                        <p class="mb-4">A sua privacidade é importante para nós. É política do CrediFácil respeitar a sua privacidade em relação a qualquer informação que possamos coletar.</p>
-                        <h3 class="font-bold mt-4 mb-2">Cookies e Publicidade</h3>
-                        <p class="mb-4">Utilizamos cookies para melhorar sua experiência e veicular anúncios personalizados através do Google AdSense. O Google, como fornecedor de terceiros, utiliza cookies para exibir anúncios. O uso do cookie DART permite que o Google veicule anúncios para nossos usuários com base em sua visita ao nosso site e a outros sites na Internet.</p>
-                        <h3 class="font-bold mt-4 mb-2">Dados Pessoais</h3>
-                        <p class="mb-4">Não vendemos ou compartilhamos suas informações de identificação pessoal publicamente ou com terceiros, exceto quando exigido por lei.</p>
+                    <h1 class="text-3xl font-bold text-black mb-8 pb-4 border-b border-gray-200">Política de Privacidade</h1>
+                    <div class="prose prose-gray text-gray-700 space-y-4">
+                        <p>A sua privacidade é prioridade para o CrediFácil. Esta política descreve como coletamos, usamos e protegemos suas informações, em conformidade com a Lei Geral de Proteção de Dados (LGPD).</p>
+
+                        <h3 class="font-bold text-black text-xl mt-6">1. Coleta de Dados</h3>
+                        <p>Podemos coletar informações fornecidas voluntariamente por você ao utilizar nossos simuladores (como nome, e-mail, faixa de renda) ou ao se inscrever em nossa newsletter. Também coletamos dados de navegação anonimizados para fins estatísticos.</p>
+
+                        <h3 class="font-bold text-black text-xl mt-6">2. Uso das Informações</h3>
+                        <p>Os dados coletados são utilizados para:</p>
+                        <ul class="list-disc pl-5">
+                            <li>Personalizar as ofertas de crédito exibidas no simulador.</li>
+                            <li>Melhorar a funcionalidade e conteúdo do site.</li>
+                            <li>Enviar comunicações de marketing (apenas com seu consentimento explícito).</li>
+                        </ul>
+
+                        <h3 class="font-bold text-black text-xl mt-6">3. Cookies e Publicidade (AdSense)</h3>
+                        <p>Utilizamos cookies para otimizar sua experiência. Terceiros, incluindo o Google, usam cookies para veicular anúncios com base em visitas anteriores do usuário ao nosso website ou a outros websites.</p>
+                        <p>Você pode desativar a publicidade personalizada acessando as Configurações de Anúncios do Google.</p>
+
+                        <h3 class="font-bold text-black text-xl mt-6">4. Seus Direitos (LGPD)</h3>
+                        <p>Você tem o direito de solicitar o acesso, correção ou exclusão de seus dados pessoais armazenados em nossa base a qualquer momento. Para exercer esses direitos, entre em contato através do e-mail oficial.</p>
                     </div>
                 </div>
             </div>
@@ -568,63 +664,58 @@
 
     </main>
 
-    <footer class="bg-black text-gray-400 py-12 border-t border-gray-800">
+    <!-- FOOTER -->
+    <footer class="bg-black text-gray-400 py-16 border-t border-gray-900 font-sans">
         <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-4 gap-8 mb-12">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center gap-2 text-white mb-4">
-                        <i class="ph-fill ph-check-circle text-brand-400 text-xl"></i>
-                        <span class="font-bold text-xl">CrediFácil</span>
+                    <div class="flex items-center gap-2 text-white mb-6">
+                        <i class="ph-fill ph-coins text-brand-400 text-2xl"></i>
+                        <span class="font-bold text-2xl">CrediFácil</span>
                     </div>
-                    <p class="text-sm max-w-md mb-4">O site que te ajuda a sair das dívidas. Conteúdo informativo sobre finanças, cartões de crédito e empréstimos.</p>
-                    <div class="text-sm space-y-2 mt-4">
-                        <p>7265 NE 4th Ave, Suite 102 Miami, FL 33138 United States of America</p>
-                        <p>Contact Information: <a href="mailto:contato@credifacil.com" class="text-brand-400 hover:underline">contato@credifacil.com</a></p>
+                    <p class="text-sm leading-relaxed mb-6 max-w-md">Nossa missão é democratizar o acesso à informação financeira, ajudando brasileiros a saírem das dívidas e realizarem seus sonhos com crédito consciente.</p>
+                    <div class="text-xs text-gray-500">
+                        <p>Contato: contato@credifacil.com</p>
+                        <p>São Paulo, SP - Brasil</p>
                     </div>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-4">Links Rápidos</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" onclick="navigateTo('home')" class="hover:text-brand-400 transition">Início</a></li>
-                        <li><a href="#" onclick="navigateTo('emprestimo')" class="hover:text-brand-400 transition">Simulador</a></li>
-                        <li><a href="#" onclick="navigateTo('cartoes')" class="hover:text-brand-400 transition">Cartões</a></li>
-                        <li><a href="#" onclick="navigateTo('blog')" class="hover:text-brand-400 transition">Blog</a></li>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Navegação</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#home" class="hover:text-brand-400 transition">Início</a></li>
+                        <li><a href="#emprestimo" class="hover:text-brand-400 transition">Simulador</a></li>
+                        <li><a href="#cartoes" class="hover:text-brand-400 transition">Melhores Cartões</a></li>
+                        <li><a href="#blog" class="hover:text-brand-400 transition">Blog Educativo</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-4">Legal</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" onclick="navigateTo('terms')" class="hover:text-brand-400 transition">Termos de Uso</a></li>
-                        <li><a href="#" onclick="navigateTo('privacy')" class="hover:text-brand-400 transition">Política de Privacidade</a></li>
-                        <li><a href="#" onclick="navigateTo('admin')" class="hover:text-brand-400 transition text-gray-600">Admin</a></li>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Institucional</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#sobre" class="hover:text-brand-400 transition">Quem Somos</a></li>
+                        <li><a href="#terms" class="hover:text-brand-400 transition">Termos de Uso</a></li>
+                        <li><a href="#privacy" class="hover:text-brand-400 transition">Política de Privacidade</a></li>
+                        <li><a href="#admin" class="hover:text-brand-400 transition text-gray-600">Área Restrita</a></li>
                     </ul>
                 </div>
             </div>
             
-            <div class="border-t border-gray-800 pt-8 pb-8 text-xs text-gray-500 text-justify">
-                <p class="mb-2"><strong>Isenção de Responsabilidade (Disclaimer):</strong> O CrediFácil é um blog informativo e não atua como instituição financeira, banco ou credora. Não realizamos empréstimos pessoais, não emitimos cartões de crédito e não somos responsáveis pela aprovação ou negação de crédito. Todo o conteúdo disposto neste site tem caráter meramente informativo.</p>
-                <p class="mb-2"><strong>Segurança:</strong> O CrediFácil jamais solicitará quantias em dinheiro para liberação de nenhum tipo de produto financeiro, seja cartão de crédito, financiamento ou empréstimo. Se isso acontecer, denuncie imediatamente.</p>
-                <p>As propostas e simulações realizadas através de links de parceiros estão sujeitas à análise de crédito e aos termos de uso de cada instituição financeira. As taxas de juros podem variar de acordo com o perfil de cada usuário.</p>
-                <p class="mt-4 text-gray-600">Loan terms: 12 to 60 months. APR: 0.99% to 9% based on the selected term (includes fees, per local law). Example: $10,000 loan at 0.99% APR for 36 months totals $11,957.15.</p>
+            <div class="border-t border-gray-800 pt-8 pb-8 text-[11px] leading-5 text-gray-600 text-justify">
+                <p class="mb-2"><strong>Aviso Legal:</strong> O CrediFácil não é uma instituição financeira. Somos um correspondente bancário digital que facilita o acesso a produtos financeiros. As taxas de juros, prazos e condições de pagamento variam de acordo com a análise de crédito de cada parceiro.</p>
+                <p>O prazo de pagamento varia de 12 a 60 meses. O Custo Efetivo Total (CET) varia de 2,99% a.m. (42,5% a.a.) a 12,99% a.m. (334,1% a.a.). Exemplo: Empréstimo de R$ 5.000,00 para pagar em 12 meses. Total de 12 parcelas de R$ 515,60. Valor total a pagar R$ 6.187,20.</p>
             </div>
 
-            <div class="text-center text-xs pt-4 border-t border-gray-800">
+            <div class="text-center text-sm pt-6 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center">
                 <p>&copy; 2025 CrediFácil. Todos os direitos reservados.</p>
+                <div class="flex gap-4 mt-4 md:mt-0 text-2xl">
+                    <i class="ph-fill ph-instagram-logo hover:text-brand-400 cursor-pointer transition"></i>
+                    <i class="ph-fill ph-facebook-logo hover:text-brand-400 cursor-pointer transition"></i>
+                    <i class="ph-fill ph-linkedin-logo hover:text-brand-400 cursor-pointer transition"></i>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- COOKIE BANNER -->
-    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-white text-gray-900 p-6 z-50 flex flex-col md:flex-row justify-between items-center gap-4 border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] transform translate-y-full transition-transform duration-500">
-        <div class="text-sm text-center md:text-left">
-            <p><strong>🍪 Política de Cookies:</strong> Utilizamos cookies para personalizar conteúdo e anúncios (AdSense), fornecer recursos de mídia social e analisar nosso tráfego. Ao continuar, você concorda com nossa <a href="#" onclick="navigateTo('privacy')" class="text-brand-600 underline font-bold">Política de Privacidade</a>.</p>
-        </div>
-        <div class="flex gap-3 shrink-0">
-             <button onclick="acceptCookies()" class="bg-black text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-gray-800 transition">Aceitar Tudo</button>
-        </div>
-    </div>
-
-    <!-- JS -->
+    <!-- JS DO APP -->
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
@@ -636,479 +727,502 @@
         };
 
         let db, auth;
-        let currentPostId = null;
+        let allBlogPosts = []; 
+        let currentEditingId = null; // Para edição no Admin
 
+        // Dados de Cartões
         const cardsData = [
-            { id: 1, name: "Santander SX", bgClass: "bg-red-600", iconBg: "bg-red-700", rotation: "rotate-45", badges: [{ text: "Aprovação Alta", color: "bg-green-100 text-green-700" }, { text: "Visa/Master", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis (gastando R$100)", income: "R$ 1.045,00", desc: "Ideal para quem busca o primeiro cartão ou quer recuperar crédito no mercado.", link: "https://www.santander.com.br/cartao-credito-santander/sx", categories: ["todos", "negativados"] },
-            { id: 2, name: "Roxinho Nubank", bgClass: "bg-purple-700", iconBg: "bg-purple-800", rotation: "-rotate-12", badges: [{ text: "Sem Anuidade", color: "bg-purple-100 text-purple-700" }, { text: "Conta Digital", color: "bg-yellow-100 text-yellow-700" }], annuity: "R$ 0,00", income: "Não exigida", desc: "Controle total pelo app.", link: "https://nubank.com.br/cartao/", categories: ["todos", "anuidade"] },
-            { id: 3, name: "Inter Gold", bgClass: "bg-orange-500", iconBg: "bg-orange-400", rotation: "rotate-0", isInter: true, badges: [{ text: "Cashback", color: "bg-orange-100 text-orange-700" }, { text: "Internacional", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Não exigida", desc: "Super App completo.", link: "https://inter.co/pra-voce/cartoes/", categories: ["todos", "milhas"] },
-            { id: 7, name: "Will Bank", bgClass: "bg-yellow-400", iconBg: "bg-yellow-500", rotation: "rotate-12", badges: [{ text: "Sem Anuidade", color: "bg-black text-white" }], annuity: "Grátis", income: "Não exigida", desc: "Cartão de crédito sem anuidade.", link: "https://www.willbank.com.br/", categories: ["todos", "anuidade", "negativados"] },
-            { id: 8, name: "Digio", bgClass: "bg-blue-800", iconBg: "bg-blue-900", rotation: "-rotate-3", badges: [{ text: "Sem Juros Rotativos", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Salário Mínimo", desc: "Cartão sem anuidade.", link: "https://www.digio.com.br/", categories: ["todos", "anuidade"] },
-             { id: 9, name: "PAN Zero", bgClass: "bg-cyan-600", iconBg: "bg-cyan-700", rotation: "rotate-6", badges: [{ text: "Sem Anuidade", color: "bg-cyan-100 text-cyan-700" }], annuity: "Grátis", income: "Salário Mínimo", desc: "Conta digital grátis.", link: "https://www.bancopan.com.br/produtos/cartao-de-credito/", categories: ["todos", "anuidade", "negativados"] },
-             { id: 10, name: "XP Visa Infinite", bgClass: "bg-gray-900", iconBg: "bg-black", rotation: "-rotate-6", badges: [{ text: "Investback", color: "bg-yellow-100 text-yellow-700" }], annuity: "Grátis", income: "R$ 5k", desc: "Cartão premium.", link: "https://www.xpi.com.br/produtos/cartao-de-credito/", categories: ["todos", "milhas"] }
+            { id: 1, name: "Santander SX", bgClass: "bg-red-600", iconBg: "bg-red-700", rotation: "rotate-45", badges: [{ text: "Aprovação Alta", color: "bg-green-100 text-green-700" }, { text: "Visa/Master", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis (gastando R$100)", income: "R$ 1.045,00", desc: "Ideal para quem busca o primeiro cartão ou quer recuperar crédito.", link: "https://www.santander.com.br/cartao-credito-santander/sx", categories: ["todos", "negativados"] },
+            { id: 2, name: "Roxinho Nubank", bgClass: "bg-purple-700", iconBg: "bg-purple-800", rotation: "-rotate-12", badges: [{ text: "Sem Anuidade", color: "bg-purple-100 text-purple-700" }], annuity: "R$ 0,00", income: "Não exigida", desc: "Controle total pelo app e atendimento humanizado.", link: "https://nubank.com.br/cartao/", categories: ["todos", "anuidade"] },
+            { id: 3, name: "Inter Gold", bgClass: "bg-orange-500", iconBg: "bg-orange-400", isInter: true, badges: [{ text: "Cashback", color: "bg-orange-100 text-orange-700" }], annuity: "Grátis", income: "Não exigida", desc: "Super App completo com investimentos e shopping.", link: "https://inter.co/pra-voce/cartoes/", categories: ["todos", "milhas"] },
+            { id: 7, name: "Will Bank", bgClass: "bg-yellow-400", iconBg: "bg-yellow-500", rotation: "rotate-12", badges: [{ text: "Fácil Aprovação", color: "bg-black text-white" }], annuity: "Grátis", income: "Não exigida", desc: "Cartão de crédito sem anuidade e sem burocracia.", link: "https://www.willbank.com.br/", categories: ["todos", "anuidade", "negativados"] },
+            { id: 8, name: "Digio", bgClass: "bg-blue-800", iconBg: "bg-blue-900", rotation: "-rotate-3", badges: [{ text: "Sem Rotativo", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Salário Mínimo", desc: "Sem juros rotativos abusivos e totalmente digital.", link: "https://www.digio.com.br/", categories: ["todos", "anuidade"] }
         ];
 
-        let blogPosts = [];
-        let allBlogPosts = []; 
-
+        // --- INICIALIZAÇÃO ---
         document.addEventListener('DOMContentLoaded', () => {
             initFirebase();
             renderCards('todos');
-            navigateTo('home');
-            setTimeout(checkCookies, 1500);
+            handleHashChange(); // Executa rota inicial
+            window.addEventListener('hashchange', handleHashChange); // Ouve mudanças na URL
         });
+
+        // --- SISTEMA DE ROTEAMENTO (SPA Tradicional) ---
+        function handleHashChange() {
+            const hash = window.location.hash.replace('#', '') || 'home';
+            
+            // Esconde todas as seções
+            document.querySelectorAll('.page-section').forEach(s => s.classList.add('hidden-section'));
+            
+            // Mostra a seção alvo
+            const section = document.getElementById(hash);
+            if(section) {
+                section.classList.remove('hidden-section');
+                
+                // Reinicia animação
+                section.classList.remove('fade-in');
+                void section.offsetWidth; 
+                section.classList.add('fade-in');
+                
+                window.scrollTo(0,0);
+                
+                // Recarrega Ads
+                setTimeout(() => {
+                    try {
+                        section.querySelectorAll('ins.adsbygoogle').forEach(slot => {
+                            if (slot.innerHTML === "") (adsbygoogle = window.adsbygoogle || []).push({});
+                        });
+                    } catch (e) {}
+                }, 500);
+            }
+        }
+        
+        // Função utilitária para mudar rota programaticamente
+        function navigateToHash(hash) {
+            window.location.hash = hash;
+        }
 
         function initFirebase() {
             try {
                 firebase.initializeApp(firebaseConfig);
                 db = firebase.firestore();
                 auth = firebase.auth();
-                console.log("Firebase conectado.");
                 
                 auth.onAuthStateChanged(user => {
                     const loginForm = document.getElementById('admin-login');
                     const panel = document.getElementById('admin-panel');
+                    const userInfo = document.getElementById('admin-user-info');
+                    
                     if (user) { 
                         loginForm.classList.add('hidden'); 
                         panel.classList.remove('hidden'); 
+                        panel.classList.add('grid');
+                        userInfo.classList.remove('hidden');
+                        loadAdminPostsList(); // Carrega lista para edição
                     } else { 
                         loginForm.classList.remove('hidden'); 
                         panel.classList.add('hidden'); 
+                        panel.classList.remove('grid');
+                        userInfo.classList.add('hidden');
                     }
                 });
 
                 fetchBlogPosts();
             } catch (e) {
-                console.error("Erro na inicialização:", e);
+                console.error("Erro Firebase:", e);
             }
         }
 
+        // --- LÓGICA DO BLOG ---
         async function fetchBlogPosts() {
             if (!db) return;
             try {
-                const snap = await db.collection("posts").orderBy("createdAt", "desc").limit(20).get();
+                const snap = await db.collection("posts").orderBy("createdAt", "desc").limit(50).get();
                 if (!snap.empty) {
-                    blogPosts = [];
-                    snap.forEach(doc => blogPosts.push({ id: doc.id, ...doc.data() }));
-                    allBlogPosts = [...blogPosts]; 
-                    renderBlog();
+                    allBlogPosts = [];
+                    snap.forEach(doc => allBlogPosts.push({ id: doc.id, ...doc.data() }));
+                    renderHomeBlog();
+                    renderBlogPage('todos');
                 }
-            } catch (e) {
-                console.warn("Erro ao buscar posts.", e);
-            }
+            } catch (e) { console.warn("Erro fetchBlog:", e); }
         }
 
-        function filterBlog(category) {
-            document.querySelectorAll('.blog-filter-btn').forEach(btn => {
-                btn.className = "blog-filter-btn px-5 py-2 bg-white border text-gray-600 hover:border-black hover:text-black rounded-full text-sm font-medium transition cursor-pointer";
-            });
+        // Renderiza apenas 4 posts na Home
+        function renderHomeBlog() {
+            const grid = document.getElementById('home-blog-grid');
+            if(!grid) return;
             
-            const buttons = document.querySelectorAll('.blog-filter-btn');
-            for(let btn of buttons) {
-                if(btn.textContent === category) {
-                     btn.className = "blog-filter-btn px-5 py-2 bg-black text-white rounded-full text-sm font-medium transition cursor-pointer";
-                }
-            }
-
-            if (category === 'todos') {
-                blogPosts = [...allBlogPosts];
-            } else {
-                blogPosts = allBlogPosts.filter(post => post.category === category);
-            }
-            renderBlog();
-        }
-
-        function renderBlog() {
-            const grids = [document.getElementById('home-blog-grid'), document.getElementById('blog-list-container')];
-            grids.forEach(grid => {
-                if(!grid) return;
-                
-                if (blogPosts.length === 0) {
-                    grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Nenhum post encontrado nesta categoria.</p>';
-                    return;
-                }
-
-                grid.innerHTML = blogPosts.map(post => `
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col h-full" onclick="openArticle('${post.id}')">
-                        <div class="h-48 overflow-hidden relative"><img src="${post.image}" class="w-full h-full object-cover transform hover:scale-105 transition duration-500"><span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-black z-20">${post.category}</span></div>
-                        <div class="p-6 flex-1 flex flex-col"><span class="text-xs text-gray-500 mb-2 block">${post.date}</span><h3 class="text-xl font-bold text-black mb-3 hover:text-brand-600 transition">${post.title}</h3><p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-1">${post.intro}</p><span class="text-brand-600 font-semibold text-sm flex items-center gap-1 mt-auto">Ler artigo <i class="ph-bold ph-arrow-right"></i></span></div>
+            const recentPosts = allBlogPosts.slice(0, 4); // Apenas 4
+            
+            grid.innerHTML = recentPosts.map(post => `
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition cursor-pointer group flex flex-col h-full" onclick="openArticle('${post.id}')">
+                    <div class="h-40 overflow-hidden relative">
+                        <img src="${post.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-3 left-3 bg-white/90 backdrop-blur text-xs font-bold px-2 py-1 rounded text-black">${post.category}</span>
                     </div>
-                `).join('');
-            });
-        }
-
-        function renderCards(filter) {
-            const container = document.getElementById('cards-container');
-            if(!container) return;
-            const filtered = (filter === 'todos') ? cardsData : cardsData.filter(c => c.categories.includes(filter));
-            container.innerHTML = filtered.map(card => `
-                <div class="card-enter bg-white rounded-2xl shadow-sm hover:shadow-xl transition overflow-hidden border border-gray-100 flex flex-col">
-                    <div class="p-6 flex flex-col items-center bg-gradient-to-b from-gray-50 to-white">
-                        <div class="w-full h-40 ${card.bgClass} rounded-xl mb-6 shadow-md relative flex items-center justify-center text-white overflow-hidden">
-                            <span class="font-bold text-2xl relative z-10">${card.name}</span>
-                            ${card.isInter ? `<div class="absolute w-20 h-20 ${card.iconBg} rounded-full top-0 right-0 opacity-50"></div>` : `<div class="absolute inset-0 ${card.iconBg} opacity-50 transform ${card.rotation} translate-y-10"></div>`}
-                        </div>
-                        <h3 class="text-xl font-bold text-black">${card.name}</h3>
-                        <div class="flex flex-wrap justify-center gap-2 mt-2">${card.badges.map(b => `<span class="text-xs font-semibold ${b.color} px-2 py-1 rounded">${b.text}</span>`).join('')}</div>
+                    <div class="p-5 flex-1 flex flex-col">
+                        <h3 class="font-bold text-gray-900 mb-2 leading-tight group-hover:text-brand-600 transition line-clamp-2">${post.title}</h3>
+                        <p class="text-gray-500 text-xs mb-3 line-clamp-3 flex-1">${post.intro}</p>
+                        <span class="text-brand-600 text-xs font-bold flex items-center gap-1 mt-auto">Ler mais <i class="ph-bold ph-arrow-right"></i></span>
                     </div>
-                    <div class="px-6 py-4 space-y-3 flex-1">
-                        <div class="flex justify-between text-sm border-b border-gray-100 pb-2"><span class="text-gray-500">Anuidade</span><span class="font-medium text-black">${card.annuity}</span></div>
-                        <div class="flex justify-between text-sm border-b border-gray-100 pb-2"><span class="text-gray-500">Renda</span><span class="font-medium text-black">${card.income}</span></div>
-                        <p class="text-sm text-gray-600 mt-4">${card.desc}</p>
-                    </div>
-                    <div class="p-6 pt-0 mt-auto"><a href="${card.link}" target="_blank" class="block w-full text-center bg-brand-400 hover:bg-brand-500 text-black font-bold py-3 rounded-lg transition">Solicitar Cartão <i class="ph ph-arrow-up-right"></i></a><p class="text-[10px] text-gray-400 text-center mt-2 leading-tight">Análise realizada pelo emissor.</p></div>
                 </div>
             `).join('');
         }
 
-        // --- ARTICLE INTERACTIONS ---
-
-        function openArticle(id) {
-            currentPostId = id; 
-            const post = allBlogPosts.find(p => p.id == id);
+        // Renderiza lista completa na página Blog
+        function filterBlog(category) {
+            // Atualiza botões
+            document.querySelectorAll('.blog-filter-btn').forEach(btn => {
+                btn.className = "blog-filter-btn px-4 py-2 bg-white border border-gray-200 hover:border-black text-gray-600 hover:text-black rounded-lg text-sm font-medium transition";
+            });
+            event.target.className = "blog-filter-btn px-4 py-2 bg-black text-white rounded-lg text-sm font-bold shadow-md";
             
+            renderBlogPage(category);
+        }
+
+        function renderBlogPage(category) {
+            const container = document.getElementById('blog-list-container');
+            if(!container) return;
+            
+            const filtered = (category === 'todos') ? allBlogPosts : allBlogPosts.filter(p => p.category === category);
+            
+            if(filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-12"><p class="text-gray-500">Nenhum artigo encontrado nesta categoria.</p></div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(post => `
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col group h-full" onclick="openArticle('${post.id}')">
+                    <div class="h-52 overflow-hidden relative">
+                        <img src="${post.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                        <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <span class="absolute top-4 left-4 bg-brand-400 text-black px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wide">${post.category}</span>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex items-center gap-2 text-xs text-gray-400 mb-3">
+                            <span>${post.date}</span> • <span>${post.author || 'Redação'}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-black mb-3 group-hover:text-brand-600 transition leading-snug">${post.title}</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-1 font-serif">${post.intro}</p>
+                        <div class="pt-4 border-t border-gray-100 flex justify-between items-center mt-auto">
+                            <span class="text-brand-600 font-bold text-sm flex items-center gap-2 group-hover:gap-3 transition-all">Ler Artigo Completo <i class="ph-bold ph-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- LEITURA DE ARTIGO E SOCIAL ---
+        function openArticle(id) {
+            const post = allBlogPosts.find(p => p.id == id);
             if(!post) return;
             
-            const titleEl = document.getElementById('post-title');
-            const categoryEl = document.getElementById('post-category');
-            const authorEl = document.getElementById('post-author');
-            const dateEl = document.getElementById('post-date');
+            // Preenche dados
+            document.getElementById('post-title').textContent = post.title;
+            document.getElementById('post-category').textContent = post.category;
+            document.getElementById('post-author').textContent = post.author || 'Equipe CrediFácil';
+            document.getElementById('post-date').textContent = post.date;
             
-            if(titleEl) titleEl.textContent = post.title;
-            if(categoryEl) categoryEl.textContent = post.category;
-            if(authorEl) authorEl.textContent = 'Por ' + (post.author || 'Redação');
-            if(dateEl) dateEl.textContent = post.date;
-            
+            // Conteúdo HTML
             const contentDiv = document.getElementById('post-content');
-            if(contentDiv) {
-                // Ao abrir o artigo, renderizar o HTML corretamente
-                contentDiv.innerHTML = '';
-                
-                const introP = document.createElement('p');
-                introP.className = 'text-xl leading-relaxed mb-8 font-medium text-gray-800 intro-text';
-                introP.textContent = post.intro;
-                
-                const bodyDiv = document.createElement('div');
-                bodyDiv.className = 'body-content rich-content'; // Usa classe rich-content para estilo
-                bodyDiv.innerHTML = post.content;
-                
-                contentDiv.appendChild(introP);
-                contentDiv.appendChild(bodyDiv);
-            }
+            contentDiv.innerHTML = `
+                <p class="text-xl md:text-2xl leading-relaxed mb-10 font-medium text-gray-600 border-l-4 border-brand-400 pl-6 intro-text font-serif italic">${post.intro}</p>
+                <div class="body-content">${post.content}</div>
+            `;
             
             // Likes
             const likeCountEl = document.getElementById('like-count');
             const likeIcon = document.getElementById('like-icon');
-            
             if(likeCountEl) likeCountEl.textContent = post.likes || 0;
             
-            if(likeIcon) {
-                if(localStorage.getItem(`liked_${id}`)) {
-                    likeIcon.classList.remove('text-gray-400');
-                    likeIcon.classList.add('text-red-500', 'ph-fill'); 
-                } else {
-                    likeIcon.classList.add('text-gray-400');
-                    likeIcon.classList.remove('text-red-500');
-                }
-            }
-
-            if(db) {
-                db.collection("posts").doc(id).onSnapshot((doc) => {
-                    if(doc.exists) {
-                        const data = doc.data();
-                        if(likeCountEl) likeCountEl.textContent = data.likes || 0;
-                    }
-                });
-                loadComments(id);
-            }
-
-            navigateTo('blog-post');
-        }
-
-        function toggleLike() {
-            if(!currentPostId || !db) return;
-            
-            const likeIcon = document.getElementById('like-icon');
-            const isLiked = localStorage.getItem(`liked_${currentPostId}`);
-            const postRef = db.collection("posts").doc(currentPostId);
-
-            if(likeIcon) {
-                likeIcon.classList.add('animate-heart');
-                setTimeout(() => likeIcon.classList.remove('animate-heart'), 300);
-
-                if (isLiked) {
-                     likeIcon.classList.remove('text-red-500');
-                     likeIcon.classList.add('text-gray-400');
-                     localStorage.removeItem(`liked_${currentPostId}`);
-                     postRef.update({ likes: firebase.firestore.FieldValue.increment(-1) });
-                } else {
-                    likeIcon.classList.remove('text-gray-400');
-                    likeIcon.classList.add('text-red-500');
-                    localStorage.setItem(`liked_${currentPostId}`, 'true');
-                    postRef.update({ likes: firebase.firestore.FieldValue.increment(1) });
-                }
-            }
-        }
-
-        function loadComments(postId) {
-            const list = document.getElementById('comments-list');
-            const countEl = document.getElementById('comment-count');
-            
-            if(!list || !countEl) return;
-            
-            list.innerHTML = '<p class="text-sm text-gray-500">Carregando...</p>';
-            
-            db.collection("posts").doc(postId).collection("comments")
-                .orderBy("timestamp", "desc")
-                .onSnapshot((snapshot) => {
-                    countEl.textContent = snapshot.size;
-                    
-                    if (snapshot.empty) {
-                        list.innerHTML = '<p class="text-sm text-gray-500">Seja o primeiro a comentar!</p>';
-                        return;
-                    }
-                    
-                    list.innerHTML = ''; 
-                    snapshot.forEach(doc => {
-                        const c = doc.data();
-                        
-                        // Formatação de data relativa
-                        let dateStr = 'Recentemente';
-                        if (c.timestamp) {
-                            const date = c.timestamp.toDate();
-                            const now = new Date();
-                            const diff = Math.floor((now - date) / 1000); // segundos
-                            
-                            if (diff < 60) dateStr = 'Agora mesmo';
-                            else if (diff < 3600) dateStr = `Há ${Math.floor(diff/60)} min`;
-                            else if (diff < 86400) dateStr = `Há ${Math.floor(diff/3600)} h`;
-                            else dateStr = date.toLocaleDateString();
-                        }
-                        
-                        const commentEl = document.createElement('div');
-                        commentEl.className = 'bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition hover:shadow-md';
-                        commentEl.innerHTML = `
-                            <div class="flex justify-between items-start mb-2">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-600">
-                                        ${c.name.charAt(0).toUpperCase()}
-                                    </div>
-                                    <h5 class="font-bold text-sm text-black">${c.name}</h5>
-                                </div>
-                                <span class="text-xs text-gray-400">${dateStr}</span>
-                            </div>
-                            <p class="text-sm text-gray-600 pl-10">${c.text}</p>
-                        `;
-                        list.appendChild(commentEl);
-                    });
-                });
-        }
-
-        function submitComment(e) {
-            e.preventDefault();
-            if(!currentPostId || !db) return;
-            
-            const nameInput = document.getElementById('comment-name');
-            const textInput = document.getElementById('comment-text');
-            const btn = e.target.querySelector('button');
-            
-            const name = nameInput.value.trim();
-            const text = textInput.value.trim();
-            
-            if(!name || !text) return;
-            
-            btn.disabled = true;
-            btn.textContent = 'Enviando...';
-            
-            db.collection("posts").doc(currentPostId).collection("comments").add({
-                name: name,
-                text: text,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => {
-                nameInput.value = '';
-                textInput.value = '';
-                btn.disabled = false;
-                btn.textContent = 'Comentar';
-            }).catch(err => {
-                alert("Erro ao comentar: " + err.message);
-                btn.disabled = false;
-                btn.textContent = 'Comentar';
-            });
-        }
-
-        function handleLogin(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            const errorMsg = document.getElementById('login-error');
-            const email = document.getElementById('login-email').value;
-            const pass = document.getElementById('login-password').value;
-
-            btn.innerText = "Processando...";
-            btn.disabled = true;
-            btn.classList.add('opacity-50', 'cursor-not-allowed');
-            if(errorMsg) errorMsg.classList.add('hidden');
-
-            auth.signInWithEmailAndPassword(email, pass)
-                .then(() => { 
-                    btn.innerText = "Sucesso!";
-                }) 
-                .catch(err => {
-                    console.error(err);
-                    let msg = "Erro desconhecido.";
-                    if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') msg = "E-mail ou senha incorretos.";
-                    else if (err.code === 'auth/too-many-requests') msg = "Muitas tentativas. Aguarde um momento.";
-                    else msg = err.message;
-
-                    if(errorMsg) {
-                        errorMsg.textContent = "Erro: " + msg;
-                        errorMsg.classList.remove('hidden');
-                    }
-                    btn.innerText = "Entrar";
-                    btn.disabled = false;
-                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                });
-        }
-
-        function handleLogout() { if(auth) auth.signOut(); }
-
-        // --- EDITOR RICO FUNÇÕES ---
-        function formatDoc(cmd, value = null) {
-            if (value) {
-                document.execCommand(cmd, false, value);
+            if(localStorage.getItem(`liked_${id}`)) {
+                likeIcon.classList.add('text-red-500', 'ph-fill');
+                likeIcon.classList.remove('text-gray-300');
             } else {
-                document.execCommand(cmd);
+                likeIcon.classList.remove('text-red-500', 'ph-fill');
+                likeIcon.classList.add('text-gray-300');
             }
+
+            // Monitora likes em tempo real
+            db.collection("posts").doc(id).onSnapshot(doc => {
+                if(doc.exists) document.getElementById('like-count').textContent = doc.data().likes || 0;
+            });
+            
+            loadComments(id);
+            window.currentPostTitle = post.title; // Para share
+            window.currentPostUrl = window.location.href; // URL base
+
+            navigateToHash('blog-post');
+        }
+
+        function sharePost(network) {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(`Confira este artigo: ${window.currentPostTitle}`);
+            let shareUrl = '';
+
+            if(network === 'whatsapp') shareUrl = `https://api.whatsapp.com/send?text=${text} ${url}`;
+            else if(network === 'facebook') shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+            else if(network === 'twitter') shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+
+            window.open(shareUrl, '_blank', 'width=600,height=400');
+        }
+
+        // --- ADMIN AVANÇADO ---
+        function formatDoc(cmd, value = null) {
+            document.execCommand(cmd, false, value);
             document.getElementById('admin-content-rich').focus();
         }
+        
+        function addLink() {
+            const url = prompt("Insira a URL do link:");
+            if(url) document.execCommand("createLink", false, url);
+        }
 
-        function addNewPost(e) {
+        // Carrega lista lateral para edição
+        function loadAdminPostsList() {
+            const list = document.getElementById('admin-posts-list');
+            list.innerHTML = allBlogPosts.map(p => `
+                <div onclick="loadPostForEdit('${p.id}')" class="p-3 bg-gray-50 hover:bg-brand-50 border border-gray-100 rounded-lg cursor-pointer transition text-sm group">
+                    <p class="font-bold text-gray-800 group-hover:text-brand-900 truncate">${p.title}</p>
+                    <div class="flex justify-between mt-1 text-xs text-gray-400">
+                        <span>${p.date}</span>
+                        <span class="text-brand-600 font-bold group-hover:underline">Editar</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function resetAdminForm() {
+            currentEditingId = null;
+            document.getElementById('form-title').innerHTML = '<i class="ph-fill ph-pencil-simple text-brand-500"></i> Adicionar Novo Artigo';
+            document.getElementById('admin-submit-btn').textContent = "Publicar Artigo";
+            document.forms[0].reset(); // Cuidado: pode resetar o login form se nao especificar
+            // Limpa campos manualmente para garantir
+            document.getElementById('admin-title').value = '';
+            document.getElementById('admin-intro').value = '';
+            document.getElementById('admin-image').value = '';
+            document.getElementById('admin-content-rich').innerHTML = '';
+            document.getElementById('admin-author').value = 'Redação CrediFácil';
+        }
+
+        function loadPostForEdit(id) {
+            const post = allBlogPosts.find(p => p.id === id);
+            if(!post) return;
+
+            currentEditingId = id;
+            document.getElementById('form-title').innerHTML = '<i class="ph-fill ph-pencil-simple text-brand-500"></i> Editando: ' + post.title;
+            document.getElementById('admin-submit-btn').textContent = "Salvar Alterações";
+
+            document.getElementById('admin-title').value = post.title;
+            document.getElementById('admin-category').value = post.category;
+            document.getElementById('admin-author').value = post.author;
+            document.getElementById('admin-image').value = post.image;
+            document.getElementById('admin-intro').value = post.intro;
+            document.getElementById('admin-content-rich').innerHTML = post.content;
+        }
+
+        function savePost(e) {
             e.preventDefault();
             if(!db) return;
             
-            // Pega o conteúdo HTML do editor rico
-            const contentHTML = document.getElementById('admin-content-rich').innerHTML;
-            
-            const post = {
+            const btn = document.getElementById('admin-submit-btn');
+            btn.disabled = true;
+            btn.textContent = "Salvando...";
+
+            const postData = {
                 title: document.getElementById('admin-title').value,
                 category: document.getElementById('admin-category').value,
                 author: document.getElementById('admin-author').value,
                 image: document.getElementById('admin-image').value,
                 intro: document.getElementById('admin-intro').value,
-                content: contentHTML, // Salva o HTML gerado
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                date: new Date().toLocaleDateString('pt-BR'),
-                likes: 0 
+                content: document.getElementById('admin-content-rich').innerHTML,
             };
 
-            db.collection("posts").add(post).then(() => { 
-                alert("Postado com sucesso!"); 
-                e.target.reset(); 
-                document.getElementById('admin-content-rich').innerHTML = ''; // Limpa o editor
-                fetchBlogPosts(); 
-            }).catch(err => alert("Erro ao salvar: " + err.message));
-        }
-
-        function navigateTo(id) {
-            document.querySelectorAll('.page-section').forEach(s => s.classList.add('hidden-section'));
-            const section = document.getElementById(id);
-            if(section) {
-                section.classList.remove('hidden-section');
-                section.classList.remove('fade-in');
-                void section.offsetWidth; 
-                section.classList.add('fade-in');
-                window.scrollTo(0,0);
-                
-                setTimeout(() => {
-                    try {
-                        const slots = section.querySelectorAll('ins.adsbygoogle');
-                        slots.forEach(slot => {
-                            if (slot.innerHTML === "") { 
-                                (adsbygoogle = window.adsbygoogle || []).push({});
-                            }
-                        });
-                    } catch (e) { console.log("AdSense info: ", e); }
-                }, 500);
+            let promise;
+            if (currentEditingId) {
+                // UPDATE
+                promise = db.collection("posts").doc(currentEditingId).update(postData);
+            } else {
+                // CREATE
+                postData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                postData.date = new Date().toLocaleDateString('pt-BR');
+                postData.likes = 0;
+                promise = db.collection("posts").add(postData);
             }
-        }
-        
-        // SIMULADOR (CORRIGIDO E ROBUSTO)
-        const loanPartners = [
-            { name: "Nubank", url: "https://nubank.com.br/" }, { name: "Inter", url: "https://inter.co/" }
-        ];
-        function updateLiveCalculation() {
-            const amountInput = document.getElementById('loan-amount');
-            const termInput = document.getElementById('loan-term');
-            
-            if(!amountInput || !termInput) return; // Segurança
 
-            const v = amountInput.value;
-            const t = termInput.value;
+            promise.then(() => {
+                alert(currentEditingId ? "Post atualizado!" : "Post criado!");
+                resetAdminForm();
+                fetchBlogPosts(); // Recarrega listas
+                btn.disabled = false;
+            }).catch(err => {
+                alert("Erro: " + err.message);
+                btn.disabled = false;
+            });
+        }
+
+        // --- SIMULADOR CORRIGIDO E INTELIGENTE ---
+        const loanPartners = [
+            { name: "Nubank", url: "https://nubank.com.br/" }, { name: "Banco Inter", url: "https://inter.co/" }, 
+            { name: "Jeitto", url: "https://www.jeitto.com.br/" }, { name: "Simplic", url: "https://www.simplic.com.br/" }
+        ];
+
+        function updateLiveCalculation() {
+            const v = document.getElementById('loan-amount').value;
+            const t = document.getElementById('loan-term').value;
             
             if(v > 0) {
-                const installment = (v * 0.035 * Math.pow(1.035, t) / (Math.pow(1.035, t) - 1));
-                const el = document.getElementById('live-installment');
-                if(el) el.textContent = installment.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+                // Fórmula Price simples: PMT = PV * i / (1 - (1+i)^-n)
+                const rate = 0.035; // 3.5% a.m.
+                const installment = (v * rate) / (1 - Math.pow(1 + rate, -t));
                 
-                const preview = document.getElementById('live-preview');
-                if(preview) preview.classList.remove('hidden');
+                document.getElementById('live-installment').textContent = installment.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+                document.getElementById('live-preview').classList.remove('hidden');
             }
         }
-        
-        // Função de cálculo de empréstimo (Restaurada)
+
         function calculateFinalLoan(e) {
-            if(e) e.preventDefault();
+            e.preventDefault();
+            const container = document.getElementById('loan-recommendations-container');
+            const resultDiv = document.getElementById('loan-result');
             
-            const res = document.getElementById('loan-result');
-            const cont = document.getElementById('loan-recommendations-container');
+            // Randomiza parceiros para parecer dinâmico
+            const shuffled = loanPartners.sort(() => 0.5 - Math.random()).slice(0, 3);
             
-            if(!res || !cont) return;
-
-            cont.innerHTML = loanPartners.map(p => `
-                <div onclick="openOffer('${p.name}', '${p.url}')" class="flex justify-between items-center p-3 bg-white border rounded-lg hover:border-brand-400 cursor-pointer mb-2 transition shadow-sm">
-                    <span class="font-bold text-gray-800">${p.name}</span>
-                    <span class="text-sm text-brand-600 font-bold flex items-center gap-1">Ver Oferta <i class="ph-bold ph-caret-right"></i></span>
-                </div>`).join('');
+            container.innerHTML = shuffled.map(p => `
+                <div onclick="openOffer('${p.name}', '${p.url}')" class="flex justify-between items-center p-4 bg-white border border-gray-200 rounded-xl hover:border-brand-400 hover:shadow-md cursor-pointer transition group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center font-bold text-gray-700">${p.name[0]}</div>
+                        <span class="font-bold text-gray-800 text-lg">${p.name}</span>
+                    </div>
+                    <span class="text-sm bg-brand-50 text-brand-700 font-bold px-3 py-1 rounded-lg group-hover:bg-brand-400 group-hover:text-black transition flex items-center gap-1">
+                        Ver Oferta <i class="ph-bold ph-arrow-right"></i>
+                    </span>
+                </div>
+            `).join('');
             
-            res.classList.remove('hidden');
-            // Rolagem suave para o resultado
-            res.scrollIntoView({behavior: 'smooth', block: 'start'});
+            resultDiv.classList.remove('hidden');
+            resultDiv.scrollIntoView({behavior: 'smooth'});
         }
 
-        function openOffer(name, url) {
-            const partnerEl = document.getElementById('offer-partner-name');
-            const btnEl = document.getElementById('offer-cta-btn');
+        function openOffer(partnerName, url) {
+            // Pega valores atuais do formulário
+            const amount = parseFloat(document.getElementById('loan-amount').value) || 5000;
+            const months = parseInt(document.getElementById('loan-term').value) || 12;
             
-            if(partnerEl) partnerEl.textContent = name;
+            // Recalcula parcela para a tela de oferta
+            const rate = 0.035;
+            const pmt = (amount * rate) / (1 - Math.pow(1 + rate, -months));
             
-            // Tenta pegar valores do simulador, ou usa padrão
-            const amountInput = document.getElementById('loan-amount');
-            const val = amountInput && amountInput.value ? amountInput.value : '5000';
+            // Atualiza tela de oferta (CORREÇÃO DO BUG "Condição Zerada")
+            document.getElementById('offer-partner-name').textContent = partnerName;
+            document.getElementById('offer-value').textContent = amount.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+            document.getElementById('offer-installments').textContent = `${months}x ${pmt.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}`;
             
-            const valEl = document.getElementById('offer-value');
-            if(valEl) valEl.textContent = 'R$ ' + parseFloat(val).toLocaleString('pt-BR');
-
-            if(btnEl) btnEl.onclick = () => window.open(url, '_blank');
+            // Configura botão
+            const btn = document.getElementById('offer-cta-btn');
+            btn.onclick = () => window.open(url, '_blank');
             
-            navigateTo('offer-screen');
+            navigateToHash('offer-screen');
         }
 
-        function toggleMobileMenu() { 
-            const menu = document.getElementById('mobile-menu');
-            if(menu) menu.classList.toggle('hidden'); 
+        // --- OUTRAS FUNÇÕES ---
+        function renderCards(filter) {
+            const container = document.getElementById('cards-container');
+            if(!container) return;
+            
+            // Atualiza botões
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.className = "filter-btn px-6 py-3 bg-white border border-gray-200 text-gray-600 hover:border-brand-400 hover:text-black rounded-xl text-sm font-bold transition shadow-sm hover:shadow-md";
+            });
+            const activeBtn = document.getElementById(`btn-${filter}`);
+            if(activeBtn) activeBtn.className = "filter-btn active px-6 py-3 bg-black text-white rounded-xl text-sm font-bold transition shadow-lg transform hover:-translate-y-0.5";
+
+            const filtered = (filter === 'todos') ? cardsData : cardsData.filter(c => c.categories.includes(filter));
+            
+            container.innerHTML = filtered.map(card => `
+                <div class="bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group overflow-hidden">
+                    <div class="p-8 flex flex-col items-center bg-gradient-to-b from-gray-50 to-white relative">
+                         <div class="absolute top-4 right-4 text-xs font-bold bg-white border px-2 py-1 rounded text-gray-500">${card.annuity === 'Grátis' ? 'ZERO ANUIDADE' : 'COM ANUIDADE'}</div>
+                        <div class="w-full h-44 ${card.bgClass} rounded-2xl mb-6 shadow-xl relative flex items-center justify-center text-white overflow-hidden transform group-hover:scale-105 transition duration-500">
+                            <span class="font-bold text-2xl relative z-10 tracking-widest drop-shadow-md">${card.name}</span>
+                            ${card.isInter ? '' : `<div class="absolute inset-0 ${card.iconBg} opacity-30 transform ${card.rotation} translate-y-12 scale-150"></div>`}
+                        </div>
+                        <h3 class="text-xl font-bold text-black mb-3">${card.name}</h3>
+                        <div class="flex flex-wrap justify-center gap-2">${card.badges.map(b => `<span class="text-[10px] font-bold uppercase tracking-wide ${b.color} px-2 py-1 rounded-md">${b.text}</span>`).join('')}</div>
+                    </div>
+                    <div class="px-8 py-6 space-y-4 flex-1 bg-white">
+                        <p class="text-sm text-gray-600 text-center leading-relaxed">${card.desc}</p>
+                        <div class="bg-gray-50 p-4 rounded-xl flex justify-between items-center text-sm border border-gray-100">
+                            <span class="text-gray-500">Renda Mínima</span>
+                            <span class="font-bold text-black">${card.income}</span>
+                        </div>
+                    </div>
+                    <div class="p-8 pt-0 mt-auto">
+                        <a href="${card.link}" target="_blank" class="block w-full text-center bg-black hover:bg-brand-500 hover:text-black text-white font-bold py-4 rounded-xl transition shadow-lg flex items-center justify-center gap-2">Solicitar Agora <i class="ph-bold ph-arrow-up-right"></i></a>
+                    </div>
+                </div>
+            `).join('');
         }
-        
-        function checkCookies() { 
-            if (!localStorage.getItem('cookiesAccepted')) {
-                const banner = document.getElementById('cookie-banner');
-                if(banner) banner.classList.remove('translate-y-full'); 
-            }
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
         }
-        
-        function acceptCookies() { 
-            localStorage.setItem('cookiesAccepted', 'true'); 
-            const banner = document.getElementById('cookie-banner');
-            if(banner) banner.classList.add('translate-y-full'); 
+
+        // Auth
+        function handleLogin(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const err = document.getElementById('login-error');
+            
+            btn.textContent = "Verificando...";
+            btn.disabled = true;
+            
+            auth.signInWithEmailAndPassword(document.getElementById('login-email').value, document.getElementById('login-password').value)
+                .catch(error => {
+                    err.textContent = "Erro: " + error.message;
+                    err.classList.remove('hidden');
+                    btn.textContent = "Entrar no Painel";
+                    btn.disabled = false;
+                });
         }
+        function handleLogout() { auth.signOut(); }
+
+        // Comentários e Likes (Mantidos e Otimizados)
+        function toggleLike() {
+            const id = window.location.hash.includes('blog-post') ? allBlogPosts.find(p => p.title === document.getElementById('post-title').textContent)?.id : null;
+            if(!id) return;
+            // ... lógica de like existente ...
+            // (Código simplificado aqui pois já está implementado na função openArticle/init)
+             const isLiked = localStorage.getItem(`liked_${id}`);
+             const ref = db.collection("posts").doc(id);
+             if(isLiked) {
+                 localStorage.removeItem(`liked_${id}`);
+                 ref.update({ likes: firebase.firestore.FieldValue.increment(-1) });
+                 document.getElementById('like-icon').classList.remove('text-red-500', 'ph-fill');
+                 document.getElementById('like-icon').classList.add('text-gray-300');
+             } else {
+                 localStorage.setItem(`liked_${id}`, 'true');
+                 ref.update({ likes: firebase.firestore.FieldValue.increment(1) });
+                 document.getElementById('like-icon').classList.add('text-red-500', 'ph-fill');
+             }
+             document.getElementById('like-icon').classList.add('animate-heart');
+             setTimeout(() => document.getElementById('like-icon').classList.remove('animate-heart'), 500);
+        }
+
+        function loadComments(id) {
+            const list = document.getElementById('comments-list');
+            const count = document.getElementById('comment-count');
+            db.collection("posts").doc(id).collection("comments").orderBy("timestamp", "desc").onSnapshot(snap => {
+                count.textContent = snap.size;
+                if(snap.empty) { list.innerHTML = '<p class="text-gray-400 text-sm italic">Nenhum comentário ainda.</p>'; return; }
+                list.innerHTML = '';
+                snap.forEach(d => {
+                    const c = d.data();
+                    list.innerHTML += `
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <div class="flex justify-between mb-1"><span class="font-bold text-sm">${c.name}</span><span class="text-xs text-gray-400">Recente</span></div>
+                            <p class="text-sm text-gray-700">${c.text}</p>
+                        </div>
+                    `;
+                });
+            });
+        }
+
+        function submitComment(e) {
+            e.preventDefault();
+            const id = allBlogPosts.find(p => p.title === document.getElementById('post-title').textContent)?.id;
+            if(!id) return;
+            
+            const n = document.getElementById('comment-name');
+            const t = document.getElementById('comment-text');
+            
+            db.collection("posts").doc(id).collection("comments").add({
+                name: n.value, text: t.value, timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => { n.value=''; t.value=''; });
+        }
+
     </script>
 </body>
 </html>

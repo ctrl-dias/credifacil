@@ -403,9 +403,9 @@
                          <!-- Share Bar (Bottom) -->
                          <div class="mt-12 mb-8 border-t border-b border-gray-100 py-6 flex flex-wrap items-center gap-4 justify-center">
                             <span class="text-sm font-bold text-gray-500 uppercase tracking-wide flex items-center mr-2">Compartilhar Artigo:</span>
-                            <button onclick="sharePost('whatsapp')" class="bg-[#25D366] text-white p-3 rounded-full hover:opacity-90 transition shadow-sm"><i class="ph-fill ph-whatsapp-logo text-xl"></i></button>
-                            <button onclick="sharePost('facebook')" class="bg-[#1877F2] text-white p-3 rounded-full hover:opacity-90 transition shadow-sm"><i class="ph-fill ph-facebook-logo text-xl"></i></button>
-                            <button onclick="sharePost('twitter')" class="bg-black text-white p-3 rounded-full hover:opacity-90 transition shadow-sm"><i class="ph-fill ph-x-logo text-xl"></i></button>
+                            <button onclick="sharePost('whatsapp')" class="bg-white text-gray-400 border border-gray-200 p-3 rounded-full hover:text-[#25D366] hover:border-[#25D366] transition shadow-sm"><i class="ph-fill ph-whatsapp-logo text-xl"></i></button>
+                            <button onclick="sharePost('facebook')" class="bg-white text-gray-400 border border-gray-200 p-3 rounded-full hover:text-[#1877F2] hover:border-[#1877F2] transition shadow-sm"><i class="ph-fill ph-facebook-logo text-xl"></i></button>
+                            <button onclick="sharePost('twitter')" class="bg-white text-gray-400 border border-gray-200 p-3 rounded-full hover:text-black hover:border-black transition shadow-sm"><i class="ph-fill ph-x-logo text-xl"></i></button>
                         </div>
                         
                         <!-- Engagement Box (DESIGN MELHORADO) -->
@@ -481,14 +481,14 @@
                     </div>
 
                     <!-- Dashboard (CORRIGIDO) -->
-                    <div id="admin-panel" class="hidden grid lg:grid-cols-3 gap-8">
+                    <div id="admin-panel" class="hidden grid lg:grid-cols-3 gap-8 items-start">
                         <!-- Coluna 1: Lista de Posts -->
-                        <div class="lg:col-span-1 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col h-[600px]">
+                        <div class="lg:col-span-1 bg-white rounded-2xl border border-gray-200 shadow-sm flex flex-col h-auto">
                             <div class="p-6 border-b border-gray-100 bg-gray-50 flex justify-between items-center shrink-0">
                                 <h3 class="font-bold text-gray-800">Gerenciar Posts</h3>
                                 <button onclick="resetAdminForm()" class="text-xs bg-brand-400 px-2 py-1 rounded font-bold hover:bg-brand-500 transition" title="Novo Post"><i class="ph-bold ph-plus"></i> Novo</button>
                             </div>
-                            <div id="admin-posts-list" class="overflow-y-auto p-4 space-y-2 flex-1">
+                            <div id="admin-posts-list" class="p-4 space-y-2">
                                 <!-- Lista de posts preenchida via JS -->
                                 <p class="text-center text-gray-400 text-sm py-4">Carregando posts...</p>
                             </div>

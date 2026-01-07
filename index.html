@@ -10,43 +10,32 @@
     <!-- Google AdSense (Script Principal) -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017585624443150" crossorigin="anonymous"></script>
 
-    <!-- FIREBASE SDKs (Versão Compatibilidade) -->
+    <!-- FIREBASE SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
     <title>CrediFácil | Guia de Crédito e Finanças Pessoais</title>
     
-    <!-- Tailwind CSS (Framework Moderno de Design) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts (Inter) -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Ícones (Phosphor Icons) -->
+    <!-- Ícones -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- Configuração de Design System -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         brand: {
-                            50: '#FEFCE8',
-                            100: '#FEF9C3',
-                            400: '#FACC15', // Amarelo Principal
-                            500: '#EAB308', // Amarelo Escuro
-                            600: '#CA8A04',
-                            900: '#713F12',
+                            50: '#FEFCE8', 100: '#FEF9C3', 400: '#FACC15', 500: '#EAB308', 600: '#CA8A04', 900: '#713F12',
                         },
-                        navy: {
-                            800: '#18181b', // Cinza Quase Preto
-                            900: '#000000', // Preto Puro
-                        }
+                        navy: { 800: '#18181b', 900: '#000000' }
                     }
                 }
             }
@@ -54,45 +43,28 @@
     </script>
 
     <style>
-        /* Estilos Customizados */
         body { -webkit-font-smoothing: antialiased; }
         .fade-in { animation: fadeIn 0.4s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .hidden-section { display: none; }
         .page-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
         main { flex: 1; }
-        .card-enter { animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        
-        .ad-slot {
-            display: block; 
-            margin: 2rem auto;
-            background-color: transparent; 
-            min-height: 90px; 
-            width: 100%;
-            text-align: center;
-            overflow: hidden;
-        }
+        .ad-slot { display: block; margin: 2rem auto; background-color: transparent; min-height: 90px; width: 100%; text-align: center; overflow: hidden; }
         .ad-slot:empty { background-color: #f9fafb; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 page-wrapper">
 
-    <!-- HEADER / NAVEGAÇÃO -->
+    <!-- HEADER -->
     <header class="bg-black shadow-sm sticky top-0 z-50 border-b border-gray-800">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
                 <div class="flex-shrink-0 cursor-pointer" onclick="navigateTo('home')">
                     <div class="flex items-center gap-2">
-                        <div class="bg-brand-400 text-black p-2 rounded-lg">
-                            <i class="ph-fill ph-coins text-2xl"></i>
-                        </div>
+                        <div class="bg-brand-400 text-black p-2 rounded-lg"><i class="ph-fill ph-coins text-2xl"></i></div>
                         <span class="font-bold text-2xl text-white tracking-tight">Credi<span class="text-brand-400">Fácil</span></span>
                     </div>
                 </div>
-
-                <!-- Desktop Menu -->
                 <nav class="hidden md:flex space-x-8">
                     <a href="#" onclick="navigateTo('home')" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition">Início</a>
                     <a href="#" onclick="navigateTo('emprestimo')" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition">Empréstimos</a>
@@ -100,98 +72,65 @@
                     <a href="#" onclick="navigateTo('blog')" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition">Blog</a>
                     <a href="#" onclick="navigateTo('sobre')" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition">Sobre</a>
                 </nav>
-
-                <!-- CTA Button -->
                 <div class="hidden md:flex">
-                    <button onclick="navigateTo('emprestimo')" class="bg-brand-400 hover:bg-brand-500 text-black px-6 py-2.5 rounded-full font-bold transition shadow-lg shadow-brand-400/20 flex items-center gap-2">
-                        <span>Solicitar Empréstimo</span>
-                        <i class="ph-bold ph-hand-coins"></i>
+                    <button onclick="navigateTo('emprestimo')" class="bg-brand-400 hover:bg-brand-500 text-black px-6 py-2.5 rounded-full font-bold transition shadow-lg flex items-center gap-2">
+                        <span>Solicitar Empréstimo</span><i class="ph-bold ph-hand-coins"></i>
                     </button>
                 </div>
-
-                <!-- Mobile Menu Button -->
                 <div class="md:hidden">
-                    <button onclick="toggleMobileMenu()" class="text-white hover:text-brand-400 p-2">
-                        <i class="ph ph-list text-3xl"></i>
-                    </button>
+                    <button onclick="toggleMobileMenu()" class="text-white hover:text-brand-400 p-2"><i class="ph ph-list text-3xl"></i></button>
                 </div>
             </div>
         </div>
-
-        <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="hidden md:hidden bg-zinc-900 border-t border-gray-800 absolute w-full left-0 shadow-lg">
             <div class="px-4 pt-2 pb-6 space-y-2">
                 <a href="#" onclick="navigateTo('home'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Início</a>
                 <a href="#" onclick="navigateTo('emprestimo'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Empréstimos</a>
                 <a href="#" onclick="navigateTo('cartoes'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Cartões</a>
                 <a href="#" onclick="navigateTo('blog'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Blog</a>
-                <a href="#" onclick="navigateTo('sobre'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Sobre</a>
                 <a href="#" onclick="navigateTo('admin'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-brand-400 font-bold hover:bg-black rounded-md">Área Admin</a>
             </div>
         </div>
     </header>
 
     <main id="app-content" class="relative">
-        
-        <!-- PÁGINA: HOME -->
+        <!-- HOME -->
         <section id="home" class="page-section fade-in">
             <div class="bg-black text-white relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-1/2 h-full bg-brand-400 opacity-10 skew-x-12 transform translate-x-20"></div>
                 <div class="container mx-auto px-4 py-20 lg:py-32 relative z-10">
                     <div class="max-w-3xl">
                         <span class="bg-brand-400/20 text-brand-400 px-4 py-1 rounded-full text-sm font-bold tracking-wide uppercase mb-6 inline-block border border-brand-400/20">Sua liberdade financeira</span>
-                        <h1 class="text-4xl lg:text-6xl font-extrabold leading-tight mb-6">
-                            Saia das dívidas e recupere seu <span class="text-brand-400">Crédito</span> hoje.
-                        </h1>
-                        <p class="text-lg text-gray-400 mb-8 max-w-2xl">
-                            Conteúdo informativo gratuito, análises imparciais de cartões e simulações de empréstimo. Tome decisões financeiras inteligentes.
-                        </p>
+                        <h1 class="text-4xl lg:text-6xl font-extrabold leading-tight mb-6">Saia das dívidas e recupere seu <span class="text-brand-400">Crédito</span> hoje.</h1>
+                        <p class="text-lg text-gray-400 mb-8 max-w-2xl">Conteúdo gratuito, análises de cartões para negativados e as melhores taxas de empréstimo.</p>
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <button onclick="navigateTo('blog')" class="bg-brand-400 hover:bg-brand-500 text-black px-8 py-4 rounded-lg font-bold text-lg transition shadow-lg shadow-brand-400/20">
-                                Ver Artigos Gratuitos
-                            </button>
-                            <button onclick="navigateTo('cartoes')" class="bg-white/5 hover:bg-white/10 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-lg font-bold text-lg transition">
-                                Melhores Cartões
-                            </button>
+                            <button onclick="navigateTo('blog')" class="bg-brand-400 hover:bg-brand-500 text-black px-8 py-4 rounded-lg font-bold text-lg transition shadow-lg">Ver Artigos Gratuitos</button>
+                            <button onclick="navigateTo('cartoes')" class="bg-white/5 hover:bg-white/10 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-lg font-bold text-lg transition">Melhores Cartões</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- AD SPACE: Banner Topo -->
+            
             <div class="container mx-auto px-4">
-                <div class="ad-slot w-full">
-                    <ins class="adsbygoogle-lazy"
-                         style="display:block"
-                         data-ad-client="ca-pub-1017585624443150"
-                         data-ad-slot="SUBSTITUA_PELO_ID_DO_BLOCO"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                </div>
+                <div class="ad-slot w-full"><ins class="adsbygoogle-lazy" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
             </div>
 
             <div class="container mx-auto px-4 py-20">
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
-                        <div class="bg-gray-900 w-14 h-14 rounded-xl flex items-center justify-center text-brand-400 mb-6 group-hover:scale-110 transition">
-                            <i class="ph ph-credit-card text-3xl"></i>
-                        </div>
+                        <div class="bg-gray-900 w-14 h-14 rounded-xl flex items-center justify-center text-brand-400 mb-6 group-hover:scale-110 transition"><i class="ph ph-credit-card text-3xl"></i></div>
                         <h3 class="text-xl font-bold text-black mb-3">Cartões Aprovados</h3>
-                        <p class="text-gray-600">Análises detalhadas sobre cartões de crédito para diferentes perfis de consumidor.</p>
+                        <p class="text-gray-600">Análises de cartões que aprovam negativados e score baixo.</p>
                     </div>
                     <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
-                        <div class="bg-brand-50 w-14 h-14 rounded-xl flex items-center justify-center text-brand-600 mb-6 group-hover:scale-110 transition">
-                            <i class="ph ph-currency-dollar text-3xl"></i>
-                        </div>
+                        <div class="bg-brand-50 w-14 h-14 rounded-xl flex items-center justify-center text-brand-600 mb-6 group-hover:scale-110 transition"><i class="ph ph-currency-dollar text-3xl"></i></div>
                         <h3 class="text-xl font-bold text-black mb-3">Empréstimo Rápido</h3>
-                        <p class="text-gray-600">Ferramenta de simulação para estimar parcelas e comparar opções de mercado.</p>
+                        <p class="text-gray-600">Simule empréstimos em recomendações confiáveis.</p>
                     </div>
                     <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
-                        <div class="bg-gray-100 w-14 h-14 rounded-xl flex items-center justify-center text-gray-700 mb-6 group-hover:scale-110 transition">
-                            <i class="ph ph-graduation-cap text-3xl"></i>
-                        </div>
+                        <div class="bg-gray-100 w-14 h-14 rounded-xl flex items-center justify-center text-gray-700 mb-6 group-hover:scale-110 transition"><i class="ph ph-graduation-cap text-3xl"></i></div>
                         <h3 class="text-xl font-bold text-black mb-3">Educação Financeira</h3>
-                        <p class="text-gray-600">Guias e dicas para ajudar você a negociar dívidas e aumentar seu score.</p>
+                        <p class="text-gray-600">Aprenda a negociar dívidas e aumentar seu score.</p>
                     </div>
                 </div>
             </div>
@@ -199,119 +138,66 @@
             <div class="bg-gray-50 py-20 border-t border-gray-200">
                 <div class="container mx-auto px-4">
                     <div class="flex justify-between items-end mb-12">
-                        <div>
-                            <h2 class="text-3xl font-bold text-black mb-2">Últimas do Blog</h2>
-                            <p class="text-gray-600">Fique por dentro das novidades do mercado financeiro.</p>
-                        </div>
+                        <div><h2 class="text-3xl font-bold text-black mb-2">Últimas do Blog</h2><p class="text-gray-600">Novidades do mercado financeiro.</p></div>
                         <a href="#" onclick="navigateTo('blog')" class="hidden md:flex text-brand-600 font-semibold items-center gap-1 hover:gap-2 transition-all">Ver todos <i class="ph ph-arrow-right"></i></a>
                     </div>
-                    
-                    <div id="home-blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <!-- Dynamic Content -->
-                        <div class="col-span-full text-center text-gray-500 py-8">Carregando artigos...</div>
-                    </div>
+                    <div id="home-blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
                 </div>
             </div>
         </section>
 
-        <!-- PÁGINA: EMPRÉSTIMOS -->
+        <!-- EMPRESTIMOS -->
         <section id="emprestimo" class="page-section hidden-section fade-in">
             <div class="bg-black text-white py-16">
                 <div class="container mx-auto px-4 text-center">
-                    <h1 class="text-4xl font-bold mb-4">Simulador de Empréstimo Inteligente</h1>
-                    <p class="text-gray-400 max-w-2xl mx-auto">Esta ferramenta ajuda a estimar custos. Não garantimos a aprovação.</p>
+                    <h1 class="text-4xl font-bold mb-4">Simulador de Empréstimo</h1>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Encontre a melhor taxa para o seu perfil.</p>
                 </div>
             </div>
-
             <div class="container mx-auto px-4 py-16">
-                <!-- AD SPACE: Banner Emprestimo -->
-                <div class="ad-slot w-full">
-                    <ins class="adsbygoogle-lazy"
-                         style="display:block"
-                         data-ad-client="ca-pub-1017585624443150"
-                         data-ad-slot="SUBSTITUA_PELO_ID_DO_BLOCO"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                </div>
-
+                <div class="ad-slot w-full"><ins class="adsbygoogle-lazy" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                 <div class="grid lg:grid-cols-2 gap-12 items-start">
                     <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 relative overflow-hidden">
                          <div class="absolute top-0 left-0 w-full h-1 bg-brand-400"></div>
-                        <h3 class="text-2xl font-bold text-black mb-6 flex items-center gap-2">
-                            <i class="ph-fill ph-calculator text-brand-500"></i> Simule Agora
-                        </h3>
-                        
+                        <h3 class="text-2xl font-bold text-black mb-6 flex items-center gap-2"><i class="ph-fill ph-calculator text-brand-500"></i> Simule Agora</h3>
                         <form id="loan-form" onsubmit="calculateFinalLoan(event)" class="space-y-6">
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Quanto você precisa?</label>
-                                <div class="relative">
-                                    <span class="absolute left-4 top-3.5 text-gray-500 font-bold">R$</span>
-                                    <input type="number" id="loan-amount" oninput="updateLiveCalculation()" class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition text-lg font-bold text-black" placeholder="5000" min="500" step="100">
-                                </div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Valor (R$)</label>
+                                <input type="number" id="loan-amount" oninput="updateLiveCalculation()" class="w-full pl-4 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none transition text-lg font-bold text-black" placeholder="5000" min="500">
                             </div>
-                            
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-bold text-gray-700 mb-2">Parcelas</label>
-                                    <select id="loan-term" onchange="updateLiveCalculation()" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none bg-white text-black font-medium">
-                                        <option value="12">12x</option>
-                                        <option value="24">24x</option>
-                                        <option value="36">36x</option>
-                                        <option value="48">48x</option>
-                                        <option value="60">60x</option>
-                                    </select>
+                                    <select id="loan-term" onchange="updateLiveCalculation()" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none bg-white text-black font-medium"><option value="12">12x</option><option value="24">24x</option><option value="36">36x</option><option value="48">48x</option></select>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-bold text-gray-700 mb-2">CPF</label>
                                     <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" placeholder="000.000.000-00">
                                 </div>
                             </div>
-
                             <div id="live-preview" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hidden">
-                                <p class="text-sm text-gray-500 mb-1">Estimativa de parcela:</p>
-                                <div class="flex items-end gap-1">
-                                    <span class="text-2xl font-bold text-brand-600" id="live-installment">R$ 0,00</span>
-                                    <span class="text-sm text-gray-400 mb-1">/mês*</span>
-                                </div>
+                                <p class="text-sm text-gray-500 mb-1">Estimativa:</p>
+                                <div class="flex items-end gap-1"><span class="text-2xl font-bold text-brand-600" id="live-installment">R$ 0,00</span><span class="text-sm text-gray-400 mb-1">/mês*</span></div>
                             </div>
-
-                            <button type="submit" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-lg transition transform hover:-translate-y-1 shadow-md shadow-brand-400/30 flex items-center justify-center gap-2">
-                                Ver Ofertas Disponíveis <i class="ph-bold ph-arrow-right"></i>
-                            </button>
-                            <p class="text-[10px] text-center text-gray-400 mt-4 leading-tight">
-                                * Simulação para fins informativos. O CrediFácil não é uma instituição financeira. A análise de crédito é feita exclusivamente pelos parceiros oficiais.
-                            </p>
+                            <button type="submit" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-lg transition transform hover:-translate-y-1 shadow-md">Ver Ofertas Disponíveis</button>
+                            <p class="text-[10px] text-center text-gray-400 mt-4">* Simulação estimada. Sujeito a análise.</p>
                         </form>
-
                         <div id="loan-result" class="hidden mt-6 pt-6 border-t border-gray-200 animate-fade-in">
                             <div class="bg-brand-50 border border-brand-100 rounded-xl p-5 mb-4">
                                 <div class="flex items-start gap-3">
-                                    <div class="bg-brand-100 p-2 rounded-full text-brand-900">
-                                        <i class="ph-fill ph-check-circle text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-bold text-gray-900 text-lg">Opções Encontradas</h4>
-                                        <p class="text-gray-700 text-sm mt-1">Confira abaixo as instituições recomendadas.</p>
-                                    </div>
+                                    <div class="bg-brand-100 p-2 rounded-full text-brand-900"><i class="ph-fill ph-check-circle text-xl"></i></div>
+                                    <div><h4 class="font-bold text-gray-900 text-lg">Pré-aprovação!</h4><p class="text-gray-700 text-sm mt-1">Recomendações encontradas.</p></div>
                                 </div>
                             </div>
-                            <div id="loan-recommendations-container" class="space-y-3">
-                                <!-- Recomendações JS -->
-                            </div>
+                            <div id="loan-recommendations-container" class="space-y-3"></div>
                         </div>
                     </div>
-
                     <div class="space-y-8">
-                        <div>
-                            <h2 class="text-3xl font-bold text-black mb-4">Informações Importantes</h2>
-                            <p class="text-gray-600 leading-relaxed">
-                                O CrediFácil atua como um guia informativo. Não realizamos cobranças antecipadas para liberação de crédito. Fique atento a golpes.
-                            </p>
-                        </div>
+                        <div><h2 class="text-3xl font-bold text-black mb-4">Como funciona?</h2><p class="text-gray-600">Algoritmo busca as melhores taxas em mais de 15 instituições.</p></div>
                         <div class="grid grid-cols-1 gap-4">
                             <div class="flex gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-brand-400 transition items-start">
                                 <div class="bg-gray-100 text-black w-12 h-12 flex items-center justify-center rounded-lg flex-shrink-0 mt-1"><i class="ph ph-shield-check text-2xl"></i></div>
-                                <div><h4 class="font-bold text-black">Segurança</h4><p class="text-sm text-gray-600 mt-1">Nunca pedimos sua senha ou depósitos.</p></div>
+                                <div><h4 class="font-bold text-black">Segurança</h4><p class="text-sm text-gray-600 mt-1">Nunca pedimos depósitos antecipados.</p></div>
                             </div>
                         </div>
                     </div>
@@ -319,259 +205,101 @@
             </div>
         </section>
 
-        <!-- PÁGINA: DETALHES DA OFERTA (offer-screen) -->
-        <section id="offer-screen" class="page-section hidden-section fade-in">
-            <div class="min-h-screen bg-gray-50 flex flex-col">
-                <div class="bg-black text-white py-12">
-                    <div class="container mx-auto px-4 text-center">
-                        <button onclick="navigateTo('emprestimo')" class="text-gray-400 hover:text-white mb-6 flex items-center justify-center gap-2 transition mx-auto">
-                            <i class="ph ph-arrow-left"></i> Voltar para Simulação
-                        </button>
-                        <h1 class="text-3xl font-bold mb-2">Detalhes da Recomendação</h1>
-                        <p class="text-gray-400">Você será redirecionado para o site oficial.</p>
-                    </div>
-                </div>
-
-                <div class="container mx-auto px-4 -mt-8 pb-16 flex-1">
-                    <!-- AD SPACE -->
-                    <div class="ad-slot bg-white rounded-lg w-full">
-                        <ins class="adsbygoogle-lazy"
-                             style="display:block"
-                             data-ad-client="ca-pub-1017585624443150"
-                             data-ad-slot="SUBSTITUA_PELO_ID_DO_BLOCO"
-                             data-ad-format="auto"
-                             data-full-width-responsive="true"></ins>
-                    </div>
-
-                    <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
-                        <div class="p-8 border-b border-gray-100">
-                            <div class="flex justify-between items-start mb-6">
-                                <div>
-                                    <p class="text-sm text-gray-500 mb-1">Instituição</p>
-                                    <h2 id="offer-partner-name" class="text-2xl font-bold text-black">Banco</h2>
-                                </div>
-                                <div class="bg-brand-100 text-brand-900 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border border-brand-200">Recomendado</div>
-                            </div>
-                            
-                            <div class="grid grid-cols-2 gap-8 mb-6">
-                                <div><p class="text-sm text-gray-500 mb-1">Simulação</p><p id="offer-value" class="text-2xl font-bold text-black">R$ 0,00</p></div>
-                                <div><p class="text-sm text-gray-500 mb-1">Parcelamento</p><p id="offer-installments" class="text-2xl font-bold text-brand-600">12x R$ 0,00</p></div>
-                            </div>
-                        </div>
-                        
-                        <div class="p-8 bg-white">
-                            <button id="offer-cta-btn" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-xl transition shadow-lg shadow-brand-400/20 text-lg flex items-center justify-center gap-2">
-                                Continuar no Site Oficial <i class="ph-bold ph-arrow-right"></i>
-                            </button>
-                            <p class="text-center text-xs text-gray-400 mt-4 leading-tight max-w-sm mx-auto">
-                                <strong>Aviso Importante:</strong> O CrediFácil não é credor. Ao clicar, você será redirecionado para o ambiente seguro da instituição financeira, onde a análise de crédito real será realizada. A aprovação não é garantida.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- PÁGINA: CARTÕES -->
+        <!-- CARTOES -->
         <section id="cartoes" class="page-section hidden-section fade-in">
             <div class="bg-white border-b border-gray-200 py-12">
                 <div class="container mx-auto px-4 text-center">
                     <h1 class="text-4xl font-bold text-black mb-4">Catálogo de Cartões</h1>
-                    <p class="text-gray-600 max-w-2xl mx-auto">Compare benefícios e anuidade antes de escolher.</p>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Encontre o cartão ideal para o seu perfil.</p>
                 </div>
             </div>
-
             <div class="container mx-auto px-4 py-16">
-                <!-- AD SPACE -->
-                <div class="ad-slot w-full">
-                    <ins class="adsbygoogle-lazy"
-                         style="display:block"
-                         data-ad-client="ca-pub-1017585624443150"
-                         data-ad-slot="SUBSTITUA_PELO_ID_DO_BLOCO"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                </div>
-
+                <div class="ad-slot w-full"><ins class="adsbygoogle-lazy" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                 <div class="flex flex-wrap gap-4 justify-center mb-12">
                     <button onclick="filterCards('todos')" id="btn-todos" class="filter-btn active px-6 py-2 bg-black text-white rounded-full text-sm font-medium transition shadow-md">Todos</button>
                     <button onclick="filterCards('anuidade')" id="btn-anuidade" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Sem Anuidade</button>
                     <button onclick="filterCards('negativados')" id="btn-negativados" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Para Negativados</button>
-                    <button onclick="filterCards('milhas')" id="btn-milhas" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Milhas / Cashback</button>
                 </div>
-
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="cards-container">
-                    <!-- Cards via JS -->
-                </div>
-                
-                <div id="no-cards-msg" class="hidden text-center py-12">
-                    <p class="text-gray-500">Nenhum cartão encontrado.</p>
-                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="cards-container"></div>
             </div>
         </section>
 
-        <!-- PÁGINA: BLOG LISTA -->
+        <!-- BLOG -->
         <section id="blog" class="page-section hidden-section fade-in">
             <div class="bg-gray-100 py-16">
                 <div class="container mx-auto px-4">
                     <div class="text-center max-w-3xl mx-auto mb-12">
                         <h1 class="text-4xl font-extrabold text-black mb-4">Blog e Notícias</h1>
-                        <p class="text-gray-600 text-lg">Conteúdo educativo para melhorar sua vida financeira.</p>
+                        <p class="text-gray-600 text-lg">Educação financeira descomplicada.</p>
                     </div>
-
-                    <!-- AD SPACE -->
-                    <div class="ad-slot bg-white rounded-lg w-full">
-                        <ins class="adsbygoogle-lazy"
-                             style="display:block"
-                             data-ad-client="ca-pub-1017585624443150"
-                             data-ad-slot="SUBSTITUA_PELO_ID_DO_BLOCO"
-                             data-ad-format="auto"
-                             data-full-width-responsive="true"></ins>
-                    </div>
-
-                    <div id="blog-list-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="col-span-full text-center text-gray-500">Carregando artigos...</div>
-                    </div>
+                    <div class="ad-slot bg-white rounded-lg w-full"><ins class="adsbygoogle-lazy" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+                    <div id="blog-list-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
                 </div>
             </div>
         </section>
 
-        <!-- PÁGINA: BLOG POST -->
+        <!-- BLOG POST -->
         <section id="blog-post" class="page-section hidden-section fade-in">
             <div class="bg-white">
                 <div class="bg-black text-white py-20">
                     <div class="container mx-auto px-4 max-w-4xl text-center">
-                        <button onclick="navigateTo('blog')" class="text-gray-400 hover:text-white mb-8 flex items-center justify-center gap-2 transition">
-                            <i class="ph ph-arrow-left"></i> Voltar
-                        </button>
+                        <button onclick="navigateTo('blog')" class="text-gray-400 hover:text-white mb-8 flex items-center justify-center gap-2 transition"><i class="ph ph-arrow-left"></i> Voltar</button>
                         <span id="post-category" class="bg-brand-400/20 text-brand-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">Categoria</span>
                         <h1 id="post-title" class="text-3xl md:text-5xl font-bold mt-4 mb-6 leading-tight">Título</h1>
-                        <div class="flex items-center justify-center gap-4 text-gray-400 text-sm">
-                            <span id="post-author">Por CrediFácil</span> • <span id="post-date">Data</span>
-                        </div>
+                        <div class="flex items-center justify-center gap-4 text-gray-400 text-sm"><span id="post-date">Data</span></div>
                     </div>
                 </div>
-
                 <div class="container mx-auto px-4 py-12 flex flex-col lg:flex-row gap-12">
-                    <!-- Main Content -->
                     <article class="lg:w-2/3">
                         <div id="post-content" class="prose prose-lg prose-gray max-w-none text-gray-700">
                             <p class="text-xl leading-relaxed mb-8 font-medium text-gray-800 intro-text"></p>
                             <div class="body-content"></div>
                         </div>
-                        <!-- AD SPACE: In-article -->
-                        <div class="ad-slot my-8 w-full">
-                            <ins class="adsbygoogle-lazy"
-                                 style="display:block"
-                                 data-ad-client="ca-pub-1017585624443150"
-                                 data-ad-slot="SUBSTITUA_PELO_ID_DO_BLOCO"
-                                 data-ad-format="auto"
-                                 data-full-width-responsive="true"></ins>
-                        </div>
+                        <div class="ad-slot my-8 w-full"><ins class="adsbygoogle-lazy" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                     </article>
-
-                    <!-- Sidebar (Bom para AdSense) -->
                     <aside class="lg:w-1/3 space-y-8">
                         <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
                             <h4 class="font-bold text-black mb-4">Publicidade</h4>
-                            <div class="ad-slot w-full bg-white rounded-lg">
-                                <ins class="adsbygoogle-lazy"
-                                     style="display:block"
-                                     data-ad-client="ca-pub-1017585624443150"
-                                     data-ad-slot="SUBSTITUA_PELO_ID_DO_BLOCO"
-                                     data-ad-format="auto"
-                                     data-full-width-responsive="true"></ins>
-                            </div>
-                        </div>
-                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                            <h4 class="font-bold text-black mb-4">Populares</h4>
-                            <ul class="space-y-3 text-sm text-gray-600">
-                                <li><a href="#" class="hover:text-brand-600">Como aumentar o Score</a></li>
-                                <li><a href="#" class="hover:text-brand-600">Cartões sem anuidade</a></li>
-                            </ul>
+                            <div class="ad-slot w-full bg-white rounded-lg"><ins class="adsbygoogle-lazy" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                         </div>
                     </aside>
                 </div>
             </div>
         </section>
 
-        <!-- PÁGINA: ADMIN (PROTEGIDA) -->
+        <!-- ADMIN -->
         <section id="admin" class="page-section hidden-section fade-in">
             <div class="bg-white py-20">
                 <div class="container mx-auto px-4 max-w-xl">
                     <h1 class="text-3xl font-bold text-black mb-8 text-center border-b border-gray-200 pb-4">Painel Administrativo</h1>
                     
-                    <!-- Aviso de modo Demo -->
-                    <div id="demo-warning" class="hidden mb-6 p-4 bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg text-sm">
-                        <strong>Modo de Demonstração:</strong> Como o Firebase não está configurado, o site está operando em modo local. Use qualquer e-mail/senha para testar o painel. Os posts serão salvos apenas no seu navegador.
-                    </div>
-
-                    <!-- Login Form -->
                     <div id="admin-login" class="bg-gray-50 p-8 rounded-xl border border-gray-200 shadow-sm">
                         <h2 class="text-xl font-bold text-black mb-6 text-center">Login Seguro</h2>
                         <form onsubmit="handleLogin(event)" class="space-y-6">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">E-mail</label>
-                                <input type="email" id="login-email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Senha</label>
-                                <input type="password" id="login-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required>
-                            </div>
-                            <button type="submit" class="w-full bg-black text-white hover:bg-gray-800 font-bold py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed">Entrar</button>
-                            <p id="login-error" class="text-red-500 text-sm text-center hidden font-bold"></p>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-2">E-mail</label><input type="email" id="login-email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required></div>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-2">Senha</label><input type="password" id="login-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required></div>
+                            <button type="submit" class="w-full bg-black text-white hover:bg-gray-800 font-bold py-3 rounded-lg transition disabled:opacity-50">Entrar</button>
+                            <p id="login-error" class="text-red-500 text-sm text-center hidden font-bold mt-4"></p>
                         </form>
                     </div>
 
-                    <!-- Admin Panel (Hidden until login) -->
                     <div id="admin-panel" class="hidden">
                         <div class="flex justify-between items-center mb-6">
                             <span class="text-green-600 font-bold flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> Logado</span>
                             <button onclick="handleLogout()" class="text-sm text-red-500 hover:underline">Sair</button>
                         </div>
-
                         <div class="bg-gray-50 p-8 rounded-xl border border-gray-200 mb-12">
                             <h2 class="text-xl font-bold text-black mb-6">Adicionar Novo Post</h2>
                             <form onsubmit="addNewPost(event)" class="space-y-6">
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Título do Artigo</label>
-                                    <input type="text" id="admin-title" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required>
-                                </div>
-                                
+                                <div><label class="block text-sm font-bold text-gray-700 mb-2">Título</label><input type="text" id="admin-title" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required></div>
                                 <div class="grid grid-cols-2 gap-6">
-                                    <div>
-                                        <label class="block text-sm font-bold text-gray-700 mb-2">Categoria</label>
-                                        <select id="admin-category" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none">
-                                            <option value="Score">Score</option>
-                                            <option value="Cartões">Cartões</option>
-                                            <option value="Empréstimos">Empréstimos</option>
-                                            <option value="Dívidas">Dívidas</option>
-                                            <option value="Educação">Educação</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-bold text-gray-700 mb-2">Autor</label>
-                                        <input type="text" id="admin-author" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" value="Redação CrediFácil">
-                                    </div>
+                                    <div><label class="block text-sm font-bold text-gray-700 mb-2">Categoria</label><select id="admin-category" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"><option>Score</option><option>Cartões</option><option>Empréstimos</option></select></div>
+                                    <div><label class="block text-sm font-bold text-gray-700 mb-2">Autor</label><input type="text" id="admin-author" value="Redação" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"></div>
                                 </div>
-
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">URL da Imagem</label>
-                                    <input type="text" id="admin-image" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" placeholder="https://..." required>
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Introdução (Resumo)</label>
-                                    <textarea id="admin-intro" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"></textarea>
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Conteúdo Completo (HTML)</label>
-                                    <textarea id="admin-content" rows="10" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none font-mono text-sm" placeholder="<p>Texto...</p>"></textarea>
-                                </div>
-
-                                <button type="submit" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-3 rounded-lg transition shadow-md">
-                                    Publicar Post
-                                </button>
+                                <div><label class="block text-sm font-bold text-gray-700 mb-2">Imagem URL</label><input type="text" id="admin-image" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required></div>
+                                <div><label class="block text-sm font-bold text-gray-700 mb-2">Resumo</label><textarea id="admin-intro" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"></textarea></div>
+                                <div><label class="block text-sm font-bold text-gray-700 mb-2">Conteúdo HTML</label><textarea id="admin-content" rows="10" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none font-mono text-sm"></textarea></div>
+                                <button type="submit" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-3 rounded-lg transition shadow-md">Publicar</button>
                             </form>
                         </div>
                     </div>
@@ -579,69 +307,33 @@
             </div>
         </section>
 
-        <!-- PÁGINA: SOBRE -->
-        <section id="sobre" class="page-section hidden-section fade-in">
-            <div class="container mx-auto px-4 py-20">
-                <div class="max-w-4xl mx-auto text-center">
-                    <h1 class="text-4xl font-bold text-black mb-6">Quem Somos</h1>
-                    <p class="text-xl text-gray-600 leading-relaxed mb-12">
-                        O CrediFácil é um portal de conteúdo informativo dedicado à democratização da educação financeira. Nosso objetivo é simplificar o acesso a produtos financeiros através de informação clara e imparcial.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PÁGINA: CONTATO -->
-        <section id="contact" class="page-section hidden-section fade-in">
-            <div class="bg-white py-20">
-                <div class="container mx-auto px-4 max-w-2xl">
-                    <h1 class="text-3xl font-bold text-black mb-8 text-center">Fale Conosco</h1>
-                    <p class="text-center text-gray-600 mb-12">Tem dúvidas sobre nosso conteúdo? Entre em contato.</p>
-                    
-                    <form class="space-y-6" onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso!');">
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Nome</label>
-                            <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">E-mail</label>
-                            <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Mensagem</label>
-                            <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required></textarea>
-                        </div>
-                        <button class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-3 rounded-lg transition">Enviar Mensagem</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <!-- PÁGINAS LEGAIS -->
-        <section id="terms" class="page-section hidden-section fade-in">
-            <div class="bg-white py-20">
-                <div class="container mx-auto px-4 max-w-3xl">
-                    <h1 class="text-3xl font-bold text-black mb-8">Termos de Uso</h1>
-                    <div class="prose prose-gray text-gray-700 text-sm">
-                        <p class="mb-4"><strong>1. Aceitação:</strong> Ao acessar o CrediFácil, você concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis.</p>
-                        <p class="mb-4"><strong>2. Natureza do Serviço:</strong> O CrediFácil é um portal estritamente informativo. Não somos uma instituição financeira, não realizamos empréstimos, não emitimos cartões e não garantimos aprovação de crédito. As simulações são estimativas baseadas em dados de mercado.</p>
-                        <p class="mb-4"><strong>3. Precisão dos Materiais:</strong> Os materiais exibidos no site do CrediFácil podem incluir erros técnicos, tipográficos ou fotográficos. Não garantimos que qualquer material em seu site seja preciso, completo ou atual, embora nos esforcemos para tal.</p>
-                        <p class="mb-4"><strong>4. Links:</strong> O CrediFácil não analisou todos os sites vinculados ao seu site e não é responsável pelo conteúdo de nenhum site vinculado (links externos para bancos/parceiros). A inclusão de qualquer link não implica endosso por CrediFácil.</p>
+        <!-- OFFER SCREEN -->
+        <section id="offer-screen" class="page-section hidden-section fade-in">
+            <div class="min-h-screen bg-gray-50 flex flex-col">
+                <div class="bg-black text-white py-12">
+                    <div class="container mx-auto px-4 text-center">
+                        <button onclick="navigateTo('emprestimo')" class="text-gray-400 hover:text-white mb-6 flex items-center justify-center gap-2 transition mx-auto"><i class="ph ph-arrow-left"></i> Voltar</button>
+                        <h1 class="text-3xl font-bold mb-2">Detalhes</h1>
+                        <p class="text-gray-400">Redirecionando para o parceiro oficial.</p>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section id="privacy" class="page-section hidden-section fade-in">
-            <div class="bg-white py-20">
-                <div class="container mx-auto px-4 max-w-3xl">
-                    <h1 class="text-3xl font-bold text-black mb-8">Política de Privacidade</h1>
-                    <div class="prose prose-gray text-gray-700 text-sm">
-                        <p class="mb-4">A sua privacidade é importante para nós. É política do CrediFácil respeitar a sua privacidade em relação a qualquer informação que possamos coletar.</p>
-                        <h3 class="font-bold mt-4 mb-2">Cookies e Publicidade</h3>
-                        <p class="mb-4">Utilizamos cookies para melhorar sua experiência e veicular anúncios personalizados através do Google AdSense. O Google, como fornecedor de terceiros, utiliza cookies para exibir anúncios. O uso do cookie DART permite que o Google veicule anúncios para nossos usuários com base em sua visita ao nosso site e a outros sites na Internet.</p>
-                        <h3 class="font-bold mt-4 mb-2">Dados Pessoais</h3>
-                        <p class="mb-4">Não vendemos ou compartilhamos suas informações de identificação pessoal publicamente ou com terceiros, exceto quando exigido por lei.</p>
+                <div class="container mx-auto px-4 -mt-8 pb-16 flex-1">
+                    <div class="ad-slot bg-white rounded-lg w-full"><ins class="adsbygoogle-lazy" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+                    <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+                        <div class="p-8 border-b border-gray-100">
+                            <div class="flex justify-between items-start mb-6">
+                                <div><p class="text-sm text-gray-500 mb-1">Instituição</p><h2 id="offer-partner-name" class="text-2xl font-bold text-black">Banco</h2></div>
+                                <div class="bg-brand-100 text-brand-900 px-3 py-1 rounded-full text-xs font-bold uppercase border border-brand-200">Recomendado</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-8 mb-6">
+                                <div><p class="text-sm text-gray-500 mb-1">Simulação</p><p id="offer-value" class="text-2xl font-bold text-black">R$ 0,00</p></div>
+                                <div><p class="text-sm text-gray-500 mb-1">Parcelamento</p><p id="offer-installments" class="text-2xl font-bold text-brand-600">12x</p></div>
+                            </div>
+                        </div>
+                        <div class="p-8 bg-white">
+                            <button id="offer-cta-btn" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-xl transition shadow-lg text-lg flex items-center justify-center gap-2">Continuar no Site Oficial <i class="ph-bold ph-arrow-right"></i></button>
+                            <p class="text-center text-xs text-gray-400 mt-4 leading-tight">Você será redirecionado para o ambiente seguro da instituição.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -649,605 +341,253 @@
 
     </main>
 
-    <!-- FOOTER (DISCLAIMER ROBUSTO) -->
     <footer class="bg-black text-gray-400 py-12 border-t border-gray-800">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-4 gap-8 mb-12">
                 <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center gap-2 text-white mb-4">
-                        <i class="ph-fill ph-check-circle text-brand-400 text-xl"></i>
-                        <span class="font-bold text-xl">CrediFácil</span>
-                    </div>
-                    <p class="text-sm max-w-md mb-4">Seu guia confiável para decisões financeiras inteligentes.</p>
+                    <span class="font-bold text-xl text-white">CrediFácil</span>
+                    <p class="text-sm mt-2">Seu guia confiável.</p>
                 </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">Navegação</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" onclick="navigateTo('home')" class="hover:text-brand-400 transition">Início</a></li>
-                        <li><a href="#" onclick="navigateTo('emprestimo')" class="hover:text-brand-400 transition">Simulador</a></li>
-                        <li><a href="#" onclick="navigateTo('blog')" class="hover:text-brand-400 transition">Blog</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">Institucional</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" onclick="navigateTo('contact')" class="hover:text-brand-400 transition">Fale Conosco</a></li>
-                        <li><a href="#" onclick="navigateTo('terms')" class="hover:text-brand-400 transition">Termos de Uso</a></li>
-                        <li><a href="#" onclick="navigateTo('privacy')" class="hover:text-brand-400 transition">Política de Privacidade</a></li>
-                        <li><a href="#" onclick="navigateTo('admin')" class="hover:text-brand-400 transition text-gray-600">Admin</a></li>
-                    </ul>
-                </div>
+                <div><h4 class="text-white font-bold mb-4">Legal</h4><ul class="space-y-2 text-sm"><li><a href="#" onclick="navigateTo('admin')" class="hover:text-white">Admin</a></li></ul></div>
             </div>
-            
-            <div class="border-t border-gray-800 pt-8 pb-8 text-xs text-gray-500 text-justify">
-                <p class="mb-2"><strong>Isenção de Responsabilidade (Disclaimer):</strong> O CrediFácil (credifacil.com) é um blog informativo e não atua como instituição financeira, banco ou credora. Não realizamos empréstimos pessoais, não emitimos cartões de crédito e não somos responsáveis pela aprovação ou negação de crédito. Todo o conteúdo disposto neste site tem caráter meramente informativo.</p>
-                <p class="mb-2"><strong>Segurança:</strong> O CrediFácil jamais solicitará quantias em dinheiro para liberação de nenhum tipo de produto financeiro, seja cartão de crédito, financiamento ou empréstimo. Se isso acontecer, denuncie imediatamente.</p>
-                <p>As propostas e simulações realizadas através de links de parceiros estão sujeitas à análise de crédito e aos termos de uso de cada instituição financeira. As taxas de juros podem variar de acordo com o perfil de cada usuário.</p>
-            </div>
-
-            <div class="text-center text-xs pt-4 border-t border-gray-800">
-                <p>&copy; 2025 CrediFácil. Todos os direitos reservados.</p>
-            </div>
+            <div class="border-t border-gray-800 pt-8 text-xs text-gray-500"><p>&copy; 2025 CrediFácil.</p></div>
         </div>
     </footer>
 
-    <!-- COOKIE BANNER -->
-    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-white text-gray-900 p-6 z-50 flex flex-col md:flex-row justify-between items-center gap-4 border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] transform translate-y-full transition-transform duration-500">
-        <div class="text-sm text-center md:text-left">
-            <p><strong>🍪 Política de Cookies:</strong> Utilizamos cookies para personalizar conteúdo e anúncios (AdSense), fornecer recursos de mídia social e analisar nosso tráfego. Ao continuar, você concorda com nossa <a href="#" onclick="navigateTo('privacy')" class="text-brand-600 underline font-bold">Política de Privacidade</a>.</p>
-        </div>
-        <div class="flex gap-3 shrink-0">
-             <button onclick="acceptCookies()" class="bg-black text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-gray-800 transition">Aceitar Tudo</button>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- JS -->
     <script>
-        // --- 1. CONFIGURAÇÃO DO FIREBASE (IMPORTANTE: SUBSTITUA COM SEUS DADOS) ---
-        // Você pega esses dados no console do Firebase: Project Settings > General > Your apps
-     const firebaseConfig = {
-  apiKey: "AIzaSyAM-jEpYxbOLHA9yGCQtKFS3P_xdbMYPNI",
-  authDomain: "credifacil-5af35.firebaseapp.com",
-  projectId: "credifacil-5af35",
-  storageBucket: "credifacil-5af35.firebasestorage.app",
-  messagingSenderId: "491592064222",
-  appId: "1:491592064222:web:a93a975bd912012359b64f",
-  measurementId: "G-CXHTDD45DJ"
-};
+        // CONFIGURAÇÃO
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
+    authDomain: "credifacil-ddb17.firebaseapp.com",
+    projectId: "credifacil-ddb17",
+    storageBucket: "credifacil-ddb17.firebasestorage.app",
+    messagingSenderId: "473150441862",
+    appId: "1:473150441862:web:8f7b1945fa27c519c90407",
+    measurementId: "G-RSHX4BZRG0"
+  };
 
-        // --- INICIALIZAÇÃO DO FIREBASE COM FALLBACK ---
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
         let db, auth;
         let isFirebaseInitialized = false;
 
-        // Verifica se a config ainda tem placeholders
-        const hasPlaceholders = firebaseConfig.projectId === "SEU_PROJECT_ID";
-
-        if (!hasPlaceholders) {
-            try {
-                firebase.initializeApp(firebaseConfig);
-                db = firebase.firestore();
-                auth = firebase.auth();
-                isFirebaseInitialized = true;
-                console.log("Firebase conectado com sucesso.");
-            } catch (error) {
-                console.warn("Erro ao conectar Firebase. Usando modo Demo.", error);
-            }
-        } else {
-            console.log("Firebase não configurado (placeholders detectados). Ativando modo Demo.");
-        }
-
-        // --- DADOS DOS CARTÕES ---
+        // DADOS DOS CARTÕES (Estático)
         const cardsData = [
-            {
-                id: 1,
-                name: "Santander SX",
-                bgClass: "bg-red-600",
-                iconBg: "bg-red-700",
-                rotation: "rotate-45",
-                badges: [{ text: "Aprovação Alta", color: "bg-green-100 text-green-700" }, { text: "Visa/Master", color: "bg-blue-100 text-blue-700" }],
-                annuity: "Grátis (gastando R$100)",
-                income: "R$ 1.045,00",
-                desc: "Ideal para quem busca o primeiro cartão ou quer recuperar crédito no mercado.",
-                link: "https://www.santander.com.br/cartao-credito-santander/sx",
-                categories: ["todos", "negativados"]
-            },
-            {
-                id: 2,
-                name: "Roxinho Nubank",
-                bgClass: "bg-purple-700",
-                iconBg: "bg-purple-800",
-                rotation: "-rotate-12",
-                badges: [{ text: "Sem Anuidade", color: "bg-purple-100 text-purple-700" }, { text: "Conta Digital", color: "bg-yellow-100 text-yellow-700" }],
-                annuity: "R$ 0,00",
-                income: "Não exigida",
-                desc: "Controle total pelo app e descontos se antecipar parcelas.",
-                link: "https://nubank.com.br/cartao/",
-                categories: ["todos", "anuidade", "negativados"]
-            },
-            {
-                id: 3,
-                name: "Inter Gold",
-                bgClass: "bg-orange-500",
-                iconBg: "bg-orange-400",
-                rotation: "rotate-0",
-                isInter: true,
-                badges: [{ text: "Cashback", color: "bg-orange-100 text-orange-700" }, { text: "Internacional", color: "bg-blue-100 text-blue-700" }],
-                annuity: "Grátis",
-                income: "Não exigida",
-                extraInfoLabel: "Cashback",
-                extraInfoValue: "0.25% na fatura",
-                desc: "Super App completo com investimentos e shopping.",
-                link: "https://inter.co/pra-voce/cartoes/",
-                categories: ["todos", "anuidade", "milhas"]
-            },
-             {
-                id: 4,
-                name: "C6 Carbon",
-                bgClass: "bg-slate-800",
-                iconBg: "bg-black",
-                rotation: "rotate-12",
-                badges: [{ text: "Pontos Átomos", color: "bg-slate-100 text-slate-700" }, { text: "Mastercard Black", color: "bg-slate-900 text-white" }],
-                annuity: "12x R$ 85,00 (Isenção possível)",
-                income: "R$ 5.000,00",
-                desc: "2.5 pontos por dólar e acesso a salas VIP em aeroportos.",
-                link: "https://www.c6bank.com.br/cartao-c6-carbon",
-                categories: ["todos", "milhas"]
-            },
-             {
-                id: 5,
-                name: "Neon",
-                bgClass: "bg-cyan-500",
-                iconBg: "bg-cyan-600",
-                rotation: "-rotate-6",
-                badges: [{ text: "Sem Anuidade", color: "bg-cyan-100 text-cyan-700" }, { text: "Débito e Crédito", color: "bg-blue-100 text-blue-700" }],
-                annuity: "Grátis",
-                income: "Não exigida",
-                desc: "Cartão virtual na hora e investimentos que rendem mais que a poupança.",
-                link: "https://neon.com.br/",
-                categories: ["todos", "anuidade", "negativados"]
-            },
-             {
-                id: 6,
-                name: "Azul Itaú",
-                bgClass: "bg-blue-600",
-                iconBg: "bg-blue-800",
-                rotation: "rotate-3",
-                badges: [{ text: "Milhas Aéreas", color: "bg-blue-100 text-blue-700" }, { text: "Descontos", color: "bg-yellow-100 text-yellow-700" }],
-                annuity: "12x R$ 30,00",
-                income: "R$ 1.500,00",
-                desc: "Ganhe pontos TudoAzul em todas as compras e descontos em passagens.",
-                link: "https://www.itau.com.br/cartoes/escolha/azul-itau-internacional-visa-msg",
-                categories: ["todos", "milhas"]
-            }
+            { id: 1, name: "Santander SX", bgClass: "bg-red-600", iconBg: "bg-red-700", rotation: "rotate-45", badges: [{ text: "Aprovação Alta", color: "bg-green-100 text-green-700" }], annuity: "Grátis", income: "R$ 1.045", desc: "Ideal para score baixo.", link: "https://www.santander.com.br/cartao-credito-santander/sx", categories: ["todos", "negativados"] },
+            { id: 2, name: "Nubank", bgClass: "bg-purple-700", iconBg: "bg-purple-800", rotation: "-rotate-12", badges: [{ text: "Sem Anuidade", color: "bg-purple-100 text-purple-700" }], annuity: "R$ 0,00", income: "Não exigida", desc: "Controle total pelo app.", link: "https://nubank.com.br/cartao/", categories: ["todos", "anuidade"] },
+            { id: 3, name: "Inter", bgClass: "bg-orange-500", iconBg: "bg-orange-400", rotation: "rotate-0", isInter: true, badges: [{ text: "Cashback", color: "bg-orange-100 text-orange-700" }], annuity: "Grátis", income: "Não exigida", desc: "Super App completo.", link: "https://inter.co/pra-voce/cartoes/", categories: ["todos", "milhas"] }
         ];
 
-        let blogPosts = [];
-
-        // --- NAVEGAÇÃO ---
-        function navigateTo(pageId) {
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.classList.add('hidden-section');
-            });
-            const targetSection = document.getElementById(pageId);
-            if (targetSection) {
-                targetSection.classList.remove('hidden-section');
-                targetSection.classList.remove('fade-in');
-                void targetSection.offsetWidth;
-                targetSection.classList.add('fade-in');
-                void targetSection.offsetWidth; 
-                window.scrollTo(0, 0);
-
-                setTimeout(() => {
-                    const pendingAds = targetSection.querySelectorAll('ins.adsbygoogle-lazy');
-                    if (pendingAds.length > 0) {
-                        pendingAds.forEach(ad => {
-                            if (ad.offsetParent !== null && ad.offsetWidth > 0) {
-                                ad.classList.remove('adsbygoogle-lazy');
-                                ad.classList.add('adsbygoogle');
-                                try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) { console.error("AdSense push error:", e); }
-                            }
-                        });
-                    }
-                }, 500);
-            }
-        }
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
-        // --- LÓGICA DE CARTÕES ---
-        function renderCards(filter = 'todos') {
-            const container = document.getElementById('cards-container');
-            if (!container) return;
-
-            container.innerHTML = '';
-            const filteredCards = cardsData.filter(card => card.categories.includes(filter));
-
-            if (filteredCards.length === 0) {
-                document.getElementById('no-cards-msg').classList.remove('hidden');
-            } else {
-                document.getElementById('no-cards-msg').classList.add('hidden');
-            }
-
-            filteredCards.forEach(card => {
-                let badgesHtml = card.badges.map(b => `<span class="text-xs font-semibold ${b.color} px-2 py-1 rounded">${b.text}</span>`).join('');
-                let cardVisual = card.isInter 
-                    ? `<div class="absolute w-20 h-20 ${card.iconBg} rounded-full top-0 right-0 opacity-50"></div>`
-                    : `<div class="absolute inset-0 ${card.iconBg} opacity-50 transform ${card.rotation} translate-y-10"></div>`;
-
-                const cardHtml = `
-                    <div class="card-enter bg-white rounded-2xl shadow-sm hover:shadow-xl transition overflow-hidden border border-gray-100 flex flex-col">
-                        <div class="p-6 flex flex-col items-center bg-gradient-to-b from-gray-50 to-white">
-                            <div class="w-full h-40 ${card.bgClass} rounded-xl mb-6 shadow-md relative flex items-center justify-center text-white overflow-hidden">
-                                <span class="font-bold text-2xl relative z-10">${card.name}</span>
-                                ${cardVisual}
-                            </div>
-                            <h3 class="text-xl font-bold text-black">${card.name}</h3>
-                            <div class="flex flex-wrap justify-center gap-2 mt-2">${badgesHtml}</div>
-                        </div>
-                        <div class="px-6 py-4 space-y-3 flex-1">
-                            <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
-                                <span class="text-gray-500">Anuidade</span>
-                                <span class="font-medium text-black">${card.annuity}</span>
-                            </div>
-                            <div class="flex justify-between text-sm border-b border-gray-100 pb-2">
-                                <span class="text-gray-500">${card.extraInfoLabel || 'Renda Mínima'}</span>
-                                <span class="font-medium text-black">${card.extraInfoValue || card.income}</span>
-                            </div>
-                            <p class="text-sm text-gray-600 mt-4">${card.desc}</p>
-                        </div>
-                        <div class="p-6 pt-0 mt-auto">
-                            <a href="${card.link}" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-brand-400 hover:bg-brand-500 text-black font-bold py-3 rounded-lg transition">Solicitar Cartão <i class="ph ph-arrow-up-right"></i></a>
-                            <p class="text-[10px] text-gray-400 text-center mt-2 leading-tight">Análise realizada pelo emissor do cartão.</p>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += cardHtml;
-            });
-        }
-
-        function filterCards(category) {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.className = "filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition cursor-pointer";
-            });
-            const activeBtn = document.getElementById('btn-' + category);
-            if(activeBtn) {
-                activeBtn.className = "filter-btn px-6 py-2 bg-black text-white rounded-full text-sm font-medium transition shadow-md cursor-pointer";
-            }
-            renderCards(category);
-        }
-
-        // --- SIMULADOR DE EMPRÉSTIMO ---
-        const loanPartners = [
-            { name: "Nubank", color: "text-purple-600", bg: "bg-purple-100", hoverBg: "group-hover:bg-purple-600", hoverText: "group-hover:text-white", letter: "N", url: "https://nubank.com.br/emprestimo/" },
-            { name: "Banco Inter", color: "text-orange-600", bg: "bg-orange-100", hoverBg: "group-hover:bg-orange-600", hoverText: "group-hover:text-white", letter: "I", url: "https://inter.co/pra-voce/emprestimo/" },
-            { name: "Santander", color: "text-red-600", bg: "bg-red-100", hoverBg: "group-hover:bg-red-600", hoverText: "group-hover:text-white", letter: "S", url: "https://www.santander.com.br/emprestimos" },
-            { name: "Itaú", color: "text-blue-600", bg: "bg-blue-100", hoverBg: "group-hover:bg-blue-600", hoverText: "group-hover:text-white", letter: "I", url: "https://www.itau.com.br/emprestimos" },
-            { name: "C6 Bank", color: "text-gray-800", bg: "bg-gray-200", hoverBg: "group-hover:bg-black", hoverText: "group-hover:text-white", letter: "C", url: "https://www.c6bank.com.br/emprestimos" }
+        const fallbackPosts = [
+            { id: 'f1', title: "Como aumentar seu Score", category: "Score", date: "Hoje", image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=500", intro: "Dicas práticas para subir sua pontuação.", content: "<p>Conteúdo exemplo...</p>" },
+            { id: 'f2', title: "Cartões para Negativados", category: "Cartões", date: "Ontem", image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=500", intro: "Lista dos melhores cartões.", content: "<p>Conteúdo exemplo...</p>" }
         ];
 
-        function updateLiveCalculation() {
-            const amount = parseFloat(document.getElementById('loan-amount').value);
-            const term = parseInt(document.getElementById('loan-term').value);
-            const rate = 0.035; 
-            const previewBox = document.getElementById('live-preview');
-            const resultElement = document.getElementById('live-installment');
+        let blogPosts = [...fallbackPosts]; // Começa com fallback
 
-            if (!amount || amount < 500) {
-                previewBox.classList.add('hidden');
-                return;
-            }
-            const numerator = amount * rate * Math.pow(1 + rate, term);
-            const denominator = Math.pow(1 + rate, term) - 1;
-            const installment = numerator / denominator;
-            const formatted = installment.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-            resultElement.textContent = formatted;
-            previewBox.classList.remove('hidden');
-        }
+        // INICIALIZAÇÃO
+        document.addEventListener('DOMContentLoaded', () => {
+            initFirebase();
+            renderCards('todos');
+            navigateTo('home');
+        });
 
-        function calculateFinalLoan(event) {
-            event.preventDefault();
-            const resultBox = document.getElementById('loan-result');
-            const container = document.getElementById('loan-recommendations-container');
-            container.innerHTML = '';
-            
-            const shuffled = [...loanPartners].sort(() => 0.5 - Math.random());
-            const count = Math.floor(Math.random() * 2) + 2;
-            const selected = shuffled.slice(0, count);
+        function initFirebase() {
+            if (firebaseConfig.apiKey !== "SUA_API_KEY_AQUI") {
+                try {
+                    firebase.initializeApp(firebaseConfig);
+                    db = firebase.firestore();
+                    auth = firebase.auth();
+                    isFirebaseInitialized = true;
+                    console.log("Firebase conectado.");
+                    
+                    // Listener de Auth
+                    auth.onAuthStateChanged(user => {
+                        const loginForm = document.getElementById('admin-login');
+                        const panel = document.getElementById('admin-panel');
+                        if (user) { loginForm.classList.add('hidden'); panel.classList.remove('hidden'); }
+                        else { loginForm.classList.remove('hidden'); panel.classList.add('hidden'); }
+                    });
 
-            selected.forEach(partner => {
-                const partnerHTML = `
-                <div onclick="openOffer('${partner.name}', '${partner.url}')" class="flex justify-between items-center p-3 bg-white border border-gray-200 rounded-lg hover:border-brand-400 transition cursor-pointer shadow-sm group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 ${partner.bg} rounded-full flex items-center justify-center ${partner.color} font-bold ${partner.hoverBg} ${partner.hoverText} transition">${partner.letter}</div>
-                        <span class="font-semibold text-black">${partner.name}</span>
-                    </div>
-                    <span class="text-brand-600 font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition">Ver oferta <i class="ph-bold ph-caret-right"></i></span>
-                </div>`;
-                container.innerHTML += partnerHTML;
-            });
-            resultBox.classList.remove('hidden');
-            resultBox.scrollIntoView({behavior: 'smooth', block: 'start'});
-        }
-
-        function openOffer(partnerName, linkUrl) {
-            const amount = document.getElementById('loan-amount').value;
-            const term = document.getElementById('loan-term').value;
-            const finalAmount = amount ? parseFloat(amount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 'R$ 5.000,00';
-            const installmentText = document.getElementById('live-installment').textContent;
-            const finalInstallment = installmentText !== 'R$ 0,00' ? installmentText : 'R$ 520,00';
-
-            document.getElementById('offer-partner-name').textContent = partnerName;
-            document.getElementById('offer-value').textContent = finalAmount;
-            document.getElementById('offer-installments').textContent = `${term}x ${finalInstallment}`;
-            
-            const ctaBtn = document.getElementById('offer-cta-btn');
-            ctaBtn.onclick = function() { window.open(linkUrl, '_blank'); };
-            navigateTo('offer-screen');
-        }
-
-        // --- AUTH & ADMIN LOGIC ---
-        
-        // Listen to Auth State if configured
-        if (isFirebaseInitialized && auth) {
-            auth.onAuthStateChanged(user => {
-                if (user) {
-                    document.getElementById('admin-login').classList.add('hidden');
-                    document.getElementById('admin-panel').classList.remove('hidden');
-                    document.getElementById('demo-warning').classList.add('hidden');
-                } else {
-                    document.getElementById('admin-login').classList.remove('hidden');
-                    document.getElementById('admin-panel').classList.add('hidden');
+                    fetchBlogPosts(); // Tenta buscar do servidor
+                } catch (e) {
+                    console.error("Erro Firebase:", e);
                 }
-            });
-        } else {
-            // Show demo warning
-            const warningEl = document.getElementById('demo-warning');
-            if (warningEl) warningEl.classList.remove('hidden');
+            } else {
+                console.warn("Modo Demo: Configure o Firebase no código.");
+                renderBlog(); // Renderiza fallback
+            }
         }
 
-        function handleLogin(event) {
-            event.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            const errorMsg = document.getElementById('login-error');
-            const btn = event.target.querySelector('button[type="submit"]');
+        async function fetchBlogPosts() {
+            if (!db) return;
+            try {
+                const snap = await db.collection("posts").orderBy("createdAt", "desc").limit(10).get();
+                if (!snap.empty) {
+                    blogPosts = []; // Limpa fallback se tiver dados reais
+                    snap.forEach(doc => blogPosts.push({ id: doc.id, ...doc.data() }));
+                    renderBlog();
+                }
+            } catch (e) {
+                console.warn("Falha ao buscar posts (pode ser permissão ou rede). Usando fallback.");
+            }
+        }
 
-            // Feedback visual imediato
-            const originalText = btn.innerText;
-            btn.innerText = "Processando...";
+        // RENDERIZAÇÃO
+        function renderBlog() {
+            const grids = [document.getElementById('home-blog-grid'), document.getElementById('blog-list-container')];
+            grids.forEach(grid => {
+                if(!grid) return;
+                grid.innerHTML = blogPosts.map(post => `
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col h-full" onclick="openArticle('${post.id}')">
+                        <div class="h-48 overflow-hidden relative"><img src="${post.image}" class="w-full h-full object-cover transform hover:scale-105 transition duration-500"><span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-black z-20">${post.category}</span></div>
+                        <div class="p-6 flex-1 flex flex-col"><span class="text-xs text-gray-500 mb-2 block">${post.date}</span><h3 class="text-xl font-bold text-black mb-3 hover:text-brand-600 transition">${post.title}</h3><p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-1">${post.intro}</p><span class="text-brand-600 font-semibold text-sm flex items-center gap-1 mt-auto">Ler artigo <i class="ph-bold ph-arrow-right"></i></span></div>
+                    </div>
+                `).join('');
+            });
+        }
+
+        function renderCards(filter) {
+            const container = document.getElementById('cards-container');
+            if(!container) return;
+            const filtered = (filter === 'todos') ? cardsData : cardsData.filter(c => c.categories.includes(filter));
+            container.innerHTML = filtered.map(card => `
+                <div class="card-enter bg-white rounded-2xl shadow-sm hover:shadow-xl transition overflow-hidden border border-gray-100 flex flex-col">
+                    <div class="p-6 flex flex-col items-center bg-gradient-to-b from-gray-50 to-white">
+                        <div class="w-full h-40 ${card.bgClass} rounded-xl mb-6 shadow-md relative flex items-center justify-center text-white overflow-hidden">
+                            <span class="font-bold text-2xl relative z-10">${card.name}</span>
+                            ${card.isInter ? `<div class="absolute w-20 h-20 ${card.iconBg} rounded-full top-0 right-0 opacity-50"></div>` : `<div class="absolute inset-0 ${card.iconBg} opacity-50 transform ${card.rotation} translate-y-10"></div>`}
+                        </div>
+                        <h3 class="text-xl font-bold text-black">${card.name}</h3>
+                        <div class="flex flex-wrap justify-center gap-2 mt-2">${card.badges.map(b => `<span class="text-xs font-semibold ${b.color} px-2 py-1 rounded">${b.text}</span>`).join('')}</div>
+                    </div>
+                    <div class="px-6 py-4 space-y-3 flex-1">
+                        <div class="flex justify-between text-sm border-b border-gray-100 pb-2"><span class="text-gray-500">Anuidade</span><span class="font-medium text-black">${card.annuity}</span></div>
+                        <div class="flex justify-between text-sm border-b border-gray-100 pb-2"><span class="text-gray-500">Renda</span><span class="font-medium text-black">${card.income}</span></div>
+                        <p class="text-sm text-gray-600 mt-4">${card.desc}</p>
+                    </div>
+                    <div class="p-6 pt-0 mt-auto"><a href="${card.link}" target="_blank" class="block w-full text-center bg-brand-400 hover:bg-brand-500 text-black font-bold py-3 rounded-lg transition">Solicitar Cartão <i class="ph ph-arrow-up-right"></i></a></div>
+                </div>
+            `).join('');
+        }
+
+        // LÓGICA DE LOGIN COM TIMEOUT
+        function handleLogin(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const errorMsg = document.getElementById('login-error');
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-password').value;
+
+            btn.innerText = "Verificando...";
             btn.disabled = true;
-            btn.classList.add('opacity-50', 'cursor-not-allowed');
             errorMsg.classList.add('hidden');
 
             if (!isFirebaseInitialized) {
-                // Mock Login for Demo
-                setTimeout(() => {
-                    alert("Modo de Demonstração: Login simulado com sucesso!");
-                    document.getElementById('admin-login').classList.add('hidden');
-                    document.getElementById('admin-panel').classList.remove('hidden');
-                    btn.innerText = originalText;
-                    btn.disabled = false;
-                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                }, 800);
+                setTimeout(() => { alert("Modo Demo: Login simulado (sem banco de dados)."); document.getElementById('admin-login').classList.add('hidden'); document.getElementById('admin-panel').classList.remove('hidden'); btn.innerText = "Entrar"; btn.disabled = false; }, 1000);
                 return;
             }
 
-            if (!auth) {
-                 errorMsg.textContent = "Erro: Firebase Auth não inicializado.";
-                 errorMsg.classList.remove('hidden');
-                 btn.innerText = originalText;
-                 btn.disabled = false;
-                 btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                 return;
-            }
+            // Race condition: Se o Firebase não responder em 10s, mostra erro
+            const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error("Tempo limite excedido. Verifique sua conexão.")), 10000));
+            const login = auth.signInWithEmailAndPassword(email, pass);
 
-            auth.signInWithEmailAndPassword(email, password)
-                .then(() => {
-                    // Sucesso é tratado pelo onAuthStateChanged
-                    // Resetamos o botão apenas por segurança visual
-                    setTimeout(() => {
-                        btn.innerText = originalText;
-                        btn.disabled = false;
-                        btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                    }, 500);
-                })
-                .catch((error) => {
-                    console.error("Login error:", error);
-                    let message = "Erro desconhecido.";
-                    // Tradução básica de erros comuns
-                    if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
-                        message = "E-mail ou senha incorretos.";
-                    } else if (error.code === 'auth/too-many-requests') {
-                        message = "Muitas tentativas. Tente mais tarde.";
-                    } else {
-                        message = "Erro: " + error.message;
-                    }
-                    
-                    errorMsg.textContent = message;
+            Promise.race([login, timeout])
+                .then(() => { btn.innerText = "Sucesso!"; }) // AuthStateListener vai trocar a tela
+                .catch(err => {
+                    console.error(err);
+                    errorMsg.textContent = "Erro: " + (err.code === 'auth/invalid-credential' ? "Dados incorretos." : err.message);
                     errorMsg.classList.remove('hidden');
-                    
-                    // Reset botão
-                    btn.innerText = originalText;
+                    btn.innerText = "Entrar";
                     btn.disabled = false;
-                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
                 });
         }
 
-        function handleLogout() {
-            if(isFirebaseInitialized && auth) {
-                auth.signOut();
-            } else {
-                // Mock Logout
-                window.location.reload();
-            }
-        }
+        function handleLogout() { if(auth) auth.signOut(); else window.location.reload(); }
 
-        // --- BLOG LOGIC (FIRESTORE OR MOCK) ---
-        
-        async function fetchBlogPosts() {
-            const container = document.getElementById('home-blog-grid');
-            const listContainer = document.getElementById('blog-list-container');
-            
-            if (!isFirebaseInitialized) {
-                // Fallback to LocalStorage or Static JSON if Firebase not config
-                const localData = localStorage.getItem('demoPosts');
-                if (localData) {
-                    blogPosts = JSON.parse(localData);
-                } else {
-                    // Try fetch static json
-                    try {
-                        const response = await fetch('posts.json');
-                        if (response.ok) {
-                            const data = await response.json();
-                            if(data.posts) blogPosts = data.posts;
-                        }
-                    } catch(e) {
-                        // Fallback hardcoded if no json file
-                        blogPosts = [
-                            {
-                                id: 'demo1',
-                                title: "Como aumentar seu Score em 30 dias",
-                                category: "Score",
-                                date: "10 Jan, 2026",
-                                intro: "Dicas essenciais para melhorar sua pontuação.",
-                                image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-                                content: "<p>Conteúdo de demonstração...</p>"
-                            }
-                        ]; 
-                    }
-                }
-                renderBlog();
-                return;
-            }
-
-            try {
-                const querySnapshot = await db.collection("posts").orderBy("createdAt", "desc").limit(10).get();
-                blogPosts = [];
-                querySnapshot.forEach((doc) => {
-                    blogPosts.push({ id: doc.id, ...doc.data() });
-                });
-                renderBlog();
-            } catch (error) {
-                console.error("Error fetching posts:", error);
-                if(container) container.innerHTML = '<p class="text-center col-span-full">Erro ao carregar posts.</p>';
-            }
-        }
-
-        function renderBlog() {
-            const homeGrid = document.getElementById('home-blog-grid');
-            const blogListGrid = document.getElementById('blog-list-container');
-            
-            if(homeGrid) homeGrid.innerHTML = '';
-            if(blogListGrid) blogListGrid.innerHTML = '';
-
-            if (blogPosts.length === 0) {
-                const emptyMsg = '<p class="text-center col-span-full text-gray-500">Nenhum post encontrado.</p>';
-                if(homeGrid) homeGrid.innerHTML = emptyMsg;
-                if(blogListGrid) blogListGrid.innerHTML = emptyMsg;
-                return;
-            }
-
-            blogPosts.forEach((post, index) => {
-                const cardHTML = `
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col h-full" onclick="openArticle('${post.id}')">
-                        <div class="h-48 overflow-hidden relative">
-                             <div class="absolute inset-0 bg-black/10 hover:bg-transparent transition z-10"></div>
-                             <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
-                             <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-black z-20">${post.category}</span>
-                        </div>
-                        <div class="p-6 flex-1 flex flex-col">
-                            <span class="text-xs text-gray-500 mb-2 block">${post.date}</span>
-                            <h3 class="text-xl font-bold text-black mb-3 hover:text-brand-600 transition">${post.title}</h3>
-                            <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-1">${post.intro}</p>
-                            <span class="text-brand-600 font-semibold text-sm flex items-center gap-1 mt-auto">Ler artigo <i class="ph-bold ph-arrow-right"></i></span>
-                        </div>
-                    </div>
-                `;
-
-                if (index < 3 && homeGrid) homeGrid.innerHTML += cardHTML;
-                if (blogListGrid) blogListGrid.innerHTML += cardHTML;
-            });
-        }
-
-        function openArticle(id) {
-            const post = blogPosts.find(p => p.id === id);
-            if (!post) return;
-            document.getElementById('post-category').textContent = post.category;
-            document.getElementById('post-title').textContent = post.title;
-            document.getElementById('post-date').textContent = post.date;
-            const contentDiv = document.getElementById('post-content');
-            contentDiv.querySelector('.intro-text').textContent = post.intro;
-            contentDiv.querySelector('.body-content').innerHTML = post.content;
-            navigateTo('blog-post');
-        }
-
-        // --- ADMIN FUNCTIONS (FIRESTORE OR MOCK) ---
-        function addNewPost(event) {
-            event.preventDefault();
-            
-            const newPost = {
+        function addNewPost(e) {
+            e.preventDefault();
+            if(!db) { alert("Modo Demo: Post salvo localmente (não persistente)."); return; }
+            const post = {
                 title: document.getElementById('admin-title').value,
                 category: document.getElementById('admin-category').value,
-                date: new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'short', year: 'numeric' }),
                 author: document.getElementById('admin-author').value,
                 image: document.getElementById('admin-image').value,
                 intro: document.getElementById('admin-intro').value,
-                content: document.getElementById('admin-content').value
+                content: document.getElementById('admin-content').value,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                date: new Date().toLocaleDateString('pt-BR')
             };
-
-            if (!isFirebaseInitialized) {
-                // Mock Save
-                newPost.id = Date.now().toString();
-                blogPosts.unshift(newPost);
-                localStorage.setItem('demoPosts', JSON.stringify(blogPosts));
-                alert("Modo Demo: Post salvo no navegador! (Configure o Firebase para salvar no servidor)");
-                event.target.reset();
-                renderBlog();
-                return;
-            }
-
-            // Real Firebase Save
-            newPost.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-            db.collection("posts").add(newPost)
-                .then((docRef) => {
-                    alert("Post publicado com sucesso! ID: " + docRef.id);
-                    event.target.reset();
-                    fetchBlogPosts();
-                })
-                .catch((error) => {
-                    console.error("Erro ao adicionar post: ", error);
-                    alert("Erro ao publicar. Verifique o console.");
-                });
+            db.collection("posts").add(post).then(() => { alert("Postado!"); e.target.reset(); fetchBlogPosts(); }).catch(err => alert("Erro: " + err.message));
         }
 
-        // --- COOKIES ---
-        function checkCookies() {
-            if (!localStorage.getItem('cookiesAccepted')) {
-                const banner = document.getElementById('cookie-banner');
-                banner.classList.remove('translate-y-full');
+        // OUTROS
+        function navigateTo(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.add('hidden-section'));
+            const section = document.getElementById(id);
+            if(section) {
+                section.classList.remove('hidden-section');
+                section.classList.remove('fade-in');
+                void section.offsetWidth;
+                section.classList.add('fade-in');
+                window.scrollTo(0,0);
+                // AdSense Loader Seguro
+                setTimeout(() => {
+                    section.querySelectorAll('ins.adsbygoogle-lazy').forEach(ad => {
+                        if(ad.offsetWidth > 0) {
+                            ad.classList.remove('adsbygoogle-lazy');
+                            ad.classList.add('adsbygoogle');
+                            try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+                        }
+                    });
+                }, 500);
             }
         }
-
-        function acceptCookies() {
-            localStorage.setItem('cookiesAccepted', 'true');
-            const banner = document.getElementById('cookie-banner');
-            banner.classList.add('translate-y-full');
+        
+        function openArticle(id) {
+            const post = blogPosts.find(p => p.id == id);
+            if(!post) return;
+            document.getElementById('post-title').textContent = post.title;
+            document.getElementById('post-category').textContent = post.category;
+            document.getElementById('post-date').textContent = post.date;
+            document.querySelector('#post-content .intro-text').textContent = post.intro;
+            document.querySelector('#post-content .body-content').innerHTML = post.content;
+            navigateTo('blog-post');
         }
 
-        // --- INIT ---
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchBlogPosts();
-            renderCards('todos');
-            navigateTo('home');
-            setTimeout(checkCookies, 1500);
-        });
+        // SIMULADOR
+        const loanPartners = [
+            { name: "Nubank", url: "https://nubank.com.br/" }, { name: "Inter", url: "https://inter.co/" }
+        ];
+        function updateLiveCalculation() {
+            const v = document.getElementById('loan-amount').value, t = document.getElementById('loan-term').value;
+            if(v > 0) document.getElementById('live-installment').textContent = (v * 0.035 * Math.pow(1.035, t) / (Math.pow(1.035, t) - 1)).toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+        }
+        function calculateFinalLoan(e) {
+            e.preventDefault();
+            const res = document.getElementById('loan-result'), cont = document.getElementById('loan-recommendations-container');
+            cont.innerHTML = loanPartners.map(p => `
+                <div onclick="openOffer('${p.name}', '${p.url}')" class="flex justify-between items-center p-3 bg-white border rounded-lg hover:border-brand-400 cursor-pointer mb-2">
+                    <span class="font-bold">${p.name}</span><span class="text-sm text-brand-600 font-bold">Ver Oferta ></span>
+                </div>`).join('');
+            res.classList.remove('hidden');
+        }
+        function openOffer(name, url) {
+            document.getElementById('offer-partner-name').textContent = name;
+            document.getElementById('offer-cta-btn').onclick = () => window.open(url, '_blank');
+            navigateTo('offer-screen');
+        }
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
     </script>
 </body>
 </html>

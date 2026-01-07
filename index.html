@@ -58,6 +58,8 @@
         .hidden-section { display: none; }
         .page-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
         main { flex: 1; }
+        
+        /* Ad Slot fixo */
         .ad-slot { 
             display: block; 
             margin: 2rem auto; 
@@ -68,6 +70,7 @@
             text-align: center; 
             overflow: hidden; 
         }
+
         .input-simulator {
             transition: all 0.3s;
         }
@@ -75,6 +78,62 @@
             border-color: #FACC15;
             box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.3);
         }
+
+        /* --- ESTILOS DO BLOG E EDITOR --- */
+        
+        /* Barra de Ferramentas do Editor */
+        .rich-editor-toolbar {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 8px;
+            background: #f9fafb;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .rich-editor-btn {
+            background: white;
+            border: 1px solid #d1d5db;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #374151;
+            transition: all 0.2s;
+        }
+        .rich-editor-btn:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+        
+        /* Área de Edição e Visualização do Conteúdo */
+        .rich-editor-content {
+            min-height: 300px;
+            padding: 16px;
+            border: 1px solid #d1d5db;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            outline: none;
+            background: white;
+            overflow-y: auto;
+        }
+        .rich-editor-content:focus {
+            border-color: #FACC15;
+            box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.1);
+        }
+
+        /* Estilos Globais para Conteúdo Rico (Editor + Post Final) */
+        .rich-content h1 { font-size: 2em; font-weight: 800; margin-top: 1.5em; margin-bottom: 0.5em; color: #111827; }
+        .rich-content h2 { font-size: 1.5em; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; color: #1f2937; }
+        .rich-content h3 { font-size: 1.25em; font-weight: 600; margin-top: 1.25em; margin-bottom: 0.5em; color: #374151; }
+        .rich-content p { margin-bottom: 1em; line-height: 1.7; color: #4b5563; font-size: 1.05rem; }
+        .rich-content ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1em; color: #4b5563; }
+        .rich-content ol { list-style-type: decimal; padding-left: 1.5em; margin-bottom: 1em; color: #4b5563; }
+        .rich-content blockquote { border-left: 4px solid #FACC15; padding: 1rem; margin: 1.5em 0; background: #ffffec; font-style: italic; color: #555; }
+        .rich-content b, .rich-content strong { font-weight: 700; color: #111; }
+        .rich-content i, .rich-content em { font-style: italic; }
+        .rich-content a { color: #CA8A04; text-decoration: underline; font-weight: 500; }
+        .rich-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 1em 0; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 page-wrapper">
@@ -149,7 +208,7 @@
                     <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
                         <div class="bg-gray-900 w-14 h-14 rounded-xl flex items-center justify-center text-brand-400 mb-6 group-hover:scale-110 transition"><i class="ph ph-credit-card text-3xl"></i></div>
                         <h3 class="text-xl font-bold text-black mb-3">Cartões Aprovados</h3>
-                        <p class="text-gray-600">Análises centenas de cartões para encontrar os que realmente aprovam negativados e pessoas com score baixo.</p>
+                        <p class="text-gray-600">Analisamos centenas de cartões para encontrar os que realmente aprovam negativados e pessoas com score baixo.</p>
                     </div>
                     <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
                         <div class="bg-brand-50 w-14 h-14 rounded-xl flex items-center justify-center text-brand-600 mb-6 group-hover:scale-110 transition"><i class="ph ph-currency-dollar text-3xl"></i></div>
@@ -305,9 +364,9 @@
                 </div>
                 <div class="container mx-auto px-4 py-12 flex flex-col lg:flex-row gap-12">
                     <article class="lg:w-2/3">
-                        <div id="post-content" class="prose prose-lg prose-gray max-w-none text-gray-700">
-                            <p class="text-xl leading-relaxed mb-8 font-medium text-gray-800 intro-text"></p>
-                            <div class="body-content"></div>
+                        <!-- Conteúdo do post, agora renderiza HTML -->
+                        <div id="post-content" class="prose prose-lg prose-gray max-w-none text-gray-700 rich-content">
+                            <!-- Injetado via JS -->
                         </div>
                         
                         <!-- ÁREA DE INTERAÇÃO (LIKES E COMENTÁRIOS) -->
@@ -384,7 +443,26 @@
                                 </div>
                                 <div><label class="block text-sm font-bold text-gray-700 mb-2">Imagem URL</label><input type="text" id="admin-image" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required></div>
                                 <div><label class="block text-sm font-bold text-gray-700 mb-2">Resumo</label><textarea id="admin-intro" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"></textarea></div>
-                                <div><label class="block text-sm font-bold text-gray-700 mb-2">Conteúdo HTML</label><textarea id="admin-content" rows="10" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none font-mono text-sm"></textarea></div>
+                                
+                                <!-- Editor Rico Simples -->
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">Conteúdo do Artigo</label>
+                                    <div class="rich-editor-toolbar border border-gray-300 rounded-t-lg border-b-0">
+                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('bold')" title="Negrito"><b>B</b></button>
+                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('italic')" title="Itálico"><i>I</i></button>
+                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('underline')" title="Sublinhado"><u>U</u></button>
+                                        <div class="w-px h-6 bg-gray-300 mx-1"></div>
+                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('formatBlock', 'h2')" title="Título H2">H2</button>
+                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('formatBlock', 'h3')" title="Título H3">H3</button>
+                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('formatBlock', 'p')" title="Parágrafo">P</button>
+                                        <div class="w-px h-6 bg-gray-300 mx-1"></div>
+                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('insertUnorderedList')" title="Lista com marcadores">• Lista</button>
+                                        <button type="button" class="rich-editor-btn" onclick="formatDoc('insertOrderedList')" title="Lista numerada">1. Lista</button>
+                                    </div>
+                                    <div id="admin-content-rich" contenteditable="true" class="rich-editor-content"></div>
+                                    <input type="hidden" id="admin-content">
+                                </div>
+
                                 <button type="submit" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-3 rounded-lg transition shadow-md">Publicar</button>
                             </form>
                         </div>
@@ -426,6 +504,63 @@
                             <button id="offer-cta-btn" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-xl transition shadow-lg text-lg flex items-center justify-center gap-2">Continuar no Site Oficial <i class="ph-bold ph-arrow-right"></i></button>
                             <p class="text-center text-xs text-gray-400 mt-4 leading-tight">Atenção: Ao clicar, você será redirecionado para o site oficial. A aprovação de crédito não é garantida e depende da análise da instituição.</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOBRE -->
+        <section id="sobre" class="page-section hidden-section fade-in">
+            <div class="container mx-auto px-4 py-20">
+                <div class="max-w-4xl mx-auto text-center">
+                    <div class="inline-block p-4 rounded-full bg-brand-50 text-brand-600 mb-6"><i class="ph ph-users text-4xl"></i></div>
+                    <h1 class="text-4xl font-bold text-black mb-6">Nossa Missão</h1>
+                    <div class="text-xl text-gray-600 leading-relaxed mb-12 space-y-6">
+                        <p>Você sabia que mais de 60 milhões de brasileiros estão endividados e com o nome sujo no mercado?</p>
+                        <p>Isso significa que eles não conseguem obter crédito, financiar um carro ou uma casa, abrir uma conta em banco ou fazer compras parceladas.</p>
+                        <p>Além disso, eles sofrem com o estresse, a ansiedade e a baixa autoestima causados pela situação financeira.</p>
+                        <p>Mas criamos este site porque acreditamos que não precisa ser assim. O <strong>CrediFácil</strong> é um site que oferece ferramentas, tecnologia e conteúdo gratuito para ajudar você a regularizar a sua vida financeira, quitando as suas dívidas e limpando o seu nome.</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 mt-16 max-w-5xl mx-auto items-center">
+                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Equipe" class="rounded-2xl shadow-xl">
+                    <div class="space-y-6">
+                        <h2 class="text-2xl font-bold text-black">Por que confiar em nós?</h2>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i><span class="text-gray-600">Conteúdo 100% imparcial e verificado por especialistas.</span></li>
+                            <li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i><span class="text-gray-600">Recomendações transparentes com instituições financeiras regulamentadas.</span></li>
+                            <li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i><span class="text-gray-600">Mais de 500 mil leitores ajudados anualmente.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TERMOS E PRIVACIDADE -->
+        <section id="terms" class="page-section hidden-section fade-in">
+            <div class="bg-white py-20">
+                <div class="container mx-auto px-4 max-w-3xl">
+                    <h1 class="text-3xl font-bold text-black mb-8">Termos de Uso</h1>
+                    <div class="prose prose-gray text-gray-700 text-sm">
+                        <p class="mb-4"><strong>1. Aceitação:</strong> Ao acessar o CrediFácil, você concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis.</p>
+                        <p class="mb-4"><strong>2. Natureza do Serviço:</strong> O CrediFácil é um portal estritamente informativo. Não somos uma instituição financeira, não realizamos empréstimos, não emitimos cartões e não garantimos aprovação de crédito. As simulações são estimativas baseadas em dados de mercado.</p>
+                        <p class="mb-4"><strong>3. Precisão dos Materiais:</strong> Os materiais exibidos no site do CrediFácil podem incluir erros técnicos, tipográficos ou fotográficos. Não garantimos que qualquer material em seu site seja preciso, completo ou atual, embora nos esforcemos para tal.</p>
+                        <p class="mb-4"><strong>4. Links:</strong> O CrediFácil não analisou todos os sites vinculados ao seu site e não é responsável pelo conteúdo de nenhum site vinculado (links externos para bancos/parceiros). A inclusão de qualquer link não implica endosso por CrediFácil.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="privacy" class="page-section hidden-section fade-in">
+            <div class="bg-white py-20">
+                <div class="container mx-auto px-4 max-w-3xl">
+                    <h1 class="text-3xl font-bold text-black mb-8">Política de Privacidade</h1>
+                    <div class="prose prose-gray text-gray-700 text-sm">
+                        <p class="mb-4">A sua privacidade é importante para nós. É política do CrediFácil respeitar a sua privacidade em relação a qualquer informação que possamos coletar.</p>
+                        <h3 class="font-bold mt-4 mb-2">Cookies e Publicidade</h3>
+                        <p class="mb-4">Utilizamos cookies para melhorar sua experiência e veicular anúncios personalizados através do Google AdSense. O Google, como fornecedor de terceiros, utiliza cookies para exibir anúncios. O uso do cookie DART permite que o Google veicule anúncios para nossos usuários com base em sua visita ao nosso site e a outros sites na Internet.</p>
+                        <h3 class="font-bold mt-4 mb-2">Dados Pessoais</h3>
+                        <p class="mb-4">Não vendemos ou compartilhamos suas informações de identificação pessoal publicamente ou com terceiros, exceto quando exigido por lei.</p>
                     </div>
                 </div>
             </div>
@@ -506,7 +641,7 @@
         const cardsData = [
             { id: 1, name: "Santander SX", bgClass: "bg-red-600", iconBg: "bg-red-700", rotation: "rotate-45", badges: [{ text: "Aprovação Alta", color: "bg-green-100 text-green-700" }, { text: "Visa/Master", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis (gastando R$100)", income: "R$ 1.045,00", desc: "Ideal para quem busca o primeiro cartão ou quer recuperar crédito no mercado.", link: "https://www.santander.com.br/cartao-credito-santander/sx", categories: ["todos", "negativados"] },
             { id: 2, name: "Roxinho Nubank", bgClass: "bg-purple-700", iconBg: "bg-purple-800", rotation: "-rotate-12", badges: [{ text: "Sem Anuidade", color: "bg-purple-100 text-purple-700" }, { text: "Conta Digital", color: "bg-yellow-100 text-yellow-700" }], annuity: "R$ 0,00", income: "Não exigida", desc: "Controle total pelo app.", link: "https://nubank.com.br/cartao/", categories: ["todos", "anuidade"] },
-            { id: 3, name: "Inter Gold", bgClass: "bg-orange-500", iconBg: "bg-orange-400", rotation: "rotate-0", isInter: true, badges: [{ text: "Cashback", color: "bg-orange-100 text-orange-700" }], annuity: "Grátis", income: "Não exigida", desc: "Super App completo.", link: "https://inter.co/pra-voce/cartoes/", categories: ["todos", "milhas"] },
+            { id: 3, name: "Inter Gold", bgClass: "bg-orange-500", iconBg: "bg-orange-400", rotation: "rotate-0", isInter: true, badges: [{ text: "Cashback", color: "bg-orange-100 text-orange-700" }, { text: "Internacional", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Não exigida", desc: "Super App completo.", link: "https://inter.co/pra-voce/cartoes/", categories: ["todos", "milhas"] },
             { id: 7, name: "Will Bank", bgClass: "bg-yellow-400", iconBg: "bg-yellow-500", rotation: "rotate-12", badges: [{ text: "Sem Anuidade", color: "bg-black text-white" }], annuity: "Grátis", income: "Não exigida", desc: "Cartão de crédito sem anuidade.", link: "https://www.willbank.com.br/", categories: ["todos", "anuidade", "negativados"] },
             { id: 8, name: "Digio", bgClass: "bg-blue-800", iconBg: "bg-blue-900", rotation: "-rotate-3", badges: [{ text: "Sem Juros Rotativos", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Salário Mínimo", desc: "Cartão sem anuidade.", link: "https://www.digio.com.br/", categories: ["todos", "anuidade"] },
              { id: 9, name: "PAN Zero", bgClass: "bg-cyan-600", iconBg: "bg-cyan-700", rotation: "rotate-6", badges: [{ text: "Sem Anuidade", color: "bg-cyan-100 text-cyan-700" }], annuity: "Grátis", income: "Salário Mínimo", desc: "Conta digital grátis.", link: "https://www.bancopan.com.br/produtos/cartao-de-credito/", categories: ["todos", "anuidade", "negativados"] },
@@ -534,11 +669,11 @@
                     const loginForm = document.getElementById('admin-login');
                     const panel = document.getElementById('admin-panel');
                     if (user) { 
-                        if(loginForm) loginForm.classList.add('hidden'); 
-                        if(panel) panel.classList.remove('hidden'); 
+                        loginForm.classList.add('hidden'); 
+                        panel.classList.remove('hidden'); 
                     } else { 
-                        if(loginForm) loginForm.classList.remove('hidden'); 
-                        if(panel) panel.classList.add('hidden'); 
+                        loginForm.classList.remove('hidden'); 
+                        panel.classList.add('hidden'); 
                     }
                 });
 
@@ -646,6 +781,7 @@
             
             const contentDiv = document.getElementById('post-content');
             if(contentDiv) {
+                // Ao abrir o artigo, renderizar o HTML corretamente
                 contentDiv.innerHTML = '';
                 
                 const introP = document.createElement('p');
@@ -653,7 +789,7 @@
                 introP.textContent = post.intro;
                 
                 const bodyDiv = document.createElement('div');
-                bodyDiv.className = 'body-content';
+                bodyDiv.className = 'body-content rich-content'; // Usa classe rich-content para estilo
                 bodyDiv.innerHTML = post.content;
                 
                 contentDiv.appendChild(introP);
@@ -735,16 +871,33 @@
                     list.innerHTML = ''; 
                     snapshot.forEach(doc => {
                         const c = doc.data();
-                        const date = c.timestamp ? new Date(c.timestamp.toDate()).toLocaleDateString() : 'Recentemente';
+                        
+                        // Formatação de data relativa
+                        let dateStr = 'Recentemente';
+                        if (c.timestamp) {
+                            const date = c.timestamp.toDate();
+                            const now = new Date();
+                            const diff = Math.floor((now - date) / 1000); // segundos
+                            
+                            if (diff < 60) dateStr = 'Agora mesmo';
+                            else if (diff < 3600) dateStr = `Há ${Math.floor(diff/60)} min`;
+                            else if (diff < 86400) dateStr = `Há ${Math.floor(diff/3600)} h`;
+                            else dateStr = date.toLocaleDateString();
+                        }
                         
                         const commentEl = document.createElement('div');
-                        commentEl.className = 'bg-white p-4 rounded-xl border border-gray-100 shadow-sm';
+                        commentEl.className = 'bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition hover:shadow-md';
                         commentEl.innerHTML = `
                             <div class="flex justify-between items-start mb-2">
-                                <h5 class="font-bold text-sm text-black">${c.name}</h5>
-                                <span class="text-xs text-gray-400">${date}</span>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-600">
+                                        ${c.name.charAt(0).toUpperCase()}
+                                    </div>
+                                    <h5 class="font-bold text-sm text-black">${c.name}</h5>
+                                </div>
+                                <span class="text-xs text-gray-400">${dateStr}</span>
                             </div>
-                            <p class="text-sm text-gray-600">${c.text}</p>
+                            <p class="text-sm text-gray-600 pl-10">${c.text}</p>
                         `;
                         list.appendChild(commentEl);
                     });
@@ -818,22 +971,41 @@
 
         function handleLogout() { if(auth) auth.signOut(); }
 
+        // --- EDITOR RICO FUNÇÕES ---
+        function formatDoc(cmd, value = null) {
+            if (value) {
+                document.execCommand(cmd, false, value);
+            } else {
+                document.execCommand(cmd);
+            }
+            document.getElementById('admin-content-rich').focus();
+        }
+
         function addNewPost(e) {
             e.preventDefault();
             if(!db) return;
+            
+            // Pega o conteúdo HTML do editor rico
+            const contentHTML = document.getElementById('admin-content-rich').innerHTML;
+            
             const post = {
                 title: document.getElementById('admin-title').value,
                 category: document.getElementById('admin-category').value,
                 author: document.getElementById('admin-author').value,
                 image: document.getElementById('admin-image').value,
                 intro: document.getElementById('admin-intro').value,
-                content: document.getElementById('admin-content').value,
+                content: contentHTML, // Salva o HTML gerado
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 date: new Date().toLocaleDateString('pt-BR'),
                 likes: 0 
             };
 
-            db.collection("posts").add(post).then(() => { alert("Postado com sucesso!"); e.target.reset(); fetchBlogPosts(); }).catch(err => alert("Erro ao salvar: " + err.message));
+            db.collection("posts").add(post).then(() => { 
+                alert("Postado com sucesso!"); 
+                e.target.reset(); 
+                document.getElementById('admin-content-rich').innerHTML = ''; // Limpa o editor
+                fetchBlogPosts(); 
+            }).catch(err => alert("Erro ao salvar: " + err.message));
         }
 
         function navigateTo(id) {
@@ -859,84 +1031,84 @@
             }
         }
         
-        // SIMULADOR
+        // SIMULADOR (CORRIGIDO E ROBUSTO)
         const loanPartners = [
-            { name: "Nubank", url: "https://nubank.com.br/emprestimo/" },
-            { name: "Banco Inter", url: "https://inter.co/pra-voce/emprestimo/" },
-            { name: "Santander", url: "https://www.santander.com.br/emprestimos" },
-            { name: "Itaú", url: "https://www.itau.com.br/emprestimos" }
+            { name: "Nubank", url: "https://nubank.com.br/" }, { name: "Inter", url: "https://inter.co/" }
         ];
-
         function updateLiveCalculation() {
             const amountInput = document.getElementById('loan-amount');
             const termInput = document.getElementById('loan-term');
-            const livePreview = document.getElementById('live-preview');
-            const liveInstallment = document.getElementById('live-installment');
+            
+            if(!amountInput || !termInput) return; // Segurança
 
-            const amount = parseFloat(amountInput.value);
-            const term = parseInt(termInput.value);
-            const rate = 0.035; 
-
-            if (amount > 0 && term > 0) {
-                const numerator = amount * rate * Math.pow(1 + rate, term);
-                const denominator = Math.pow(1 + rate, term) - 1;
-                const installment = numerator / denominator;
-
-                liveInstallment.textContent = installment.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-                livePreview.classList.remove('hidden');
-            } else {
-                livePreview.classList.add('hidden');
+            const v = amountInput.value;
+            const t = termInput.value;
+            
+            if(v > 0) {
+                const installment = (v * 0.035 * Math.pow(1.035, t) / (Math.pow(1.035, t) - 1));
+                const el = document.getElementById('live-installment');
+                if(el) el.textContent = installment.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+                
+                const preview = document.getElementById('live-preview');
+                if(preview) preview.classList.remove('hidden');
             }
         }
-
+        
+        // Função de cálculo de empréstimo (Restaurada)
         function calculateFinalLoan(e) {
-            e.preventDefault();
+            if(e) e.preventDefault();
+            
             const res = document.getElementById('loan-result');
             const cont = document.getElementById('loan-recommendations-container');
             
-            const shuffled = [...loanPartners].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 2); 
+            if(!res || !cont) return;
 
-            cont.innerHTML = selected.map(p => `
+            cont.innerHTML = loanPartners.map(p => `
                 <div onclick="openOffer('${p.name}', '${p.url}')" class="flex justify-between items-center p-3 bg-white border rounded-lg hover:border-brand-400 cursor-pointer mb-2 transition shadow-sm">
                     <span class="font-bold text-gray-800">${p.name}</span>
                     <span class="text-sm text-brand-600 font-bold flex items-center gap-1">Ver Oferta <i class="ph-bold ph-caret-right"></i></span>
                 </div>`).join('');
             
             res.classList.remove('hidden');
+            // Rolagem suave para o resultado
             res.scrollIntoView({behavior: 'smooth', block: 'start'});
         }
 
         function openOffer(name, url) {
-            const partnerNameEl = document.getElementById('offer-partner-name');
-            const amountEl = document.getElementById('loan-amount');
-            const termEl = document.getElementById('loan-term');
-            const instEl = document.getElementById('live-installment');
-
-            if(partnerNameEl) partnerNameEl.textContent = name;
+            const partnerEl = document.getElementById('offer-partner-name');
+            const btnEl = document.getElementById('offer-cta-btn');
             
-            // Pegar valores do simulador para a tela de oferta
-            const amountVal = amountEl ? parseFloat(amountEl.value) : 0;
-            const termVal = termEl ? termEl.value : "12";
-            const instText = instEl ? instEl.textContent : "R$ 0,00";
+            if(partnerEl) partnerEl.textContent = name;
+            
+            // Tenta pegar valores do simulador, ou usa padrão
+            const amountInput = document.getElementById('loan-amount');
+            const val = amountInput && amountInput.value ? amountInput.value : '5000';
+            
+            const valEl = document.getElementById('offer-value');
+            if(valEl) valEl.textContent = 'R$ ' + parseFloat(val).toLocaleString('pt-BR');
 
-            const finalAmount = amountVal ? amountVal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 'R$ 5.000,00';
-            const finalInstallment = instText !== 'R$ 0,00' ? instText : 'R$ 0,00';
-
-            const offerValEl = document.getElementById('offer-value');
-            const offerInstEl = document.getElementById('offer-installments');
-            const ctaBtn = document.getElementById('offer-cta-btn');
-
-            if(offerValEl) offerValEl.textContent = finalAmount;
-            if(offerInstEl) offerInstEl.textContent = `${termVal}x ${finalInstallment}`;
-            if(ctaBtn) ctaBtn.onclick = () => window.open(url, '_blank');
+            if(btnEl) btnEl.onclick = () => window.open(url, '_blank');
             
             navigateTo('offer-screen');
         }
 
-        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
-        function checkCookies() { if (!localStorage.getItem('cookiesAccepted')) document.getElementById('cookie-banner').classList.remove('translate-y-full'); }
-        function acceptCookies() { localStorage.setItem('cookiesAccepted', 'true'); document.getElementById('cookie-banner').classList.add('translate-y-full'); }
+        function toggleMobileMenu() { 
+            const menu = document.getElementById('mobile-menu');
+            if(menu) menu.classList.toggle('hidden'); 
+        }
+        
+        function checkCookies() { 
+            if (!localStorage.getItem('cookiesAccepted')) {
+                const banner = document.getElementById('cookie-banner');
+                if(banner) banner.classList.remove('translate-y-full'); 
+            }
+        }
+        
+        function acceptCookies() { 
+            localStorage.setItem('cookiesAccepted', 'true'); 
+            const banner = document.getElementById('cookie-banner');
+            if(banner) banner.classList.add('translate-y-full'); 
+        }
     </script>
 </body>
 </html>

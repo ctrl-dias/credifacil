@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Guia completo sobre recuperação de crédito, cartões e empréstimos. Compare taxas e encontre a melhor opção financeira para o seu perfil.">
-    <meta name="keywords" content="empréstimo, cartão de crédito, nome sujo, score, finanças">
+    <meta name="description" content="O site que te ajuda a sair das dívidas e recuperar o seu crédito. Quer reorganizar sua vida financeira? Nós temos o conteúdo certo para ajudar.">
+    <meta name="keywords" content="empréstimo, cartão de crédito, nome sujo, score, finanças, limpar nome">
     <meta name="author" content="CrediFácil">
     
-    <!-- Google AdSense (Script Principal) -->
+    <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017585624443150" crossorigin="anonymous"></script>
 
     <!-- FIREBASE SDKs -->
@@ -46,10 +46,18 @@
         body { -webkit-font-smoothing: antialiased; }
         .fade-in { animation: fadeIn 0.4s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Animação do Coração */
+        @keyframes heart-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        .animate-heart { animation: heart-pulse 0.3s ease-in-out; color: #ef4444; }
+
         .hidden-section { display: none; }
         .page-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
         main { flex: 1; }
-        /* Ad Slot fixo para evitar CLS e erros de largura */
         .ad-slot { 
             display: block; 
             margin: 2rem auto; 
@@ -59,6 +67,13 @@
             max-width: 100%;
             text-align: center; 
             overflow: hidden; 
+        }
+        .input-simulator {
+            transition: all 0.3s;
+        }
+        .input-simulator:focus {
+            border-color: #FACC15;
+            box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.3);
         }
     </style>
 </head>
@@ -104,11 +119,6 @@
 
     <main id="app-content" class="relative">
         
-        <!-- ALERTA DE CONFIGURAÇÃO (VISÍVEL SE FALTAR CHAVES) -->
-        <div id="config-alert" class="hidden bg-red-600 text-white text-center p-4 font-bold sticky top-20 z-40 shadow-lg">
-            ⚠️ ATENÇÃO: As chaves do Firebase não foram configuradas! Edite o código e insira suas credenciais para o site funcionar.
-        </div>
-
         <!-- HOME -->
         <section id="home" class="page-section fade-in">
             <div class="bg-black text-white relative overflow-hidden">
@@ -165,7 +175,7 @@
             </div>
         </section>
 
-        <!-- EMPRESTIMOS -->
+        <!-- EMPRÉSTIMOS -->
         <section id="emprestimo" class="page-section hidden-section fade-in">
             <div class="bg-black text-white py-16">
                 <div class="container mx-auto px-4 text-center">
@@ -176,44 +186,58 @@
             <div class="container mx-auto px-4 py-16">
                 <div class="ad-slot w-full"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                 <div class="grid lg:grid-cols-2 gap-12 items-start">
+                    <!-- Formulário -->
                     <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 relative overflow-hidden">
                          <div class="absolute top-0 left-0 w-full h-1 bg-brand-400"></div>
                         <h3 class="text-2xl font-bold text-black mb-6 flex items-center gap-2"><i class="ph-fill ph-calculator text-brand-500"></i> Simule Agora</h3>
+                        
                         <form id="loan-form" onsubmit="calculateFinalLoan(event)" class="space-y-6">
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Quanto você precisa? (R$)</label>
-                                <input type="number" id="loan-amount" oninput="updateLiveCalculation()" class="w-full pl-4 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none transition text-lg font-bold text-black" placeholder="5000" min="500">
+                                <input type="number" id="loan-amount" oninput="updateLiveCalculation()" class="input-simulator w-full pl-4 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none transition text-lg font-bold text-black" placeholder="5000" min="500" step="100">
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-bold text-gray-700 mb-2">Parcelas</label>
-                                    <select id="loan-term" onchange="updateLiveCalculation()" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none bg-white text-black font-medium"><option value="12">12x</option><option value="24">24x</option><option value="36">36x</option><option value="48">48x</option></select>
+                                    <select id="loan-term" onchange="updateLiveCalculation()" class="input-simulator w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none bg-white text-black font-medium"><option value="12">12x</option><option value="24">24x</option><option value="36">36x</option><option value="48">48x</option><option value="60">60x</option></select>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-bold text-gray-700 mb-2">CPF</label>
-                                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" placeholder="000.000.000-00">
+                                    <input type="text" id="loan-cpf" class="input-simulator w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="000.000.000-00">
                                 </div>
                             </div>
                             <div id="live-preview" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hidden">
                                 <p class="text-sm text-gray-500 mb-1">Estimativa de parcela:</p>
                                 <div class="flex items-end gap-1"><span class="text-2xl font-bold text-brand-600" id="live-installment">R$ 0,00</span><span class="text-sm text-gray-400 mb-1">/mês*</span></div>
                             </div>
-                            <button type="submit" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-lg transition transform hover:-translate-y-1 shadow-md">Ver Ofertas Disponíveis</button>
-                            <p class="text-[10px] text-center text-gray-400 mt-4">* Simulação estimada. A aprovação de crédito não é garantida e depende da análise da instituição.</p>
+                            <button type="submit" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-lg transition transform hover:-translate-y-1 shadow-md flex items-center justify-center gap-2">
+                                Ver Ofertas Disponíveis <i class="ph-bold ph-arrow-right"></i>
+                            </button>
+                            <p class="text-[10px] text-center text-gray-400 mt-4">* Simulação estimada com taxa média de 3.5% a.m. A aprovação de crédito não é garantida.</p>
                         </form>
+                        
+                        <!-- Resultado da Simulação -->
                         <div id="loan-result" class="hidden mt-6 pt-6 border-t border-gray-200 animate-fade-in">
                             <div class="bg-brand-50 border border-brand-100 rounded-xl p-5 mb-4">
                                 <div class="flex items-start gap-3">
                                     <div class="bg-brand-100 p-2 rounded-full text-brand-900"><i class="ph-fill ph-check-circle text-xl"></i></div>
-                                    <div><h4 class="font-bold text-gray-900 text-lg">Pré-aprovação Disponível!</h4><p class="text-gray-700 text-sm mt-1">Recomendações encontradas para seu perfil.</p></div>
+                                    <div><h4 class="font-bold text-gray-900 text-lg">Pré-aprovação Disponível!</h4><p class="text-gray-700 text-sm mt-1">Encontramos recomendações para seu perfil.</p></div>
                                 </div>
                             </div>
-                            <div id="loan-recommendations-container" class="space-y-3"></div>
+                            <div id="loan-recommendations-container" class="space-y-3">
+                                <!-- Conteúdo inserido via JS -->
+                            </div>
                         </div>
                     </div>
+                    
+                    <!-- Informações Laterais -->
                     <div class="space-y-8">
                         <div><h2 class="text-3xl font-bold text-black mb-4">Como funciona?</h2><p class="text-gray-600">Nosso algoritmo busca as melhores taxas em mais de 15 instituições financeiras simultaneamente. Mesmo se você estiver negativado, temos recomendações especializadas.</p></div>
                         <div class="grid grid-cols-1 gap-4">
+                            <div class="flex gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-brand-400 transition items-start">
+                                <div class="bg-gray-100 text-black w-12 h-12 flex items-center justify-center rounded-lg flex-shrink-0 mt-1"><i class="ph ph-lightning text-2xl"></i></div>
+                                <div><h4 class="font-bold text-black">Aprovação Rápida</h4><p class="text-sm text-gray-600 mt-1">Algumas recomendações depositam o dinheiro via PIX em até 30 minutos.</p></div>
+                            </div>
                             <div class="flex gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-brand-400 transition items-start">
                                 <div class="bg-gray-100 text-black w-12 h-12 flex items-center justify-center rounded-lg flex-shrink-0 mt-1"><i class="ph ph-shield-check text-2xl"></i></div>
                                 <div><h4 class="font-bold text-black">Segurança 100%</h4><p class="text-sm text-gray-600 mt-1">Seus dados são criptografados. Nunca pedimos depósitos antecipados para liberar crédito.</p></div>
@@ -238,6 +262,7 @@
                     <button onclick="filterCards('todos')" id="btn-todos" class="filter-btn active px-6 py-2 bg-black text-white rounded-full text-sm font-medium transition shadow-md">Todos</button>
                     <button onclick="filterCards('anuidade')" id="btn-anuidade" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Sem Anuidade</button>
                     <button onclick="filterCards('negativados')" id="btn-negativados" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Para Negativados</button>
+                    <button onclick="filterCards('milhas')" id="btn-milhas" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Milhas / Cashback</button>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="cards-container"></div>
             </div>
@@ -251,6 +276,16 @@
                         <h1 class="text-4xl font-extrabold text-black mb-4">Blog de Educação Financeira</h1>
                         <p class="text-gray-600 text-lg">Artigos, guias e notícias para você tomar as melhores decisões com seu dinheiro.</p>
                     </div>
+                    
+                    <!-- Filtros do Blog -->
+                    <div class="flex flex-wrap gap-3 justify-center mb-12">
+                        <button onclick="filterBlog('todos')" class="blog-filter-btn px-5 py-2 bg-black text-white rounded-full text-sm font-medium transition cursor-pointer">Todos</button>
+                        <button onclick="filterBlog('Score')" class="blog-filter-btn px-5 py-2 bg-white border text-gray-600 hover:border-black hover:text-black rounded-full text-sm font-medium transition cursor-pointer">Score</button>
+                        <button onclick="filterBlog('Cartões')" class="blog-filter-btn px-5 py-2 bg-white border text-gray-600 hover:border-black hover:text-black rounded-full text-sm font-medium transition cursor-pointer">Cartões</button>
+                        <button onclick="filterBlog('Empréstimos')" class="blog-filter-btn px-5 py-2 bg-white border text-gray-600 hover:border-black hover:text-black rounded-full text-sm font-medium transition cursor-pointer">Empréstimos</button>
+                         <button onclick="filterBlog('Dívidas')" class="blog-filter-btn px-5 py-2 bg-white border text-gray-600 hover:border-black hover:text-black rounded-full text-sm font-medium transition cursor-pointer">Dívidas</button>
+                    </div>
+
                     <div class="ad-slot bg-white rounded-lg w-full"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                     <div id="blog-list-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
                 </div>
@@ -274,6 +309,36 @@
                             <p class="text-xl leading-relaxed mb-8 font-medium text-gray-800 intro-text"></p>
                             <div class="body-content"></div>
                         </div>
+                        
+                        <!-- ÁREA DE INTERAÇÃO (LIKES E COMENTÁRIOS) -->
+                        <div class="mt-12 pt-8 border-t border-gray-200">
+                            <div class="flex items-center justify-between mb-8">
+                                <h3 class="text-xl font-bold text-black">Gostou deste artigo?</h3>
+                                <button id="like-btn" onclick="toggleLike()" class="flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-red-50 rounded-full transition group">
+                                    <i id="like-icon" class="ph-fill ph-heart text-2xl text-gray-400 group-hover:text-red-500 transition"></i>
+                                    <span id="like-count" class="font-bold text-gray-700">0</span>
+                                </button>
+                            </div>
+
+                            <div class="bg-gray-50 rounded-2xl p-6">
+                                <h4 class="text-lg font-bold mb-6">Comentários (<span id="comment-count">0</span>)</h4>
+                                
+                                <!-- Lista de Comentários -->
+                                <div id="comments-list" class="space-y-6 mb-8 max-h-96 overflow-y-auto pr-2">
+                                    <!-- Comentários via JS -->
+                                </div>
+
+                                <!-- Form de Comentário -->
+                                <form onsubmit="submitComment(event)" class="mt-6 border-t border-gray-200 pt-6">
+                                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                        <input type="text" id="comment-name" placeholder="Seu nome" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black" required>
+                                    </div>
+                                    <textarea id="comment-text" rows="3" placeholder="Escreva seu comentário..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black mb-4" required></textarea>
+                                    <button type="submit" class="bg-black text-white px-6 py-2 rounded-lg font-bold hover:bg-gray-800 transition">Comentar</button>
+                                </form>
+                            </div>
+                        </div>
+
                         <div class="ad-slot my-8 w-full"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                     </article>
                     <aside class="lg:w-1/3 space-y-8">
@@ -314,7 +379,7 @@
                             <form onsubmit="addNewPost(event)" class="space-y-6">
                                 <div><label class="block text-sm font-bold text-gray-700 mb-2">Título</label><input type="text" id="admin-title" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required></div>
                                 <div class="grid grid-cols-2 gap-6">
-                                    <div><label class="block text-sm font-bold text-gray-700 mb-2">Categoria</label><select id="admin-category" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"><option>Score</option><option>Cartões</option><option>Empréstimos</option></select></div>
+                                    <div><label class="block text-sm font-bold text-gray-700 mb-2">Categoria</label><select id="admin-category" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"><option>Score</option><option>Cartões</option><option>Empréstimos</option><option>Dívidas</option><option>Educação</option></select></div>
                                     <div><label class="block text-sm font-bold text-gray-700 mb-2">Autor</label><input type="text" id="admin-author" value="Redação CrediFácil" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"></div>
                                 </div>
                                 <div><label class="block text-sm font-bold text-gray-700 mb-2">Imagem URL</label><input type="text" id="admin-image" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required></div>
@@ -366,60 +431,6 @@
             </div>
         </section>
 
-        <!-- SOBRE -->
-        <section id="sobre" class="page-section hidden-section fade-in">
-            <div class="container mx-auto px-4 py-20">
-                <div class="max-w-4xl mx-auto text-center">
-                    <div class="inline-block p-4 rounded-full bg-brand-50 text-brand-600 mb-6"><i class="ph ph-users text-4xl"></i></div>
-                    <h1 class="text-4xl font-bold text-black mb-6">Nossa Missão</h1>
-                    <p class="text-xl text-gray-600 leading-relaxed mb-12">
-                        O "CrediFácil" nasceu com um propósito claro: democratizar o acesso à informação financeira de qualidade. Acreditamos que todos merecem uma segunda chance e as ferramentas certas para construir um futuro próspero, longe das dívidas abusivas.
-                    </p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-12 mt-16 max-w-5xl mx-auto items-center">
-                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Equipe" class="rounded-2xl shadow-xl">
-                    <div class="space-y-6">
-                        <h2 class="text-2xl font-bold text-black">Por que confiar em nós?</h2>
-                        <ul class="space-y-4">
-                            <li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i><span class="text-gray-600">Conteúdo 100% imparcial e verificado por especialistas.</span></li>
-                            <li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i><span class="text-gray-600">Recomendações transparentes com instituições financeiras regulamentadas.</span></li>
-                            <li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i><span class="text-gray-600">Mais de 500 mil leitores ajudados anualmente.</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- TERMOS E PRIVACIDADE -->
-        <section id="terms" class="page-section hidden-section fade-in">
-            <div class="bg-white py-20">
-                <div class="container mx-auto px-4 max-w-3xl">
-                    <h1 class="text-3xl font-bold text-black mb-8">Termos de Uso</h1>
-                    <div class="prose prose-gray text-gray-700 text-sm">
-                        <p class="mb-4"><strong>1. Aceitação:</strong> Ao acessar o CrediFácil, você concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis.</p>
-                        <p class="mb-4"><strong>2. Natureza do Serviço:</strong> O CrediFácil é um portal estritamente informativo. Não somos uma instituição financeira, não realizamos empréstimos, não emitimos cartões e não garantimos aprovação de crédito. As simulações são estimativas baseadas em dados de mercado.</p>
-                        <p class="mb-4"><strong>3. Precisão dos Materiais:</strong> Os materiais exibidos no site do CrediFácil podem incluir erros técnicos, tipográficos ou fotográficos. Não garantimos que qualquer material em seu site seja preciso, completo ou atual, embora nos esforcemos para tal.</p>
-                        <p class="mb-4"><strong>4. Links:</strong> O CrediFácil não analisou todos os sites vinculados ao seu site e não é responsável pelo conteúdo de nenhum site vinculado (links externos para bancos/parceiros). A inclusão de qualquer link não implica endosso por CrediFácil.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="privacy" class="page-section hidden-section fade-in">
-            <div class="bg-white py-20">
-                <div class="container mx-auto px-4 max-w-3xl">
-                    <h1 class="text-3xl font-bold text-black mb-8">Política de Privacidade</h1>
-                    <div class="prose prose-gray text-gray-700 text-sm">
-                        <p class="mb-4">A sua privacidade é importante para nós. É política do CrediFácil respeitar a sua privacidade em relação a qualquer informação que possamos coletar.</p>
-                        <h3 class="font-bold mt-4 mb-2">Cookies e Publicidade</h3>
-                        <p class="mb-4">Utilizamos cookies para melhorar sua experiência e veicular anúncios personalizados através do Google AdSense. O Google, como fornecedor de terceiros, utiliza cookies para exibir anúncios. O uso do cookie DART permite que o Google veicule anúncios para nossos usuários com base em sua visita ao nosso site e a outros sites na Internet.</p>
-                        <h3 class="font-bold mt-4 mb-2">Dados Pessoais</h3>
-                        <p class="mb-4">Não vendemos ou compartilhamos suas informações de identificação pessoal publicamente ou com terceiros, exceto quando exigido por lei.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
     </main>
 
     <footer class="bg-black text-gray-400 py-12 border-t border-gray-800">
@@ -431,6 +442,10 @@
                         <span class="font-bold text-xl">CrediFácil</span>
                     </div>
                     <p class="text-sm max-w-md mb-4">O site que te ajuda a sair das dívidas. Conteúdo informativo sobre finanças, cartões de crédito e empréstimos.</p>
+                    <div class="text-sm space-y-2 mt-4">
+                        <p>7265 NE 4th Ave, Suite 102 Miami, FL 33138 United States of America</p>
+                        <p>Contact Information: <a href="mailto:contato@credifacil.com" class="text-brand-400 hover:underline">contato@credifacil.com</a></p>
+                    </div>
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-4">Links Rápidos</h4>
@@ -451,11 +466,11 @@
                 </div>
             </div>
             
-            <!-- Aviso Legal Obrigatório (YMYL) - RESTAURADO -->
             <div class="border-t border-gray-800 pt-8 pb-8 text-xs text-gray-500 text-justify">
-                <p class="mb-2"><strong>Isenção de Responsabilidade (Disclaimer):</strong> O CrediFácil (credifacil.com) é um blog informativo e não atua como instituição financeira, banco ou credora. Não realizamos empréstimos pessoais, não emitimos cartões de crédito e não somos responsáveis pela aprovação ou negação de crédito. Todo o conteúdo disposto neste site tem caráter meramente informativo.</p>
+                <p class="mb-2"><strong>Isenção de Responsabilidade (Disclaimer):</strong> O CrediFácil é um blog informativo e não atua como instituição financeira, banco ou credora. Não realizamos empréstimos pessoais, não emitimos cartões de crédito e não somos responsáveis pela aprovação ou negação de crédito. Todo o conteúdo disposto neste site tem caráter meramente informativo.</p>
                 <p class="mb-2"><strong>Segurança:</strong> O CrediFácil jamais solicitará quantias em dinheiro para liberação de nenhum tipo de produto financeiro, seja cartão de crédito, financiamento ou empréstimo. Se isso acontecer, denuncie imediatamente.</p>
                 <p>As propostas e simulações realizadas através de links de parceiros estão sujeitas à análise de crédito e aos termos de uso de cada instituição financeira. As taxas de juros podem variar de acordo com o perfil de cada usuário.</p>
+                <p class="mt-4 text-gray-600">Loan terms: 12 to 60 months. APR: 0.99% to 9% based on the selected term (includes fees, per local law). Example: $10,000 loan at 0.99% APR for 36 months totals $11,957.15.</p>
             </div>
 
             <div class="text-center text-xs pt-4 border-t border-gray-800">
@@ -474,40 +489,33 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- JS -->
     <script>
-        // =========================================================================
-        // ⚠️ ATENÇÃO: COLE SUAS CREDENCIAIS DO FIREBASE AQUI EMBAIXO
-        // =========================================================================
         const firebaseConfig = {
-apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
-  authDomain: "credifacil-ddb17.firebaseapp.com",
-  projectId: "credifacil-ddb17",
-  storageBucket: "credifacil-ddb17.firebasestorage.app",
-  messagingSenderId: "473150441862",
-  appId: "1:473150441862:web:8f7b1945fa27c519c90407",
+            apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
+            authDomain: "credifacil-ddb17.firebaseapp.com",
+            projectId: "credifacil-ddb17",
+            storageBucket: "credifacil-ddb17.firebasestorage.app",
+            messagingSenderId: "473150441862",
+            appId: "1:473150441862:web:8f7b1945fa27c519c90407"
         };
-        // =========================================================================
 
         let db, auth;
+        let currentPostId = null;
 
-        // DADOS DOS CARTÕES (Estático) - Restaurado cardsData
         const cardsData = [
             { id: 1, name: "Santander SX", bgClass: "bg-red-600", iconBg: "bg-red-700", rotation: "rotate-45", badges: [{ text: "Aprovação Alta", color: "bg-green-100 text-green-700" }, { text: "Visa/Master", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis (gastando R$100)", income: "R$ 1.045,00", desc: "Ideal para quem busca o primeiro cartão ou quer recuperar crédito no mercado.", link: "https://www.santander.com.br/cartao-credito-santander/sx", categories: ["todos", "negativados"] },
-            { id: 2, name: "Roxinho Nubank", bgClass: "bg-purple-700", iconBg: "bg-purple-800", rotation: "-rotate-12", badges: [{ text: "Sem Anuidade", color: "bg-purple-100 text-purple-700" }, { text: "Conta Digital", color: "bg-yellow-100 text-yellow-700" }], annuity: "R$ 0,00", income: "Não exigida", desc: "Controle total pelo app e descontos se antecipar parcelas.", link: "https://nubank.com.br/cartao/", categories: ["todos", "anuidade", "negativados"] },
-            { id: 3, name: "Inter Gold", bgClass: "bg-orange-500", iconBg: "bg-orange-400", rotation: "rotate-0", isInter: true, badges: [{ text: "Cashback", color: "bg-orange-100 text-orange-700" }, { text: "Internacional", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Não exigida", extraInfoLabel: "Cashback", extraInfoValue: "0.25% na fatura", desc: "Super App completo com investimentos e shopping.", link: "https://inter.co/pra-voce/cartoes/", categories: ["todos", "anuidade", "milhas"] },
-             { id: 4, name: "C6 Carbon", bgClass: "bg-slate-800", iconBg: "bg-black", rotation: "rotate-12", badges: [{ text: "Pontos Átomos", color: "bg-slate-100 text-slate-700" }, { text: "Mastercard Black", color: "bg-slate-900 text-white" }], annuity: "12x R$ 85,00 (Isenção possível)", income: "R$ 5.000,00", desc: "2.5 pontos por dólar e acesso a salas VIP em aeroportos.", link: "https://www.c6bank.com.br/cartao-c6-carbon", categories: ["todos", "milhas"] },
-             { id: 5, name: "Neon", bgClass: "bg-cyan-500", iconBg: "bg-cyan-600", rotation: "-rotate-6", badges: [{ text: "Sem Anuidade", color: "bg-cyan-100 text-cyan-700" }, { text: "Débito e Crédito", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Não exigida", desc: "Cartão virtual na hora e investimentos que rendem mais que a poupança.", link: "https://neon.com.br/", categories: ["todos", "anuidade", "negativados"] },
-             { id: 6, name: "Azul Itaú", bgClass: "bg-blue-600", iconBg: "bg-blue-800", rotation: "rotate-3", badges: [{ text: "Milhas Aéreas", color: "bg-blue-100 text-blue-700" }, { text: "Descontos", color: "bg-yellow-100 text-yellow-700" }], annuity: "12x R$ 30,00", income: "R$ 1.500,00", desc: "Ganhe pontos TudoAzul em todas as compras e descontos em passagens.", link: "https://www.itau.com.br/cartoes/escolha/azul-itau-internacional-visa-msg", categories: ["todos", "milhas"] },
-             { id: 7, name: "Will Bank", bgClass: "bg-yellow-400", iconBg: "bg-yellow-500", rotation: "rotate-12", badges: [{ text: "Sem Anuidade", color: "bg-black text-white" }, { text: "Aprovação Fácil", color: "bg-green-100 text-green-700" }], annuity: "Grátis", income: "Não exigida", desc: "Cartão de crédito sem anuidade e conta digital completa.", link: "https://www.willbank.com.br/", categories: ["todos", "anuidade", "negativados"] },
-             { id: 8, name: "Digio", bgClass: "bg-blue-800", iconBg: "bg-blue-900", rotation: "-rotate-3", badges: [{ text: "Sem Juros Rotativos", color: "bg-blue-100 text-blue-700" }, { text: "Visa", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Salário Mínimo", desc: "Cartão sem anuidade e sem juros rotativos.", link: "https://www.digio.com.br/", categories: ["todos", "anuidade"] },
-             { id: 9, name: "PAN Zero", bgClass: "bg-cyan-600", iconBg: "bg-cyan-700", rotation: "rotate-6", badges: [{ text: "Sem Anuidade", color: "bg-cyan-100 text-cyan-700" }, { text: "Conta Digital", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Salário Mínimo", desc: "Cartão zero anuidade e conta digital grátis.", link: "https://www.bancopan.com.br/produtos/cartao-de-credito/", categories: ["todos", "anuidade", "negativados"] },
-             { id: 10, name: "XP Visa Infinite", bgClass: "bg-gray-900", iconBg: "bg-black", rotation: "-rotate-6", badges: [{ text: "Investback", color: "bg-yellow-100 text-yellow-700" }, { text: "Sala VIP", color: "bg-gray-100 text-gray-700" }], annuity: "Grátis (com investimentos)", income: "R$ 5.000,00", desc: "Cartão premium com investback e acesso a salas VIP.", link: "https://www.xpi.com.br/produtos/cartao-de-credito/", categories: ["todos", "milhas"] }
+            { id: 2, name: "Roxinho Nubank", bgClass: "bg-purple-700", iconBg: "bg-purple-800", rotation: "-rotate-12", badges: [{ text: "Sem Anuidade", color: "bg-purple-100 text-purple-700" }, { text: "Conta Digital", color: "bg-yellow-100 text-yellow-700" }], annuity: "R$ 0,00", income: "Não exigida", desc: "Controle total pelo app.", link: "https://nubank.com.br/cartao/", categories: ["todos", "anuidade"] },
+            { id: 3, name: "Inter Gold", bgClass: "bg-orange-500", iconBg: "bg-orange-400", rotation: "rotate-0", isInter: true, badges: [{ text: "Cashback", color: "bg-orange-100 text-orange-700" }], annuity: "Grátis", income: "Não exigida", desc: "Super App completo.", link: "https://inter.co/pra-voce/cartoes/", categories: ["todos", "milhas"] },
+            { id: 7, name: "Will Bank", bgClass: "bg-yellow-400", iconBg: "bg-yellow-500", rotation: "rotate-12", badges: [{ text: "Sem Anuidade", color: "bg-black text-white" }], annuity: "Grátis", income: "Não exigida", desc: "Cartão de crédito sem anuidade.", link: "https://www.willbank.com.br/", categories: ["todos", "anuidade", "negativados"] },
+            { id: 8, name: "Digio", bgClass: "bg-blue-800", iconBg: "bg-blue-900", rotation: "-rotate-3", badges: [{ text: "Sem Juros Rotativos", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Salário Mínimo", desc: "Cartão sem anuidade.", link: "https://www.digio.com.br/", categories: ["todos", "anuidade"] },
+             { id: 9, name: "PAN Zero", bgClass: "bg-cyan-600", iconBg: "bg-cyan-700", rotation: "rotate-6", badges: [{ text: "Sem Anuidade", color: "bg-cyan-100 text-cyan-700" }], annuity: "Grátis", income: "Salário Mínimo", desc: "Conta digital grátis.", link: "https://www.bancopan.com.br/produtos/cartao-de-credito/", categories: ["todos", "anuidade", "negativados"] },
+             { id: 10, name: "XP Visa Infinite", bgClass: "bg-gray-900", iconBg: "bg-black", rotation: "-rotate-6", badges: [{ text: "Investback", color: "bg-yellow-100 text-yellow-700" }], annuity: "Grátis", income: "R$ 5k", desc: "Cartão premium.", link: "https://www.xpi.com.br/produtos/cartao-de-credito/", categories: ["todos", "milhas"] }
         ];
 
         let blogPosts = [];
+        let allBlogPosts = []; 
 
-        // INICIALIZAÇÃO
         document.addEventListener('DOMContentLoaded', () => {
             initFirebase();
             renderCards('todos');
@@ -516,72 +524,75 @@ apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
         });
 
         function initFirebase() {
-            // VERIFICA SE CHAVES SÃO VÁLIDAS
-            if (firebaseConfig.apiKey === "SUA_API_KEY_AQUI") {
-                 // MOSTRAR ALERTA VISUAL NO ADMIN SE ESTIVER COM CHAVES DE EXEMPLO
-                 const connError = document.getElementById('config-alert');
-                 if(connError) connError.classList.remove('hidden');
-                 return;
-            }
-
             try {
                 firebase.initializeApp(firebaseConfig);
                 db = firebase.firestore();
                 auth = firebase.auth();
                 console.log("Firebase conectado.");
                 
-                // Listener de Auth
                 auth.onAuthStateChanged(user => {
                     const loginForm = document.getElementById('admin-login');
                     const panel = document.getElementById('admin-panel');
-                    const connError = document.getElementById('connection-error');
-                    
                     if (user) { 
-                        loginForm.classList.add('hidden'); 
-                        panel.classList.remove('hidden'); 
-                        if(connError) connError.classList.add('hidden');
+                        if(loginForm) loginForm.classList.add('hidden'); 
+                        if(panel) panel.classList.remove('hidden'); 
                     } else { 
-                        loginForm.classList.remove('hidden'); 
-                        panel.classList.add('hidden'); 
+                        if(loginForm) loginForm.classList.remove('hidden'); 
+                        if(panel) panel.classList.add('hidden'); 
                     }
                 });
 
                 fetchBlogPosts();
             } catch (e) {
                 console.error("Erro na inicialização:", e);
-                const connError = document.getElementById('connection-error');
-                if(connError) {
-                    connError.textContent = "Erro ao conectar: " + e.message;
-                    connError.classList.remove('hidden');
-                }
             }
         }
 
         async function fetchBlogPosts() {
             if (!db) return;
             try {
-                const snap = await db.collection("posts").orderBy("createdAt", "desc").limit(10).get();
+                const snap = await db.collection("posts").orderBy("createdAt", "desc").limit(20).get();
                 if (!snap.empty) {
                     blogPosts = [];
                     snap.forEach(doc => blogPosts.push({ id: doc.id, ...doc.data() }));
+                    allBlogPosts = [...blogPosts]; 
                     renderBlog();
-                } else {
-                    console.log("Nenhum post encontrado no Firebase.");
-                    const grids = [document.getElementById('home-blog-grid'), document.getElementById('blog-list-container')];
-                    grids.forEach(grid => {
-                        if(grid) grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Nenhum post encontrado. Adicione no Admin.</p>';
-                    });
                 }
             } catch (e) {
-                console.warn("Erro ao buscar posts (verifique regras ou internet).", e);
+                console.warn("Erro ao buscar posts.", e);
             }
         }
 
-        // RENDERIZAÇÃO DO BLOG
+        function filterBlog(category) {
+            document.querySelectorAll('.blog-filter-btn').forEach(btn => {
+                btn.className = "blog-filter-btn px-5 py-2 bg-white border text-gray-600 hover:border-black hover:text-black rounded-full text-sm font-medium transition cursor-pointer";
+            });
+            
+            const buttons = document.querySelectorAll('.blog-filter-btn');
+            for(let btn of buttons) {
+                if(btn.textContent === category) {
+                     btn.className = "blog-filter-btn px-5 py-2 bg-black text-white rounded-full text-sm font-medium transition cursor-pointer";
+                }
+            }
+
+            if (category === 'todos') {
+                blogPosts = [...allBlogPosts];
+            } else {
+                blogPosts = allBlogPosts.filter(post => post.category === category);
+            }
+            renderBlog();
+        }
+
         function renderBlog() {
             const grids = [document.getElementById('home-blog-grid'), document.getElementById('blog-list-container')];
             grids.forEach(grid => {
                 if(!grid) return;
+                
+                if (blogPosts.length === 0) {
+                    grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Nenhum post encontrado nesta categoria.</p>';
+                    return;
+                }
+
                 grid.innerHTML = blogPosts.map(post => `
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col h-full" onclick="openArticle('${post.id}')">
                         <div class="h-48 overflow-hidden relative"><img src="${post.image}" class="w-full h-full object-cover transform hover:scale-105 transition duration-500"><span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-black z-20">${post.category}</span></div>
@@ -615,7 +626,163 @@ apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
             `).join('');
         }
 
-        // LÓGICA DE LOGIN COM FEEDBACK
+        // --- ARTICLE INTERACTIONS ---
+
+        function openArticle(id) {
+            currentPostId = id; 
+            const post = allBlogPosts.find(p => p.id == id);
+            
+            if(!post) return;
+            
+            const titleEl = document.getElementById('post-title');
+            const categoryEl = document.getElementById('post-category');
+            const authorEl = document.getElementById('post-author');
+            const dateEl = document.getElementById('post-date');
+            
+            if(titleEl) titleEl.textContent = post.title;
+            if(categoryEl) categoryEl.textContent = post.category;
+            if(authorEl) authorEl.textContent = 'Por ' + (post.author || 'Redação');
+            if(dateEl) dateEl.textContent = post.date;
+            
+            const contentDiv = document.getElementById('post-content');
+            if(contentDiv) {
+                contentDiv.innerHTML = '';
+                
+                const introP = document.createElement('p');
+                introP.className = 'text-xl leading-relaxed mb-8 font-medium text-gray-800 intro-text';
+                introP.textContent = post.intro;
+                
+                const bodyDiv = document.createElement('div');
+                bodyDiv.className = 'body-content';
+                bodyDiv.innerHTML = post.content;
+                
+                contentDiv.appendChild(introP);
+                contentDiv.appendChild(bodyDiv);
+            }
+            
+            // Likes
+            const likeCountEl = document.getElementById('like-count');
+            const likeIcon = document.getElementById('like-icon');
+            
+            if(likeCountEl) likeCountEl.textContent = post.likes || 0;
+            
+            if(likeIcon) {
+                if(localStorage.getItem(`liked_${id}`)) {
+                    likeIcon.classList.remove('text-gray-400');
+                    likeIcon.classList.add('text-red-500', 'ph-fill'); 
+                } else {
+                    likeIcon.classList.add('text-gray-400');
+                    likeIcon.classList.remove('text-red-500');
+                }
+            }
+
+            if(db) {
+                db.collection("posts").doc(id).onSnapshot((doc) => {
+                    if(doc.exists) {
+                        const data = doc.data();
+                        if(likeCountEl) likeCountEl.textContent = data.likes || 0;
+                    }
+                });
+                loadComments(id);
+            }
+
+            navigateTo('blog-post');
+        }
+
+        function toggleLike() {
+            if(!currentPostId || !db) return;
+            
+            const likeIcon = document.getElementById('like-icon');
+            const isLiked = localStorage.getItem(`liked_${currentPostId}`);
+            const postRef = db.collection("posts").doc(currentPostId);
+
+            if(likeIcon) {
+                likeIcon.classList.add('animate-heart');
+                setTimeout(() => likeIcon.classList.remove('animate-heart'), 300);
+
+                if (isLiked) {
+                     likeIcon.classList.remove('text-red-500');
+                     likeIcon.classList.add('text-gray-400');
+                     localStorage.removeItem(`liked_${currentPostId}`);
+                     postRef.update({ likes: firebase.firestore.FieldValue.increment(-1) });
+                } else {
+                    likeIcon.classList.remove('text-gray-400');
+                    likeIcon.classList.add('text-red-500');
+                    localStorage.setItem(`liked_${currentPostId}`, 'true');
+                    postRef.update({ likes: firebase.firestore.FieldValue.increment(1) });
+                }
+            }
+        }
+
+        function loadComments(postId) {
+            const list = document.getElementById('comments-list');
+            const countEl = document.getElementById('comment-count');
+            
+            if(!list || !countEl) return;
+            
+            list.innerHTML = '<p class="text-sm text-gray-500">Carregando...</p>';
+            
+            db.collection("posts").doc(postId).collection("comments")
+                .orderBy("timestamp", "desc")
+                .onSnapshot((snapshot) => {
+                    countEl.textContent = snapshot.size;
+                    
+                    if (snapshot.empty) {
+                        list.innerHTML = '<p class="text-sm text-gray-500">Seja o primeiro a comentar!</p>';
+                        return;
+                    }
+                    
+                    list.innerHTML = ''; 
+                    snapshot.forEach(doc => {
+                        const c = doc.data();
+                        const date = c.timestamp ? new Date(c.timestamp.toDate()).toLocaleDateString() : 'Recentemente';
+                        
+                        const commentEl = document.createElement('div');
+                        commentEl.className = 'bg-white p-4 rounded-xl border border-gray-100 shadow-sm';
+                        commentEl.innerHTML = `
+                            <div class="flex justify-between items-start mb-2">
+                                <h5 class="font-bold text-sm text-black">${c.name}</h5>
+                                <span class="text-xs text-gray-400">${date}</span>
+                            </div>
+                            <p class="text-sm text-gray-600">${c.text}</p>
+                        `;
+                        list.appendChild(commentEl);
+                    });
+                });
+        }
+
+        function submitComment(e) {
+            e.preventDefault();
+            if(!currentPostId || !db) return;
+            
+            const nameInput = document.getElementById('comment-name');
+            const textInput = document.getElementById('comment-text');
+            const btn = e.target.querySelector('button');
+            
+            const name = nameInput.value.trim();
+            const text = textInput.value.trim();
+            
+            if(!name || !text) return;
+            
+            btn.disabled = true;
+            btn.textContent = 'Enviando...';
+            
+            db.collection("posts").doc(currentPostId).collection("comments").add({
+                name: name,
+                text: text,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                nameInput.value = '';
+                textInput.value = '';
+                btn.disabled = false;
+                btn.textContent = 'Comentar';
+            }).catch(err => {
+                alert("Erro ao comentar: " + err.message);
+                btn.disabled = false;
+                btn.textContent = 'Comentar';
+            });
+        }
+
         function handleLogin(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button');
@@ -626,21 +793,11 @@ apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
             btn.innerText = "Processando...";
             btn.disabled = true;
             btn.classList.add('opacity-50', 'cursor-not-allowed');
-            errorMsg.classList.add('hidden');
-
-            if (!auth) {
-                 errorMsg.textContent = "Erro: Firebase não configurado. Verifique as chaves.";
-                 errorMsg.classList.remove('hidden');
-                 btn.innerText = "Entrar";
-                 btn.disabled = false;
-                 btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                 return;
-            }
+            if(errorMsg) errorMsg.classList.add('hidden');
 
             auth.signInWithEmailAndPassword(email, pass)
                 .then(() => { 
                     btn.innerText = "Sucesso!";
-                    // O AuthStateListener cuidará da troca de tela
                 }) 
                 .catch(err => {
                     console.error(err);
@@ -649,19 +806,21 @@ apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
                     else if (err.code === 'auth/too-many-requests') msg = "Muitas tentativas. Aguarde um momento.";
                     else msg = err.message;
 
-                    errorMsg.textContent = "Erro: " + msg;
-                    errorMsg.classList.remove('hidden');
+                    if(errorMsg) {
+                        errorMsg.textContent = "Erro: " + msg;
+                        errorMsg.classList.remove('hidden');
+                    }
                     btn.innerText = "Entrar";
                     btn.disabled = false;
                     btn.classList.remove('opacity-50', 'cursor-not-allowed');
                 });
         }
 
-        function handleLogout() { if(auth) auth.signOut(); else window.location.reload(); }
+        function handleLogout() { if(auth) auth.signOut(); }
 
         function addNewPost(e) {
             e.preventDefault();
-            if(!db) { alert("Erro: Banco de dados não inicializado."); return; }
+            if(!db) return;
             const post = {
                 title: document.getElementById('admin-title').value,
                 category: document.getElementById('admin-category').value,
@@ -670,7 +829,8 @@ apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
                 intro: document.getElementById('admin-intro').value,
                 content: document.getElementById('admin-content').value,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                date: new Date().toLocaleDateString('pt-BR')
+                date: new Date().toLocaleDateString('pt-BR'),
+                likes: 0 
             };
 
             db.collection("posts").add(post).then(() => { alert("Postado com sucesso!"); e.target.reset(); fetchBlogPosts(); }).catch(err => alert("Erro ao salvar: " + err.message));
@@ -685,59 +845,95 @@ apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
                 void section.offsetWidth; 
                 section.classList.add('fade-in');
                 window.scrollTo(0,0);
+                
+                setTimeout(() => {
+                    try {
+                        const slots = section.querySelectorAll('ins.adsbygoogle');
+                        slots.forEach(slot => {
+                            if (slot.innerHTML === "") { 
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            }
+                        });
+                    } catch (e) { console.log("AdSense info: ", e); }
+                }, 500);
             }
         }
         
-        function openArticle(id) {
-            const post = blogPosts.find(p => p.id == id);
-            if(!post) return;
-            document.getElementById('post-title').textContent = post.title;
-            document.getElementById('post-category').textContent = post.category;
-            // Autor pode não existir no objeto post, verificar antes
-            document.getElementById('post-author').textContent = 'Por ' + (post.author || 'Redação');
-            document.getElementById('post-date').textContent = post.date;
-            
-            // Limpa conteúdo anterior
-            const contentDiv = document.getElementById('post-content');
-            contentDiv.innerHTML = '';
-            
-            // Cria elementos para evitar injeção direta de strings mal formadas
-            const introP = document.createElement('p');
-            introP.className = 'text-xl leading-relaxed mb-8 font-medium text-gray-800 intro-text';
-            introP.textContent = post.intro;
-            
-            const bodyDiv = document.createElement('div');
-            bodyDiv.className = 'body-content';
-            bodyDiv.innerHTML = post.content; // HTML permitido para o corpo
-            
-            contentDiv.appendChild(introP);
-            contentDiv.appendChild(bodyDiv);
-            
-            navigateTo('blog-post');
-        }
-
         // SIMULADOR
         const loanPartners = [
-            { name: "Nubank", url: "https://nubank.com.br/" }, { name: "Inter", url: "https://inter.co/" }
+            { name: "Nubank", url: "https://nubank.com.br/emprestimo/" },
+            { name: "Banco Inter", url: "https://inter.co/pra-voce/emprestimo/" },
+            { name: "Santander", url: "https://www.santander.com.br/emprestimos" },
+            { name: "Itaú", url: "https://www.itau.com.br/emprestimos" }
         ];
+
         function updateLiveCalculation() {
-            const v = document.getElementById('loan-amount').value, t = document.getElementById('loan-term').value;
-            if(v > 0) document.getElementById('live-installment').textContent = (v * 0.035 * Math.pow(1.035, t) / (Math.pow(1.035, t) - 1)).toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+            const amountInput = document.getElementById('loan-amount');
+            const termInput = document.getElementById('loan-term');
+            const livePreview = document.getElementById('live-preview');
+            const liveInstallment = document.getElementById('live-installment');
+
+            const amount = parseFloat(amountInput.value);
+            const term = parseInt(termInput.value);
+            const rate = 0.035; 
+
+            if (amount > 0 && term > 0) {
+                const numerator = amount * rate * Math.pow(1 + rate, term);
+                const denominator = Math.pow(1 + rate, term) - 1;
+                const installment = numerator / denominator;
+
+                liveInstallment.textContent = installment.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                livePreview.classList.remove('hidden');
+            } else {
+                livePreview.classList.add('hidden');
+            }
         }
+
         function calculateFinalLoan(e) {
             e.preventDefault();
-            const res = document.getElementById('loan-result'), cont = document.getElementById('loan-recommendations-container');
-            cont.innerHTML = loanPartners.map(p => `
-                <div onclick="openOffer('${p.name}', '${p.url}')" class="flex justify-between items-center p-3 bg-white border rounded-lg hover:border-brand-400 cursor-pointer mb-2">
-                    <span class="font-bold">${p.name}</span><span class="text-sm text-brand-600 font-bold">Ver Oferta ></span>
+            const res = document.getElementById('loan-result');
+            const cont = document.getElementById('loan-recommendations-container');
+            
+            const shuffled = [...loanPartners].sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 2); 
+
+            cont.innerHTML = selected.map(p => `
+                <div onclick="openOffer('${p.name}', '${p.url}')" class="flex justify-between items-center p-3 bg-white border rounded-lg hover:border-brand-400 cursor-pointer mb-2 transition shadow-sm">
+                    <span class="font-bold text-gray-800">${p.name}</span>
+                    <span class="text-sm text-brand-600 font-bold flex items-center gap-1">Ver Oferta <i class="ph-bold ph-caret-right"></i></span>
                 </div>`).join('');
+            
             res.classList.remove('hidden');
+            res.scrollIntoView({behavior: 'smooth', block: 'start'});
         }
+
         function openOffer(name, url) {
-            document.getElementById('offer-partner-name').textContent = name;
-            document.getElementById('offer-cta-btn').onclick = () => window.open(url, '_blank');
+            const partnerNameEl = document.getElementById('offer-partner-name');
+            const amountEl = document.getElementById('loan-amount');
+            const termEl = document.getElementById('loan-term');
+            const instEl = document.getElementById('live-installment');
+
+            if(partnerNameEl) partnerNameEl.textContent = name;
+            
+            // Pegar valores do simulador para a tela de oferta
+            const amountVal = amountEl ? parseFloat(amountEl.value) : 0;
+            const termVal = termEl ? termEl.value : "12";
+            const instText = instEl ? instEl.textContent : "R$ 0,00";
+
+            const finalAmount = amountVal ? amountVal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 'R$ 5.000,00';
+            const finalInstallment = instText !== 'R$ 0,00' ? instText : 'R$ 0,00';
+
+            const offerValEl = document.getElementById('offer-value');
+            const offerInstEl = document.getElementById('offer-installments');
+            const ctaBtn = document.getElementById('offer-cta-btn');
+
+            if(offerValEl) offerValEl.textContent = finalAmount;
+            if(offerInstEl) offerInstEl.textContent = `${termVal}x ${finalInstallment}`;
+            if(ctaBtn) ctaBtn.onclick = () => window.open(url, '_blank');
+            
             navigateTo('offer-screen');
         }
+
         function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
         function checkCookies() { if (!localStorage.getItem('cookiesAccepted')) document.getElementById('cookie-banner').classList.remove('translate-y-full'); }
         function acceptCookies() { localStorage.setItem('cookiesAccepted', 'true'); document.getElementById('cookie-banner').classList.add('translate-y-full'); }

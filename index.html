@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta name="google-adsense-account" content="ca-pub-1017585624443150">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Guia completo sobre recuperação de crédito, cartões e empréstimos. Compare taxas e encontre a melhor opção financeira para o seu perfil.">
@@ -9,9 +8,12 @@
     <meta name="author" content="CrediFácil">
     
     <!-- Google AdSense (Script Principal) -->
-    <!-- Carrega a biblioteca do AdSense uma única vez -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017585624443150"
-     crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017585624443150" crossorigin="anonymous"></script>
+
+    <!-- FIREBASE SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
     <title>CrediFácil | Guia de Crédito e Finanças Pessoais</title>
     
@@ -36,8 +38,8 @@
                         brand: {
                             50: '#FEFCE8',
                             100: '#FEF9C3',
-                            400: '#FACC15', // Amarelo Principal (Botões)
-                            500: '#EAB308', // Amarelo Escuro (Hover)
+                            400: '#FACC15', // Amarelo Principal
+                            500: '#EAB308', // Amarelo Escuro
                             600: '#CA8A04',
                             900: '#713F12',
                         },
@@ -62,9 +64,8 @@
         .card-enter { animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         
-        /* Container de Anúncio Otimizado para AdSense */
         .ad-slot {
-            display: block; /* Importante: block funciona melhor que flex para ads responsivos */
+            display: block; 
             margin: 2rem auto;
             background-color: transparent; 
             min-height: 90px; 
@@ -72,10 +73,7 @@
             text-align: center;
             overflow: hidden;
         }
-        
-        .ad-slot:empty {
-            background-color: #f9fafb;
-        }
+        .ad-slot:empty { background-color: #f9fafb; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 page-wrapper">
@@ -128,6 +126,7 @@
                 <a href="#" onclick="navigateTo('cartoes'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Cartões</a>
                 <a href="#" onclick="navigateTo('blog'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Blog</a>
                 <a href="#" onclick="navigateTo('sobre'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Sobre</a>
+                <a href="#" onclick="navigateTo('admin'); toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-brand-400 font-bold hover:bg-black rounded-md">Área Admin</a>
             </div>
         </div>
     </header>
@@ -209,6 +208,7 @@
                     
                     <div id="home-blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         <!-- Dynamic Content -->
+                        <div class="col-span-full text-center text-gray-500 py-8">Carregando artigos...</div>
                     </div>
                 </div>
             </div>
@@ -309,7 +309,6 @@
                             </p>
                         </div>
                         <div class="grid grid-cols-1 gap-4">
-                            <!-- Cards informativos mantidos -->
                             <div class="flex gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-brand-400 transition items-start">
                                 <div class="bg-gray-100 text-black w-12 h-12 flex items-center justify-center rounded-lg flex-shrink-0 mt-1"><i class="ph ph-shield-check text-2xl"></i></div>
                                 <div><h4 class="font-bold text-black">Segurança</h4><p class="text-sm text-gray-600 mt-1">Nunca pedimos sua senha ou depósitos.</p></div>
@@ -430,7 +429,7 @@
                     </div>
 
                     <div id="blog-list-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <!-- JS populated items -->
+                        <div class="col-span-full text-center text-gray-500">Carregando artigos...</div>
                     </div>
                 </div>
             </div>
@@ -495,6 +494,91 @@
             </div>
         </section>
 
+        <!-- PÁGINA: ADMIN (PROTEGIDA) -->
+        <section id="admin" class="page-section hidden-section fade-in">
+            <div class="bg-white py-20">
+                <div class="container mx-auto px-4 max-w-xl">
+                    <h1 class="text-3xl font-bold text-black mb-8 text-center border-b border-gray-200 pb-4">Painel Administrativo</h1>
+                    
+                    <!-- Aviso de modo Demo -->
+                    <div id="demo-warning" class="hidden mb-6 p-4 bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg text-sm">
+                        <strong>Modo de Demonstração:</strong> Como o Firebase não está configurado, o site está operando em modo local. Use qualquer e-mail/senha para testar o painel. Os posts serão salvos apenas no seu navegador.
+                    </div>
+
+                    <!-- Login Form -->
+                    <div id="admin-login" class="bg-gray-50 p-8 rounded-xl border border-gray-200 shadow-sm">
+                        <h2 class="text-xl font-bold text-black mb-6 text-center">Login Seguro</h2>
+                        <form onsubmit="handleLogin(event)" class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">E-mail</label>
+                                <input type="email" id="login-email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Senha</label>
+                                <input type="password" id="login-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required>
+                            </div>
+                            <button type="submit" class="w-full bg-black text-white hover:bg-gray-800 font-bold py-3 rounded-lg transition">Entrar</button>
+                            <p id="login-error" class="text-red-500 text-sm text-center hidden"></p>
+                        </form>
+                    </div>
+
+                    <!-- Admin Panel (Hidden until login) -->
+                    <div id="admin-panel" class="hidden">
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-green-600 font-bold flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> Logado</span>
+                            <button onclick="handleLogout()" class="text-sm text-red-500 hover:underline">Sair</button>
+                        </div>
+
+                        <div class="bg-gray-50 p-8 rounded-xl border border-gray-200 mb-12">
+                            <h2 class="text-xl font-bold text-black mb-6">Adicionar Novo Post</h2>
+                            <form onsubmit="addNewPost(event)" class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">Título do Artigo</label>
+                                    <input type="text" id="admin-title" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-bold text-gray-700 mb-2">Categoria</label>
+                                        <select id="admin-category" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none">
+                                            <option value="Score">Score</option>
+                                            <option value="Cartões">Cartões</option>
+                                            <option value="Empréstimos">Empréstimos</option>
+                                            <option value="Dívidas">Dívidas</option>
+                                            <option value="Educação">Educação</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-bold text-gray-700 mb-2">Autor</label>
+                                        <input type="text" id="admin-author" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" value="Redação CrediFácil">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">URL da Imagem</label>
+                                    <input type="text" id="admin-image" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" placeholder="https://..." required>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">Introdução (Resumo)</label>
+                                    <textarea id="admin-intro" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"></textarea>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">Conteúdo Completo (HTML)</label>
+                                    <textarea id="admin-content" rows="10" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none font-mono text-sm" placeholder="<p>Texto...</p>"></textarea>
+                                </div>
+
+                                <button type="submit" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-3 rounded-lg transition shadow-md">
+                                    Publicar Post
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- PÁGINA: SOBRE -->
         <section id="sobre" class="page-section hidden-section fade-in">
             <div class="container mx-auto px-4 py-20">
@@ -507,7 +591,7 @@
             </div>
         </section>
 
-        <!-- PÁGINA: CONTATO (Nova - Exigida pelo AdSense) -->
+        <!-- PÁGINA: CONTATO -->
         <section id="contact" class="page-section hidden-section fade-in">
             <div class="bg-white py-20">
                 <div class="container mx-auto px-4 max-w-2xl">
@@ -590,11 +674,11 @@
                         <li><a href="#" onclick="navigateTo('contact')" class="hover:text-brand-400 transition">Fale Conosco</a></li>
                         <li><a href="#" onclick="navigateTo('terms')" class="hover:text-brand-400 transition">Termos de Uso</a></li>
                         <li><a href="#" onclick="navigateTo('privacy')" class="hover:text-brand-400 transition">Política de Privacidade</a></li>
+                        <li><a href="#" onclick="navigateTo('admin')" class="hover:text-brand-400 transition text-gray-600">Admin</a></li>
                     </ul>
                 </div>
             </div>
             
-            <!-- Aviso Legal Obrigatório (YMYL) -->
             <div class="border-t border-gray-800 pt-8 pb-8 text-xs text-gray-500 text-justify">
                 <p class="mb-2"><strong>Isenção de Responsabilidade (Disclaimer):</strong> O CrediFácil (credifacil.com) é um blog informativo e não atua como instituição financeira, banco ou credora. Não realizamos empréstimos pessoais, não emitimos cartões de crédito e não somos responsáveis pela aprovação ou negação de crédito. Todo o conteúdo disposto neste site tem caráter meramente informativo.</p>
                 <p class="mb-2"><strong>Segurança:</strong> O CrediFácil jamais solicitará quantias em dinheiro para liberação de nenhum tipo de produto financeiro, seja cartão de crédito, financiamento ou empréstimo. Se isso acontecer, denuncie imediatamente.</p>
@@ -619,6 +703,38 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        // --- 1. CONFIGURAÇÃO DO FIREBASE (IMPORTANTE: SUBSTITUA COM SEUS DADOS) ---
+        // Você pega esses dados no console do Firebase: Project Settings > General > Your apps
+        const firebaseConfig = {
+            apiKey: "AIzaSyAM-jEpYxbOLHA9yGCQtKFS3P_xdbMYPNI",
+    authDomain: "credifacil-5af35.firebaseapp.com",
+    projectId: "credifacil-5af35",
+    storageBucket: "credifacil-5af35.firebasestorage.app",
+    messagingSenderId: "491592064222",
+    appId: "1:491592064222:web:a93a975bd912012359b64f",
+        };
+
+        // --- INICIALIZAÇÃO DO FIREBASE COM FALLBACK ---
+        let db, auth;
+        let isFirebaseInitialized = false;
+
+        // Verifica se a config ainda tem placeholders
+        const hasPlaceholders = firebaseConfig.projectId === "credifacil-5af35";
+
+        if (!hasPlaceholders) {
+            try {
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.firestore();
+                auth = firebase.auth();
+                isFirebaseInitialized = true;
+                console.log("Firebase conectado com sucesso.");
+            } catch (error) {
+                console.warn("Erro ao conectar Firebase. Usando modo Demo.", error);
+            }
+        } else {
+            console.log("Firebase não configurado (placeholders detectados). Ativando modo Demo.");
+        }
+
         // --- DADOS DOS CARTÕES ---
         const cardsData = [
             {
@@ -704,53 +820,7 @@
             }
         ];
 
-        // --- BLOG PLACEHOLDERS (Conteúdo demonstrativo) ---
-        let blogPosts = [
-            {
-                id: 1,
-                title: "Como aumentar seu Score em 30 dias: O Guia Definitivo",
-                category: "Score",
-                date: "10 Dez, 2025",
-                author: "Ana Silva",
-                image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-                intro: "Muitos brasileiros sofrem com score baixo mesmo pagando as contas em dia. Descubra os segredos que os bancos não te contam.",
-                content: `<p class="mb-4">O Score de crédito é a porta de entrada para financiamentos e cartões com limites altos. Se você está "travado" nos 300 ou 400 pontos, saiba que existem ações práticas para mudar isso.</p>
-                          <h3 class="text-2xl font-bold text-black mt-6 mb-3">1. Cadastro Positivo</h3>
-                          <p class="mb-4">Ativar o cadastro positivo é o passo zero. Ele permite que as instituições vejam que você paga suas contas em dia, não apenas quando você atrasa. Isso gera um histórico de bom pagador.</p>
-                          <h3 class="text-2xl font-bold text-black mt-6 mb-3">2. Contas no seu nome</h3>
-                          <p class="mb-4">Tenha contas de consumo (luz, água, telefone) no seu nome e pague rigorosamente antes do vencimento. O sistema entende isso como estabilidade financeira e responsabilidade.</p>`
-            },
-            {
-                id: 2,
-                title: "5 Cartões de Crédito que aprovam Negativados em 2025",
-                category: "Cartões",
-                date: "08 Dez, 2025",
-                author: "Carlos Souza",
-                image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-                intro: "Estar com o nome sujo não significa o fim da linha. Bancos digitais estão apostando nesse público com limites iniciais.",
-                content: "<p>Se você tem restrições no CPF, os grandes bancos tradicionais provavelmente vão te negar. Mas fintechs como Nubank (função construir limite), Inter e Santander SX possuem algoritmos diferentes que podem facilitar a aprovação.</p>"
-            },
-            {
-                id: 3,
-                title: "Empréstimo Pessoal vs Consignado: Qual escolher?",
-                category: "Empréstimos",
-                date: "05 Dez, 2025",
-                author: "Redação",
-                image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                intro: "Entenda as taxas de juros e os riscos de cada modalidade antes de assinar o contrato e comprometer sua renda.",
-                content: "<p>A principal diferença está na garantia de pagamento. O consignado oferece as menores taxas do Brasil porque desconta direto da folha, reduzindo o risco para o banco.</p>"
-            },
-             {
-                id: 4,
-                title: "Como renegociar dívidas com até 90% de desconto",
-                category: "Dívidas",
-                date: "01 Dez, 2025",
-                author: "Ana Silva",
-                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-                intro: "Feirões Limpa Nome são a melhor oportunidade do ano. Saiba como se preparar e limpar seu nome com pouco dinheiro.",
-                content: "<p>Não aceite a primeira proposta. Bancos preferem receber 10% da dívida do que nada. Aprenda a barganhar nos feirões oficiais como o do Serasa.</p>"
-            }
-        ];
+        let blogPosts = [];
 
         // --- NAVEGAÇÃO ---
         function navigateTo(pageId) {
@@ -760,42 +830,24 @@
             const targetSection = document.getElementById(pageId);
             if (targetSection) {
                 targetSection.classList.remove('hidden-section');
-                
-                // Reiniciar animação
                 targetSection.classList.remove('fade-in');
-                void targetSection.offsetWidth; // trigger reflow
+                void targetSection.offsetWidth;
                 targetSection.classList.add('fade-in');
-                
-                // FORCE LAYOUT REFLOW
                 void targetSection.offsetWidth; 
-
                 window.scrollTo(0, 0);
 
-                // --- LÓGICA DE CARREGAMENTO DO ADSENSE ---
-                // Delay to ensure layout is calculated (fixes availableWidth=0)
                 setTimeout(() => {
                     const pendingAds = targetSection.querySelectorAll('ins.adsbygoogle-lazy');
                     if (pendingAds.length > 0) {
                         pendingAds.forEach(ad => {
-                            // Check if ad is actually visible and has width
-                            const style = window.getComputedStyle(ad);
-                            const isVisible = style.display !== 'none' && (ad.offsetWidth > 0 || ad.parentElement.offsetWidth > 0);
-
-                            if (isVisible) {
-                                // Troca a classe para 'adsbygoogle' padrão
+                            if (ad.offsetParent !== null && ad.offsetWidth > 0) {
                                 ad.classList.remove('adsbygoogle-lazy');
                                 ad.classList.add('adsbygoogle');
-                                
-                                // Solicita o carregamento do anúncio ao Google
-                                try {
-                                    (window.adsbygoogle = window.adsbygoogle || []).push({});
-                                } catch (e) {
-                                    console.error("AdSense push error:", e);
-                                }
+                                try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) { console.error("AdSense push error:", e); }
                             }
                         });
                     }
-                }, 300); // Increased delay
+                }, 500);
             }
         }
 
@@ -935,27 +987,124 @@
             navigateTo('offer-screen');
         }
 
-        // --- BLOG LOGIC ---
-        async function fetchBlogPosts() {
-            try {
-                const response = await fetch('posts.json');
-                if (response.ok) {
-                    const data = await response.json();
-                    if(data.posts && Array.isArray(data.posts)){ blogPosts = data.posts; }
+        // --- AUTH & ADMIN LOGIC ---
+        
+        // Listen to Auth State if configured
+        if (isFirebaseInitialized && auth) {
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    document.getElementById('admin-login').classList.add('hidden');
+                    document.getElementById('admin-panel').classList.remove('hidden');
+                    document.getElementById('demo-warning').classList.add('hidden');
+                } else {
+                    document.getElementById('admin-login').classList.remove('hidden');
+                    document.getElementById('admin-panel').classList.add('hidden');
                 }
-            } catch (error) { console.log("Usando posts padrão."); }
-            renderBlog();
+            });
+        } else {
+            // Show demo warning
+            const warningEl = document.getElementById('demo-warning');
+            if (warningEl) warningEl.classList.remove('hidden');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const errorMsg = document.getElementById('login-error');
+
+            if (!isFirebaseInitialized) {
+                // Mock Login for Demo
+                alert("Modo de Demonstração: Login simulado com sucesso!");
+                document.getElementById('admin-login').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+                return;
+            }
+
+            auth.signInWithEmailAndPassword(email, password)
+                .catch((error) => {
+                    errorMsg.textContent = "Erro: " + error.message;
+                    errorMsg.classList.remove('hidden');
+                });
+        }
+
+        function handleLogout() {
+            if(isFirebaseInitialized && auth) {
+                auth.signOut();
+            } else {
+                // Mock Logout
+                window.location.reload();
+            }
+        }
+
+        // --- BLOG LOGIC (FIRESTORE OR MOCK) ---
+        
+        async function fetchBlogPosts() {
+            const container = document.getElementById('home-blog-grid');
+            const listContainer = document.getElementById('blog-list-container');
+            
+            if (!isFirebaseInitialized) {
+                // Fallback to LocalStorage or Static JSON if Firebase not config
+                const localData = localStorage.getItem('demoPosts');
+                if (localData) {
+                    blogPosts = JSON.parse(localData);
+                } else {
+                    // Try fetch static json
+                    try {
+                        const response = await fetch('posts.json');
+                        if (response.ok) {
+                            const data = await response.json();
+                            if(data.posts) blogPosts = data.posts;
+                        }
+                    } catch(e) {
+                        // Fallback hardcoded if no json file
+                        blogPosts = [
+                            {
+                                id: 'demo1',
+                                title: "Como aumentar seu Score em 30 dias",
+                                category: "Score",
+                                date: "10 Jan, 2026",
+                                intro: "Dicas essenciais para melhorar sua pontuação.",
+                                image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                                content: "<p>Conteúdo de demonstração...</p>"
+                            }
+                        ]; 
+                    }
+                }
+                renderBlog();
+                return;
+            }
+
+            try {
+                const querySnapshot = await db.collection("posts").orderBy("createdAt", "desc").limit(10).get();
+                blogPosts = [];
+                querySnapshot.forEach((doc) => {
+                    blogPosts.push({ id: doc.id, ...doc.data() });
+                });
+                renderBlog();
+            } catch (error) {
+                console.error("Error fetching posts:", error);
+                if(container) container.innerHTML = '<p class="text-center col-span-full">Erro ao carregar posts.</p>';
+            }
         }
 
         function renderBlog() {
             const homeGrid = document.getElementById('home-blog-grid');
             const blogListGrid = document.getElementById('blog-list-container');
+            
             if(homeGrid) homeGrid.innerHTML = '';
             if(blogListGrid) blogListGrid.innerHTML = '';
 
+            if (blogPosts.length === 0) {
+                const emptyMsg = '<p class="text-center col-span-full text-gray-500">Nenhum post encontrado.</p>';
+                if(homeGrid) homeGrid.innerHTML = emptyMsg;
+                if(blogListGrid) blogListGrid.innerHTML = emptyMsg;
+                return;
+            }
+
             blogPosts.forEach((post, index) => {
                 const cardHTML = `
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col h-full" onclick="openArticle(${post.id})">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col h-full" onclick="openArticle('${post.id}')">
                         <div class="h-48 overflow-hidden relative">
                              <div class="absolute inset-0 bg-black/10 hover:bg-transparent transition z-10"></div>
                              <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
@@ -969,6 +1118,7 @@
                         </div>
                     </div>
                 `;
+
                 if (index < 3 && homeGrid) homeGrid.innerHTML += cardHTML;
                 if (blogListGrid) blogListGrid.innerHTML += cardHTML;
             });
@@ -979,12 +1129,50 @@
             if (!post) return;
             document.getElementById('post-category').textContent = post.category;
             document.getElementById('post-title').textContent = post.title;
-            // document.getElementById('post-author').textContent = 'Por ' + post.author; // Ajustado no HTML fixo
             document.getElementById('post-date').textContent = post.date;
             const contentDiv = document.getElementById('post-content');
             contentDiv.querySelector('.intro-text').textContent = post.intro;
             contentDiv.querySelector('.body-content').innerHTML = post.content;
             navigateTo('blog-post');
+        }
+
+        // --- ADMIN FUNCTIONS (FIRESTORE OR MOCK) ---
+        function addNewPost(event) {
+            event.preventDefault();
+            
+            const newPost = {
+                title: document.getElementById('admin-title').value,
+                category: document.getElementById('admin-category').value,
+                date: new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'short', year: 'numeric' }),
+                author: document.getElementById('admin-author').value,
+                image: document.getElementById('admin-image').value,
+                intro: document.getElementById('admin-intro').value,
+                content: document.getElementById('admin-content').value
+            };
+
+            if (!isFirebaseInitialized) {
+                // Mock Save
+                newPost.id = Date.now().toString();
+                blogPosts.unshift(newPost);
+                localStorage.setItem('demoPosts', JSON.stringify(blogPosts));
+                alert("Modo Demo: Post salvo no navegador! (Configure o Firebase para salvar no servidor)");
+                event.target.reset();
+                renderBlog();
+                return;
+            }
+
+            // Real Firebase Save
+            newPost.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+            db.collection("posts").add(newPost)
+                .then((docRef) => {
+                    alert("Post publicado com sucesso! ID: " + docRef.id);
+                    event.target.reset();
+                    fetchBlogPosts();
+                })
+                .catch((error) => {
+                    console.error("Erro ao adicionar post: ", error);
+                    alert("Erro ao publicar. Verifique o console.");
+                });
         }
 
         // --- COOKIES ---
@@ -1011,5 +1199,3 @@
     </script>
 </body>
 </html>
-
-

@@ -49,8 +49,17 @@
         .hidden-section { display: none; }
         .page-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
         main { flex: 1; }
-        .ad-slot { display: block; margin: 2rem auto; background-color: transparent; min-height: 90px; width: 100%; text-align: center; overflow: hidden; }
-        .ad-slot:empty { background-color: #f9fafb; }
+        /* Ad Slot fixo para evitar CLS e erros de largura */
+        .ad-slot { 
+            display: block; 
+            margin: 2rem auto; 
+            background-color: #f9fafb; 
+            min-height: 90px; 
+            width: 100%; 
+            max-width: 100%;
+            text-align: center; 
+            overflow: hidden; 
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 page-wrapper">
@@ -102,7 +111,9 @@
                     <div class="max-w-3xl">
                         <span class="bg-brand-400/20 text-brand-400 px-4 py-1 rounded-full text-sm font-bold tracking-wide uppercase mb-6 inline-block border border-brand-400/20">Sua liberdade financeira</span>
                         <h1 class="text-4xl lg:text-6xl font-extrabold leading-tight mb-6">Saia das dívidas e recupere seu <span class="text-brand-400">Crédito</span> hoje.</h1>
-                        <p class="text-lg text-gray-400 mb-8 max-w-2xl">Conteúdo gratuito, análises de cartões para negativados e as melhores taxas de empréstimo.</p>
+                        <p class="text-lg text-gray-400 mb-8 max-w-2xl">
+                            Conteúdo gratuito, análises de cartões para negativados e as melhores taxas de empréstimo. Tudo para você reorganizar sua vida financeira.
+                        </p>
                         <div class="flex flex-col sm:flex-row gap-4">
                             <button onclick="navigateTo('blog')" class="bg-brand-400 hover:bg-brand-500 text-black px-8 py-4 rounded-lg font-bold text-lg transition shadow-lg">Ver Artigos Gratuitos</button>
                             <button onclick="navigateTo('cartoes')" class="bg-white/5 hover:bg-white/10 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-lg font-bold text-lg transition">Melhores Cartões</button>
@@ -112,7 +123,9 @@
             </div>
             
             <div class="container mx-auto px-4">
-                <div class="ad-slot w-full"><ins class="adsbygoogle-lazy" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+                <div class="ad-slot w-full">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                </div>
             </div>
 
             <div class="container mx-auto px-4 py-20">
@@ -120,17 +133,17 @@
                     <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
                         <div class="bg-gray-900 w-14 h-14 rounded-xl flex items-center justify-center text-brand-400 mb-6 group-hover:scale-110 transition"><i class="ph ph-credit-card text-3xl"></i></div>
                         <h3 class="text-xl font-bold text-black mb-3">Cartões Aprovados</h3>
-                        <p class="text-gray-600">Análises de cartões que aprovam negativados e score baixo.</p>
+                        <p class="text-gray-600">Analisamos centenas de cartões para encontrar os que realmente aprovam negativados e pessoas com score baixo.</p>
                     </div>
                     <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
                         <div class="bg-brand-50 w-14 h-14 rounded-xl flex items-center justify-center text-brand-600 mb-6 group-hover:scale-110 transition"><i class="ph ph-currency-dollar text-3xl"></i></div>
                         <h3 class="text-xl font-bold text-black mb-3">Empréstimo Rápido</h3>
-                        <p class="text-gray-600">Simule empréstimos em recomendações confiáveis.</p>
+                        <p class="text-gray-600">Simule empréstimos em recomendações confiáveis. Dinheiro na conta rápido e com parcelas que cabem no bolso.</p>
                     </div>
                     <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition border border-gray-100 group">
                         <div class="bg-gray-100 w-14 h-14 rounded-xl flex items-center justify-center text-gray-700 mb-6 group-hover:scale-110 transition"><i class="ph ph-graduation-cap text-3xl"></i></div>
                         <h3 class="text-xl font-bold text-black mb-3">Educação Financeira</h3>
-                        <p class="text-gray-600">Aprenda a negociar dívidas e aumentar seu score.</p>
+                        <p class="text-gray-600">Aprenda a negociar dívidas, aumentar seu score e investir seu dinheiro com nossos guias completos.</p>
                     </div>
                 </div>
             </div>
@@ -138,7 +151,7 @@
             <div class="bg-gray-50 py-20 border-t border-gray-200">
                 <div class="container mx-auto px-4">
                     <div class="flex justify-between items-end mb-12">
-                        <div><h2 class="text-3xl font-bold text-black mb-2">Últimas do Blog</h2><p class="text-gray-600">Novidades do mercado financeiro.</p></div>
+                        <div><h2 class="text-3xl font-bold text-black mb-2">Últimas do Blog</h2><p class="text-gray-600">Fique por dentro das novidades do mercado financeiro.</p></div>
                         <a href="#" onclick="navigateTo('blog')" class="hidden md:flex text-brand-600 font-semibold items-center gap-1 hover:gap-2 transition-all">Ver todos <i class="ph ph-arrow-right"></i></a>
                     </div>
                     <div id="home-blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
@@ -150,19 +163,19 @@
         <section id="emprestimo" class="page-section hidden-section fade-in">
             <div class="bg-black text-white py-16">
                 <div class="container mx-auto px-4 text-center">
-                    <h1 class="text-4xl font-bold mb-4">Simulador de Empréstimo</h1>
-                    <p class="text-gray-400 max-w-2xl mx-auto">Encontre a melhor taxa para o seu perfil.</p>
+                    <h1 class="text-4xl font-bold mb-4">Simulador de Empréstimo Inteligente</h1>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Encontre a melhor taxa para o seu perfil e veja na hora o valor estimado da parcela.</p>
                 </div>
             </div>
             <div class="container mx-auto px-4 py-16">
-                <div class="ad-slot w-full"><ins class="adsbygoogle-lazy" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+                <div class="ad-slot w-full"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                 <div class="grid lg:grid-cols-2 gap-12 items-start">
                     <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 relative overflow-hidden">
                          <div class="absolute top-0 left-0 w-full h-1 bg-brand-400"></div>
                         <h3 class="text-2xl font-bold text-black mb-6 flex items-center gap-2"><i class="ph-fill ph-calculator text-brand-500"></i> Simule Agora</h3>
                         <form id="loan-form" onsubmit="calculateFinalLoan(event)" class="space-y-6">
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Valor (R$)</label>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Quanto você precisa? (R$)</label>
                                 <input type="number" id="loan-amount" oninput="updateLiveCalculation()" class="w-full pl-4 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none transition text-lg font-bold text-black" placeholder="5000" min="500">
                             </div>
                             <div class="grid grid-cols-2 gap-4">
@@ -176,28 +189,28 @@
                                 </div>
                             </div>
                             <div id="live-preview" class="bg-gray-50 p-4 rounded-lg border border-gray-200 hidden">
-                                <p class="text-sm text-gray-500 mb-1">Estimativa:</p>
+                                <p class="text-sm text-gray-500 mb-1">Estimativa de parcela:</p>
                                 <div class="flex items-end gap-1"><span class="text-2xl font-bold text-brand-600" id="live-installment">R$ 0,00</span><span class="text-sm text-gray-400 mb-1">/mês*</span></div>
                             </div>
                             <button type="submit" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-lg transition transform hover:-translate-y-1 shadow-md">Ver Ofertas Disponíveis</button>
-                            <p class="text-[10px] text-center text-gray-400 mt-4">* Simulação estimada. Sujeito a análise.</p>
+                            <p class="text-[10px] text-center text-gray-400 mt-4">* Simulação estimada. A aprovação de crédito não é garantida e depende da análise da instituição.</p>
                         </form>
                         <div id="loan-result" class="hidden mt-6 pt-6 border-t border-gray-200 animate-fade-in">
                             <div class="bg-brand-50 border border-brand-100 rounded-xl p-5 mb-4">
                                 <div class="flex items-start gap-3">
                                     <div class="bg-brand-100 p-2 rounded-full text-brand-900"><i class="ph-fill ph-check-circle text-xl"></i></div>
-                                    <div><h4 class="font-bold text-gray-900 text-lg">Pré-aprovação!</h4><p class="text-gray-700 text-sm mt-1">Recomendações encontradas.</p></div>
+                                    <div><h4 class="font-bold text-gray-900 text-lg">Pré-aprovação Disponível!</h4><p class="text-gray-700 text-sm mt-1">Recomendações encontradas para seu perfil.</p></div>
                                 </div>
                             </div>
                             <div id="loan-recommendations-container" class="space-y-3"></div>
                         </div>
                     </div>
                     <div class="space-y-8">
-                        <div><h2 class="text-3xl font-bold text-black mb-4">Como funciona?</h2><p class="text-gray-600">Algoritmo busca as melhores taxas em mais de 15 instituições.</p></div>
+                        <div><h2 class="text-3xl font-bold text-black mb-4">Como funciona?</h2><p class="text-gray-600">Nosso algoritmo busca as melhores taxas em mais de 15 instituições financeiras simultaneamente. Mesmo se você estiver negativado, temos recomendações especializadas.</p></div>
                         <div class="grid grid-cols-1 gap-4">
                             <div class="flex gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-brand-400 transition items-start">
                                 <div class="bg-gray-100 text-black w-12 h-12 flex items-center justify-center rounded-lg flex-shrink-0 mt-1"><i class="ph ph-shield-check text-2xl"></i></div>
-                                <div><h4 class="font-bold text-black">Segurança</h4><p class="text-sm text-gray-600 mt-1">Nunca pedimos depósitos antecipados.</p></div>
+                                <div><h4 class="font-bold text-black">Segurança 100%</h4><p class="text-sm text-gray-600 mt-1">Seus dados são criptografados. Nunca pedimos depósitos antecipados para liberar crédito.</p></div>
                             </div>
                         </div>
                     </div>
@@ -209,12 +222,12 @@
         <section id="cartoes" class="page-section hidden-section fade-in">
             <div class="bg-white border-b border-gray-200 py-12">
                 <div class="container mx-auto px-4 text-center">
-                    <h1 class="text-4xl font-bold text-black mb-4">Catálogo de Cartões</h1>
-                    <p class="text-gray-600 max-w-2xl mx-auto">Encontre o cartão ideal para o seu perfil.</p>
+                    <h1 class="text-4xl font-bold text-black mb-4">Melhores Cartões de Crédito</h1>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Use os filtros abaixo para encontrar o cartão ideal para o seu perfil financeiro.</p>
                 </div>
             </div>
             <div class="container mx-auto px-4 py-16">
-                <div class="ad-slot w-full"><ins class="adsbygoogle-lazy" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+                <div class="ad-slot w-full"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                 <div class="flex flex-wrap gap-4 justify-center mb-12">
                     <button onclick="filterCards('todos')" id="btn-todos" class="filter-btn active px-6 py-2 bg-black text-white rounded-full text-sm font-medium transition shadow-md">Todos</button>
                     <button onclick="filterCards('anuidade')" id="btn-anuidade" class="filter-btn px-6 py-2 bg-white border border-gray-300 text-gray-600 hover:border-brand-400 hover:text-black rounded-full text-sm font-medium transition">Sem Anuidade</button>
@@ -229,10 +242,10 @@
             <div class="bg-gray-100 py-16">
                 <div class="container mx-auto px-4">
                     <div class="text-center max-w-3xl mx-auto mb-12">
-                        <h1 class="text-4xl font-extrabold text-black mb-4">Blog e Notícias</h1>
-                        <p class="text-gray-600 text-lg">Educação financeira descomplicada.</p>
+                        <h1 class="text-4xl font-extrabold text-black mb-4">Blog de Educação Financeira</h1>
+                        <p class="text-gray-600 text-lg">Artigos, guias e notícias para você tomar as melhores decisões com seu dinheiro.</p>
                     </div>
-                    <div class="ad-slot bg-white rounded-lg w-full"><ins class="adsbygoogle-lazy" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+                    <div class="ad-slot bg-white rounded-lg w-full"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                     <div id="blog-list-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
                 </div>
             </div>
@@ -243,10 +256,10 @@
             <div class="bg-white">
                 <div class="bg-black text-white py-20">
                     <div class="container mx-auto px-4 max-w-4xl text-center">
-                        <button onclick="navigateTo('blog')" class="text-gray-400 hover:text-white mb-8 flex items-center justify-center gap-2 transition"><i class="ph ph-arrow-left"></i> Voltar</button>
+                        <button onclick="navigateTo('blog')" class="text-gray-400 hover:text-white mb-8 flex items-center justify-center gap-2 transition"><i class="ph ph-arrow-left"></i> Voltar para o Blog</button>
                         <span id="post-category" class="bg-brand-400/20 text-brand-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">Categoria</span>
-                        <h1 id="post-title" class="text-3xl md:text-5xl font-bold mt-4 mb-6 leading-tight">Título</h1>
-                        <div class="flex items-center justify-center gap-4 text-gray-400 text-sm"><span id="post-date">Data</span></div>
+                        <h1 id="post-title" class="text-3xl md:text-5xl font-bold mt-4 mb-6 leading-tight">Título do Artigo</h1>
+                        <div class="flex items-center justify-center gap-4 text-gray-400 text-sm"><span id="post-author">Por Redação CrediFácil</span> • <span id="post-date">Data</span></div>
                     </div>
                 </div>
                 <div class="container mx-auto px-4 py-12 flex flex-col lg:flex-row gap-12">
@@ -255,12 +268,12 @@
                             <p class="text-xl leading-relaxed mb-8 font-medium text-gray-800 intro-text"></p>
                             <div class="body-content"></div>
                         </div>
-                        <div class="ad-slot my-8 w-full"><ins class="adsbygoogle-lazy" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+                        <div class="ad-slot my-8 w-full"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                     </article>
                     <aside class="lg:w-1/3 space-y-8">
                         <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
                             <h4 class="font-bold text-black mb-4">Publicidade</h4>
-                            <div class="ad-slot w-full bg-white rounded-lg"><ins class="adsbygoogle-lazy" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+                            <div class="ad-slot w-full bg-white rounded-lg"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                         </div>
                     </aside>
                 </div>
@@ -273,6 +286,10 @@
                 <div class="container mx-auto px-4 max-w-xl">
                     <h1 class="text-3xl font-bold text-black mb-8 text-center border-b border-gray-200 pb-4">Painel Administrativo</h1>
                     
+                    <div id="demo-warning" class="hidden mb-6 p-4 bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg text-sm">
+                        <strong>Modo de Demonstração:</strong> Cole suas chaves do Firebase no código (linha ~750) para salvar no banco de dados real.
+                    </div>
+
                     <div id="admin-login" class="bg-gray-50 p-8 rounded-xl border border-gray-200 shadow-sm">
                         <h2 class="text-xl font-bold text-black mb-6 text-center">Login Seguro</h2>
                         <form onsubmit="handleLogin(event)" class="space-y-6">
@@ -294,7 +311,7 @@
                                 <div><label class="block text-sm font-bold text-gray-700 mb-2">Título</label><input type="text" id="admin-title" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required></div>
                                 <div class="grid grid-cols-2 gap-6">
                                     <div><label class="block text-sm font-bold text-gray-700 mb-2">Categoria</label><select id="admin-category" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"><option>Score</option><option>Cartões</option><option>Empréstimos</option></select></div>
-                                    <div><label class="block text-sm font-bold text-gray-700 mb-2">Autor</label><input type="text" id="admin-author" value="Redação" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"></div>
+                                    <div><label class="block text-sm font-bold text-gray-700 mb-2">Autor</label><input type="text" id="admin-author" value="Redação CrediFácil" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"></div>
                                 </div>
                                 <div><label class="block text-sm font-bold text-gray-700 mb-2">Imagem URL</label><input type="text" id="admin-image" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none" required></div>
                                 <div><label class="block text-sm font-bold text-gray-700 mb-2">Resumo</label><textarea id="admin-intro" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-400 outline-none"></textarea></div>
@@ -312,28 +329,88 @@
             <div class="min-h-screen bg-gray-50 flex flex-col">
                 <div class="bg-black text-white py-12">
                     <div class="container mx-auto px-4 text-center">
-                        <button onclick="navigateTo('emprestimo')" class="text-gray-400 hover:text-white mb-6 flex items-center justify-center gap-2 transition mx-auto"><i class="ph ph-arrow-left"></i> Voltar</button>
-                        <h1 class="text-3xl font-bold mb-2">Detalhes</h1>
-                        <p class="text-gray-400">Redirecionando para o parceiro oficial.</p>
+                        <button onclick="navigateTo('emprestimo')" class="text-gray-400 hover:text-white mb-6 flex items-center justify-center gap-2 transition mx-auto"><i class="ph ph-arrow-left"></i> Voltar para Simulação</button>
+                        <h1 class="text-3xl font-bold mb-2">Detalhes da Recomendação</h1>
+                        <p class="text-gray-400">Você será redirecionado para o site oficial.</p>
                     </div>
                 </div>
                 <div class="container mx-auto px-4 -mt-8 pb-16 flex-1">
-                    <div class="ad-slot bg-white rounded-lg w-full"><ins class="adsbygoogle-lazy" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+                    <div class="ad-slot bg-white rounded-lg w-full"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1017585624443150" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
                     <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
                         <div class="p-8 border-b border-gray-100">
                             <div class="flex justify-between items-start mb-6">
-                                <div><p class="text-sm text-gray-500 mb-1">Instituição</p><h2 id="offer-partner-name" class="text-2xl font-bold text-black">Banco</h2></div>
-                                <div class="bg-brand-100 text-brand-900 px-3 py-1 rounded-full text-xs font-bold uppercase border border-brand-200">Recomendado</div>
+                                <div><p class="text-sm text-gray-500 mb-1">Instituição Recomendada</p><h2 id="offer-partner-name" class="text-2xl font-bold text-black">Banco</h2></div>
+                                <div class="bg-brand-100 text-brand-900 px-3 py-1 rounded-full text-xs font-bold uppercase border border-brand-200">Pré-Aprovado</div>
                             </div>
                             <div class="grid grid-cols-2 gap-8 mb-6">
-                                <div><p class="text-sm text-gray-500 mb-1">Simulação</p><p id="offer-value" class="text-2xl font-bold text-black">R$ 0,00</p></div>
-                                <div><p class="text-sm text-gray-500 mb-1">Parcelamento</p><p id="offer-installments" class="text-2xl font-bold text-brand-600">12x</p></div>
+                                <div><p class="text-sm text-gray-500 mb-1">Valor Solicitado</p><p id="offer-value" class="text-2xl font-bold text-black">R$ 0,00</p></div>
+                                <div><p class="text-sm text-gray-500 mb-1">Condição de Pagamento</p><p id="offer-installments" class="text-2xl font-bold text-brand-600">12x R$ 0,00</p></div>
                             </div>
                         </div>
                         <div class="p-8 bg-white">
+                            <h3 class="font-bold text-black mb-4">Vantagens desta oferta:</h3>
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-center gap-3 text-gray-700"><i class="ph-fill ph-check-circle text-brand-500 text-xl"></i><span>Sem necessidade de garantia de bens.</span></li>
+                                <li class="flex items-center gap-3 text-gray-700"><i class="ph-fill ph-check-circle text-brand-500 text-xl"></i><span>Processo 100% digital e sem burocracia.</span></li>
+                                <li class="flex items-center gap-3 text-gray-700"><i class="ph-fill ph-check-circle text-brand-500 text-xl"></i><span>Dinheiro na conta em até 24 horas úteis.</span></li>
+                            </ul>
                             <button id="offer-cta-btn" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-xl transition shadow-lg text-lg flex items-center justify-center gap-2">Continuar no Site Oficial <i class="ph-bold ph-arrow-right"></i></button>
-                            <p class="text-center text-xs text-gray-400 mt-4 leading-tight">Você será redirecionado para o ambiente seguro da instituição.</p>
+                            <p class="text-center text-xs text-gray-400 mt-4 leading-tight">Atenção: Ao clicar, você será redirecionado para o site oficial. A aprovação de crédito não é garantida e depende da análise da instituição.</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOBRE -->
+        <section id="sobre" class="page-section hidden-section fade-in">
+            <div class="container mx-auto px-4 py-20">
+                <div class="max-w-4xl mx-auto text-center">
+                    <div class="inline-block p-4 rounded-full bg-brand-50 text-brand-600 mb-6"><i class="ph ph-users text-4xl"></i></div>
+                    <h1 class="text-4xl font-bold text-black mb-6">Nossa Missão</h1>
+                    <p class="text-xl text-gray-600 leading-relaxed mb-12">
+                        O "CrediFácil" nasceu com um propósito claro: democratizar o acesso à informação financeira de qualidade. Acreditamos que todos merecem uma segunda chance e as ferramentas certas para construir um futuro próspero, longe das dívidas abusivas.
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 mt-16 max-w-5xl mx-auto items-center">
+                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Equipe" class="rounded-2xl shadow-xl">
+                    <div class="space-y-6">
+                        <h2 class="text-2xl font-bold text-black">Por que confiar em nós?</h2>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i><span class="text-gray-600">Conteúdo 100% imparcial e verificado por especialistas.</span></li>
+                            <li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i><span class="text-gray-600">Recomendações transparentes com instituições financeiras regulamentadas.</span></li>
+                            <li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-brand-500 text-xl mt-1"></i><span class="text-gray-600">Mais de 500 mil leitores ajudados anualmente.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TERMOS E PRIVACIDADE -->
+        <section id="terms" class="page-section hidden-section fade-in">
+            <div class="bg-white py-20">
+                <div class="container mx-auto px-4 max-w-3xl">
+                    <h1 class="text-3xl font-bold text-black mb-8">Termos de Uso</h1>
+                    <div class="prose prose-gray text-gray-700 text-sm">
+                        <p class="mb-4"><strong>1. Aceitação:</strong> Ao acessar o CrediFácil, você concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis.</p>
+                        <p class="mb-4"><strong>2. Natureza do Serviço:</strong> O CrediFácil é um portal estritamente informativo. Não somos uma instituição financeira, não realizamos empréstimos, não emitimos cartões e não garantimos aprovação de crédito. As simulações são estimativas baseadas em dados de mercado.</p>
+                        <p class="mb-4"><strong>3. Precisão dos Materiais:</strong> Os materiais exibidos no site do CrediFácil podem incluir erros técnicos, tipográficos ou fotográficos. Não garantimos que qualquer material em seu site seja preciso, completo ou atual, embora nos esforcemos para tal.</p>
+                        <p class="mb-4"><strong>4. Links:</strong> O CrediFácil não analisou todos os sites vinculados ao seu site e não é responsável pelo conteúdo de nenhum site vinculado (links externos para bancos/parceiros). A inclusão de qualquer link não implica endosso por CrediFácil.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="privacy" class="page-section hidden-section fade-in">
+            <div class="bg-white py-20">
+                <div class="container mx-auto px-4 max-w-3xl">
+                    <h1 class="text-3xl font-bold text-black mb-8">Política de Privacidade</h1>
+                    <div class="prose prose-gray text-gray-700 text-sm">
+                        <p class="mb-4">A sua privacidade é importante para nós. É política do CrediFácil respeitar a sua privacidade em relação a qualquer informação que possamos coletar.</p>
+                        <h3 class="font-bold mt-4 mb-2">Cookies e Publicidade</h3>
+                        <p class="mb-4">Utilizamos cookies para melhorar sua experiência e veicular anúncios personalizados através do Google AdSense. O Google, como fornecedor de terceiros, utiliza cookies para exibir anúncios. O uso do cookie DART permite que o Google veicule anúncios para nossos usuários com base em sua visita ao nosso site e a outros sites na Internet.</p>
+                        <h3 class="font-bold mt-4 mb-2">Dados Pessoais</h3>
+                        <p class="mb-4">Não vendemos ou compartilhamos suas informações de identificação pessoal publicamente ou com terceiros, exceto quando exigido por lei.</p>
                     </div>
                 </div>
             </div>
@@ -345,64 +422,103 @@
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-4 gap-8 mb-12">
                 <div class="col-span-1 md:col-span-2">
-                    <span class="font-bold text-xl text-white">CrediFácil</span>
-                    <p class="text-sm mt-2">Seu guia confiável.</p>
+                    <div class="flex items-center gap-2 text-white mb-4">
+                        <i class="ph-fill ph-check-circle text-brand-400 text-xl"></i>
+                        <span class="font-bold text-xl">CrediFácil</span>
+                    </div>
+                    <p class="text-sm max-w-md mb-4">O site que te ajuda a sair das dívidas. Conteúdo informativo sobre finanças, cartões de crédito e empréstimos.</p>
                 </div>
-                <div><h4 class="text-white font-bold mb-4">Legal</h4><ul class="space-y-2 text-sm"><li><a href="#" onclick="navigateTo('admin')" class="hover:text-white">Admin</a></li></ul></div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Links Rápidos</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" onclick="navigateTo('home')" class="hover:text-brand-400 transition">Início</a></li>
+                        <li><a href="#" onclick="navigateTo('emprestimo')" class="hover:text-brand-400 transition">Simulador</a></li>
+                        <li><a href="#" onclick="navigateTo('cartoes')" class="hover:text-brand-400 transition">Cartões</a></li>
+                        <li><a href="#" onclick="navigateTo('blog')" class="hover:text-brand-400 transition">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" onclick="navigateTo('terms')" class="hover:text-brand-400 transition">Termos de Uso</a></li>
+                        <li><a href="#" onclick="navigateTo('privacy')" class="hover:text-brand-400 transition">Política de Privacidade</a></li>
+                        <li><a href="#" onclick="navigateTo('admin')" class="hover:text-brand-400 transition text-gray-600">Admin</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="border-t border-gray-800 pt-8 text-xs text-gray-500"><p>&copy; 2025 CrediFácil.</p></div>
+            
+            <!-- Aviso Legal Obrigatório (YMYL) - RESTAURADO -->
+            <div class="border-t border-gray-800 pt-8 pb-8 text-xs text-gray-500 text-justify">
+                <p class="mb-2"><strong>Isenção de Responsabilidade (Disclaimer):</strong> O CrediFácil (credifacil.com) é um blog informativo e não atua como instituição financeira, banco ou credora. Não realizamos empréstimos pessoais, não emitimos cartões de crédito e não somos responsáveis pela aprovação ou negação de crédito. Todo o conteúdo disposto neste site tem caráter meramente informativo.</p>
+                <p class="mb-2"><strong>Segurança:</strong> O CrediFácil jamais solicitará quantias em dinheiro para liberação de nenhum tipo de produto financeiro, seja cartão de crédito, financiamento ou empréstimo. Se isso acontecer, denuncie imediatamente.</p>
+                <p>As propostas e simulações realizadas através de links de parceiros estão sujeitas à análise de crédito e aos termos de uso de cada instituição financeira. As taxas de juros podem variar de acordo com o perfil de cada usuário.</p>
+            </div>
+
+            <div class="text-center text-xs pt-4 border-t border-gray-800">
+                <p>&copy; 2025 CrediFácil. Todos os direitos reservados.</p>
+            </div>
         </div>
     </footer>
 
-    <!-- JS -->
+    <!-- COOKIE BANNER -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-white text-gray-900 p-6 z-50 flex flex-col md:flex-row justify-between items-center gap-4 border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] transform translate-y-full transition-transform duration-500">
+        <div class="text-sm text-center md:text-left">
+            <p><strong>🍪 Política de Cookies:</strong> Utilizamos cookies para personalizar conteúdo e anúncios (AdSense), fornecer recursos de mídia social e analisar nosso tráfego. Ao continuar, você concorda com nossa <a href="#" onclick="navigateTo('privacy')" class="text-brand-600 underline font-bold">Política de Privacidade</a>.</p>
+        </div>
+        <div class="flex gap-3 shrink-0">
+             <button onclick="acceptCookies()" class="bg-black text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-gray-800 transition">Aceitar Tudo</button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // CONFIGURAÇÃO
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+        // =========================================================================
+        // ⚠️ ATENÇÃO: COLE SUAS CREDENCIAIS DO FIREBASE AQUI EMBAIXO
+        // =========================================================================
+       const firebaseConfig = {
+  apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
+  authDomain: "credifacil-ddb17.firebaseapp.com",
+  projectId: "credifacil-ddb17",
+  storageBucket: "credifacil-ddb17.firebasestorage.app",
+  messagingSenderId: "473150441862",
+  appId: "1:473150441862:web:8f7b1945fa27c519c90407",
+  measurementId: "G-RSHX4BZRG0"
+};
+        // =========================================================================
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
-    authDomain: "credifacil-ddb17.firebaseapp.com",
-    projectId: "credifacil-ddb17",
-    storageBucket: "credifacil-ddb17.firebasestorage.app",
-    messagingSenderId: "473150441862",
-    appId: "1:473150441862:web:8f7b1945fa27c519c90407",
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
         let db, auth;
-        let isFirebaseInitialized = true;
+        let isFirebaseInitialized = false;
 
-        // DADOS DOS CARTÕES (Estático)
+        // DADOS DOS CARTÕES (Estático) - Restaurado cardsData
         const cardsData = [
-            { id: 1, name: "Santander SX", bgClass: "bg-red-600", iconBg: "bg-red-700", rotation: "rotate-45", badges: [{ text: "Aprovação Alta", color: "bg-green-100 text-green-700" }], annuity: "Grátis", income: "R$ 1.045", desc: "Ideal para score baixo.", link: "https://www.santander.com.br/cartao-credito-santander/sx", categories: ["todos", "negativados"] },
-            { id: 2, name: "Nubank", bgClass: "bg-purple-700", iconBg: "bg-purple-800", rotation: "-rotate-12", badges: [{ text: "Sem Anuidade", color: "bg-purple-100 text-purple-700" }], annuity: "R$ 0,00", income: "Não exigida", desc: "Controle total pelo app.", link: "https://nubank.com.br/cartao/", categories: ["todos", "anuidade"] },
-            { id: 3, name: "Inter", bgClass: "bg-orange-500", iconBg: "bg-orange-400", rotation: "rotate-0", isInter: true, badges: [{ text: "Cashback", color: "bg-orange-100 text-orange-700" }], annuity: "Grátis", income: "Não exigida", desc: "Super App completo.", link: "https://inter.co/pra-voce/cartoes/", categories: ["todos", "milhas"] }
+            { id: 1, name: "Santander SX", bgClass: "bg-red-600", iconBg: "bg-red-700", rotation: "rotate-45", badges: [{ text: "Aprovação Alta", color: "bg-green-100 text-green-700" }, { text: "Visa/Master", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis (gastando R$100)", income: "R$ 1.045,00", desc: "Ideal para quem busca o primeiro cartão ou quer recuperar crédito no mercado.", link: "https://www.santander.com.br/cartao-credito-santander/sx", categories: ["todos", "negativados"] },
+            { id: 2, name: "Roxinho Nubank", bgClass: "bg-purple-700", iconBg: "bg-purple-800", rotation: "-rotate-12", badges: [{ text: "Sem Anuidade", color: "bg-purple-100 text-purple-700" }, { text: "Conta Digital", color: "bg-yellow-100 text-yellow-700" }], annuity: "R$ 0,00", income: "Não exigida", desc: "Controle total pelo app e descontos se antecipar parcelas.", link: "https://nubank.com.br/cartao/", categories: ["todos", "anuidade", "negativados"] },
+            { id: 3, name: "Inter Gold", bgClass: "bg-orange-500", iconBg: "bg-orange-400", rotation: "rotate-0", isInter: true, badges: [{ text: "Cashback", color: "bg-orange-100 text-orange-700" }, { text: "Internacional", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Não exigida", extraInfoLabel: "Cashback", extraInfoValue: "0.25% na fatura", desc: "Super App completo com investimentos e shopping.", link: "https://inter.co/pra-voce/cartoes/", categories: ["todos", "anuidade", "milhas"] },
+             { id: 4, name: "C6 Carbon", bgClass: "bg-slate-800", iconBg: "bg-black", rotation: "rotate-12", badges: [{ text: "Pontos Átomos", color: "bg-slate-100 text-slate-700" }, { text: "Mastercard Black", color: "bg-slate-900 text-white" }], annuity: "12x R$ 85,00 (Isenção possível)", income: "R$ 5.000,00", desc: "2.5 pontos por dólar e acesso a salas VIP em aeroportos.", link: "https://www.c6bank.com.br/cartao-c6-carbon", categories: ["todos", "milhas"] },
+             { id: 5, name: "Neon", bgClass: "bg-cyan-500", iconBg: "bg-cyan-600", rotation: "-rotate-6", badges: [{ text: "Sem Anuidade", color: "bg-cyan-100 text-cyan-700" }, { text: "Débito e Crédito", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis", income: "Não exigida", desc: "Cartão virtual na hora e investimentos que rendem mais que a poupança.", link: "https://neon.com.br/", categories: ["todos", "anuidade", "negativados"] },
+             { id: 6, name: "Azul Itaú", bgClass: "bg-blue-600", iconBg: "bg-blue-800", rotation: "rotate-3", badges: [{ text: "Milhas Aéreas", color: "bg-blue-100 text-blue-700" }, { text: "Descontos", color: "bg-yellow-100 text-yellow-700" }], annuity: "12x R$ 30,00", income: "R$ 1.500,00", desc: "Ganhe pontos TudoAzul em todas as compras e descontos em passagens.", link: "https://www.itau.com.br/cartoes/escolha/azul-itau-internacional-visa-msg", categories: ["todos", "milhas"] }
         ];
 
+        // Posts de Fallback (Caso Firebase falhe ou esteja vazio)
         const fallbackPosts = [
-            { id: 'f1', title: "Como aumentar seu Score", category: "Score", date: "Hoje", image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=500", intro: "Dicas práticas para subir sua pontuação.", content: "<p>Conteúdo exemplo...</p>" },
-            { id: 'f2', title: "Cartões para Negativados", category: "Cartões", date: "Ontem", image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=500", intro: "Lista dos melhores cartões.", content: "<p>Conteúdo exemplo...</p>" }
+            { id: 'f1', title: "Como aumentar seu Score em 30 dias: O Guia Definitivo", category: "Score", date: "10 Dez, 2025", image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=500", intro: "Muitos brasileiros sofrem com score baixo mesmo pagando as contas em dia. Descubra os segredos que os bancos não te contam.", content: "<p class='mb-4'>O Score de crédito é a porta de entrada para financiamentos e cartões com limites altos...</p>" },
+            { id: 'f2', title: "5 Cartões de Crédito que aprovam Negativados em 2025", category: "Cartões", date: "08 Dez, 2025", image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=500", intro: "Estar com o nome sujo não significa o fim da linha. Bancos digitais estão apostando nesse público com limites iniciais.", content: "<p>Se você tem restrições no CPF, os grandes bancos tradicionais provavelmente vão te negar...</p>" },
+            { id: 'f3', title: "Empréstimo Pessoal vs Consignado: Qual escolher?", category: "Empréstimos", date: "05 Dez, 2025", image: "https://images.unsplash.com/photo-1565514020179-0c2235c8227a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", intro: "Entenda as taxas de juros e os riscos de cada modalidade antes de assinar o contrato.", content: "<p>A principal diferença está na garantia de pagamento.</p>" }
         ];
 
-        let blogPosts = [...fallbackPosts]; // Começa com fallback
+        let blogPosts = [...fallbackPosts];
 
         // INICIALIZAÇÃO
         document.addEventListener('DOMContentLoaded', () => {
             initFirebase();
             renderCards('todos');
             navigateTo('home');
+            setTimeout(checkCookies, 1500);
         });
 
         function initFirebase() {
-            if (firebaseConfig.apiKey !== "SUA_API_KEY_AQUI") {
+            // Verifica se o usuário preencheu as credenciais reais
+            if (firebaseConfig.apiKey !== "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk") {
                 try {
                     firebase.initializeApp(firebaseConfig);
                     db = firebase.firestore();
@@ -414,16 +530,27 @@
                     auth.onAuthStateChanged(user => {
                         const loginForm = document.getElementById('admin-login');
                         const panel = document.getElementById('admin-panel');
-                        if (user) { loginForm.classList.add('hidden'); panel.classList.remove('hidden'); }
-                        else { loginForm.classList.remove('hidden'); panel.classList.add('hidden'); }
+                        const demoWarning = document.getElementById('demo-warning');
+                        
+                        if (user) { 
+                            loginForm.classList.add('hidden'); 
+                            panel.classList.remove('hidden'); 
+                            if(demoWarning) demoWarning.classList.add('hidden');
+                        } else { 
+                            loginForm.classList.remove('hidden'); 
+                            panel.classList.add('hidden'); 
+                        }
                     });
 
                     fetchBlogPosts(); // Tenta buscar do servidor
                 } catch (e) {
                     console.error("Erro Firebase:", e);
+                    // Não mostra alerta para o usuário final, apenas usa fallback silenciosamente
                 }
             } else {
-                console.warn("Modo Demo: Configure o Firebase no código.");
+                console.warn("Modo Demo: Configure o Firebase no código para salvar dados.");
+                const demoWarning = document.getElementById('demo-warning');
+                if(demoWarning) demoWarning.classList.remove('hidden');
                 renderBlog(); // Renderiza fallback
             }
         }
@@ -438,11 +565,11 @@
                     renderBlog();
                 }
             } catch (e) {
-                console.warn("Falha ao buscar posts (pode ser permissão ou rede). Usando fallback.");
+                console.warn("Falha ao buscar posts. Usando fallback.");
             }
         }
 
-        // RENDERIZAÇÃO
+        // RENDERIZAÇÃO DO BLOG
         function renderBlog() {
             const grids = [document.getElementById('home-blog-grid'), document.getElementById('blog-list-container')];
             grids.forEach(grid => {
@@ -475,12 +602,12 @@
                         <div class="flex justify-between text-sm border-b border-gray-100 pb-2"><span class="text-gray-500">Renda</span><span class="font-medium text-black">${card.income}</span></div>
                         <p class="text-sm text-gray-600 mt-4">${card.desc}</p>
                     </div>
-                    <div class="p-6 pt-0 mt-auto"><a href="${card.link}" target="_blank" class="block w-full text-center bg-brand-400 hover:bg-brand-500 text-black font-bold py-3 rounded-lg transition">Solicitar Cartão <i class="ph ph-arrow-up-right"></i></a></div>
+                    <div class="p-6 pt-0 mt-auto"><a href="${card.link}" target="_blank" class="block w-full text-center bg-brand-400 hover:bg-brand-500 text-black font-bold py-3 rounded-lg transition">Solicitar Cartão <i class="ph ph-arrow-up-right"></i></a><p class="text-[10px] text-gray-400 text-center mt-2 leading-tight">Análise realizada pelo emissor.</p></div>
                 </div>
             `).join('');
         }
 
-        // LÓGICA DE LOGIN COM TIMEOUT
+        // LÓGICA DE LOGIN COM TIMEOUT E FEEDBACK
         function handleLogin(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button');
@@ -488,27 +615,45 @@
             const email = document.getElementById('login-email').value;
             const pass = document.getElementById('login-password').value;
 
-            btn.innerText = "Verificando...";
+            btn.innerText = "Processando...";
             btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
             errorMsg.classList.add('hidden');
 
             if (!isFirebaseInitialized) {
-                setTimeout(() => { alert("Modo Demo: Login simulado (sem banco de dados)."); document.getElementById('admin-login').classList.add('hidden'); document.getElementById('admin-panel').classList.remove('hidden'); btn.innerText = "Entrar"; btn.disabled = false; }, 1000);
+                // Modo Demo
+                setTimeout(() => { 
+                    alert("Modo Demo: Login simulado (sem banco de dados)."); 
+                    document.getElementById('admin-login').classList.add('hidden'); 
+                    document.getElementById('admin-panel').classList.remove('hidden'); 
+                    btn.innerText = "Entrar"; 
+                    btn.disabled = false; 
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }, 1000);
                 return;
             }
 
-            // Race condition: Se o Firebase não responder em 10s, mostra erro
+            // Race condition: Timeout de 10s
             const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error("Tempo limite excedido. Verifique sua conexão.")), 10000));
             const login = auth.signInWithEmailAndPassword(email, pass);
 
             Promise.race([login, timeout])
-                .then(() => { btn.innerText = "Sucesso!"; }) // AuthStateListener vai trocar a tela
+                .then(() => { 
+                    btn.innerText = "Sucesso!";
+                    // O AuthStateListener cuidará da troca de tela
+                }) 
                 .catch(err => {
                     console.error(err);
-                    errorMsg.textContent = "Erro: " + (err.code === 'auth/invalid-credential' ? "Dados incorretos." : err.message);
+                    let msg = "Erro desconhecido.";
+                    if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') msg = "E-mail ou senha incorretos.";
+                    else if (err.code === 'auth/too-many-requests') msg = "Muitas tentativas. Aguarde um momento.";
+                    else msg = err.message;
+
+                    errorMsg.textContent = "Erro: " + msg;
                     errorMsg.classList.remove('hidden');
                     btn.innerText = "Entrar";
                     btn.disabled = false;
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
                 });
         }
 
@@ -527,28 +672,31 @@
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 date: new Date().toLocaleDateString('pt-BR')
             };
-            db.collection("posts").add(post).then(() => { alert("Postado!"); e.target.reset(); fetchBlogPosts(); }).catch(err => alert("Erro: " + err.message));
+            db.collection("posts").add(post).then(() => { alert("Postado com sucesso!"); e.target.reset(); fetchBlogPosts(); }).catch(err => alert("Erro ao salvar: " + err.message));
         }
 
-        // OUTROS
+        // NAVEGAÇÃO E ANÚNCIOS (SEM TRAVAMENTOS)
         function navigateTo(id) {
             document.querySelectorAll('.page-section').forEach(s => s.classList.add('hidden-section'));
             const section = document.getElementById(id);
             if(section) {
                 section.classList.remove('hidden-section');
                 section.classList.remove('fade-in');
-                void section.offsetWidth;
+                void section.offsetWidth; // Trigger reflow
                 section.classList.add('fade-in');
                 window.scrollTo(0,0);
-                // AdSense Loader Seguro
+                
+                // Lógica Simplificada de AdSense para evitar erros de renderização
+                // Apenas tenta dar push se o slot estiver visível
                 setTimeout(() => {
-                    section.querySelectorAll('ins.adsbygoogle-lazy').forEach(ad => {
-                        if(ad.offsetWidth > 0) {
-                            ad.classList.remove('adsbygoogle-lazy');
-                            ad.classList.add('adsbygoogle');
-                            try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
-                        }
-                    });
+                    try {
+                        const slots = section.querySelectorAll('ins.adsbygoogle');
+                        slots.forEach(slot => {
+                            if (slot.innerHTML === "") { // Só carrega se estiver vazio
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            }
+                        });
+                    } catch (e) { console.log("AdSense info: ", e); }
                 }, 500);
             }
         }
@@ -558,9 +706,26 @@
             if(!post) return;
             document.getElementById('post-title').textContent = post.title;
             document.getElementById('post-category').textContent = post.category;
+            // Autor pode não existir no objeto post, verificar antes
+            document.getElementById('post-author').textContent = 'Por ' + (post.author || 'Redação');
             document.getElementById('post-date').textContent = post.date;
-            document.querySelector('#post-content .intro-text').textContent = post.intro;
-            document.querySelector('#post-content .body-content').innerHTML = post.content;
+            
+            // Limpa conteúdo anterior
+            const contentDiv = document.getElementById('post-content');
+            contentDiv.innerHTML = '';
+            
+            // Cria elementos para evitar injeção direta de strings mal formadas
+            const introP = document.createElement('p');
+            introP.className = 'text-xl leading-relaxed mb-8 font-medium text-gray-800 intro-text';
+            introP.textContent = post.intro;
+            
+            const bodyDiv = document.createElement('div');
+            bodyDiv.className = 'body-content';
+            bodyDiv.innerHTML = post.content; // HTML permitido para o corpo
+            
+            contentDiv.appendChild(introP);
+            contentDiv.appendChild(bodyDiv);
+            
             navigateTo('blog-post');
         }
 
@@ -587,6 +752,10 @@
             navigateTo('offer-screen');
         }
         function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+
+        // COOKIES
+        function checkCookies() { if (!localStorage.getItem('cookiesAccepted')) document.getElementById('cookie-banner').classList.remove('translate-y-full'); }
+        function acceptCookies() { localStorage.setItem('cookiesAccepted', 'true'); document.getElementById('cookie-banner').classList.add('translate-y-full'); }
     </script>
 </body>
 </html>

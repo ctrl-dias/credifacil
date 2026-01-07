@@ -484,6 +484,9 @@
   appId: "1:473150441862:web:8f7b1945fa27c519c90407",
   measurementId: "G-RSHX4BZRG0"
 };
+        // Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
         // =========================================================================
 
         let db, auth;
@@ -759,3 +762,4 @@
     </script>
 </body>
 </html>
+

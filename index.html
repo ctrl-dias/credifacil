@@ -370,6 +370,11 @@
                     <div id="blog-list-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         <!-- Renderização completa via JS -->
                     </div>
+                    
+                    <!-- Paginação -->
+                    <div id="pagination-controls" class="flex justify-center items-center gap-2 mt-16">
+                        <!-- Injetado via JS -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -731,6 +736,9 @@
         let db, auth;
         let allBlogPosts = []; 
         let currentEditingId = null; // Para edição no Admin
+        let currentBlogPage = 1;
+        const postsPerPage = 6;
+        let currentBlogCategory = 'todos';
 
         // Dados de Cartões (Categorias alinhadas com os filtros)
         const cardsData = [
@@ -751,8 +759,20 @@
 
         // --- SISTEMA DE ROTEAMENTO (SPA Tradicional) ---
         function handleHashChange() {
-            const hash = window.location.hash.replace('#', '') || 'home';
+            let hash = window.location.hash.replace('#', '') || 'home';
             
+            // Lógica para detectar se é um link direto de post (Ex: #artigo-ID)
+            if (hash.startsWith('artigo-')) {
+                const postId = hash.replace('artigo-', '');
+                // Espera carregar os posts se ainda não tiver
+                if (allBlogPosts.length === 0) {
+                    // Se não carregou, o fetchBlogPosts vai chamar de novo
+                    return;
+                }
+                openArticle(postId);
+                return; // Interrompe fluxo normal de seção
+            }
+
             // Esconde todas as seções
             document.querySelectorAll('.page-section').forEach(s => s.classList.add('hidden-section'));
             
@@ -819,12 +839,17 @@
         async function fetchBlogPosts() {
             if (!db) return;
             try {
-                const snap = await db.collection("posts").orderBy("createdAt", "desc").limit(50).get();
+                const snap = await db.collection("posts").orderBy("createdAt", "desc").limit(100).get();
                 if (!snap.empty) {
                     allBlogPosts = [];
                     snap.forEach(doc => allBlogPosts.push({ id: doc.id, ...doc.data() }));
                     renderHomeBlog();
                     renderBlogPage('todos');
+                    
+                    // Checa se tem um hash de artigo pendente para abrir
+                    if (window.location.hash.startsWith('#artigo-')) {
+                        handleHashChange();
+                    }
                 }
             } catch (e) { console.warn("Erro fetchBlog:", e); }
         }
@@ -851,29 +876,42 @@
             `).join('');
         }
 
-        // Renderiza lista completa na página Blog
+        // Renderiza lista completa na página Blog com PAGINAÇÃO
         function filterBlog(category) {
+            currentBlogCategory = category;
+            currentBlogPage = 1; // Reseta para página 1 ao filtrar
+            
             // Atualiza botões
             document.querySelectorAll('.blog-filter-btn').forEach(btn => {
                 btn.className = "blog-filter-btn px-4 py-2 bg-white border border-gray-200 hover:border-black text-gray-600 hover:text-black rounded-lg text-sm font-medium transition";
             });
             event.target.className = "blog-filter-btn px-4 py-2 bg-black text-white rounded-lg text-sm font-bold shadow-md";
             
-            renderBlogPage(category);
+            renderBlogPage();
         }
 
-        function renderBlogPage(category) {
+        function renderBlogPage() {
             const container = document.getElementById('blog-list-container');
+            const paginationContainer = document.getElementById('pagination-controls');
             if(!container) return;
             
-            const filtered = (category === 'todos') ? allBlogPosts : allBlogPosts.filter(p => p.category === category);
+            // 1. Filtrar
+            const filtered = (currentBlogCategory === 'todos') ? allBlogPosts : allBlogPosts.filter(p => p.category === currentBlogCategory);
             
             if(filtered.length === 0) {
                 container.innerHTML = `<div class="col-span-full text-center py-12"><p class="text-gray-500">Nenhum artigo encontrado nesta categoria.</p></div>`;
+                paginationContainer.innerHTML = '';
                 return;
             }
 
-            container.innerHTML = filtered.map(post => `
+            // 2. Paginar
+            const totalPages = Math.ceil(filtered.length / postsPerPage);
+            const startIndex = (currentBlogPage - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+            const postsToShow = filtered.slice(startIndex, endIndex);
+
+            // 3. Renderizar Posts
+            container.innerHTML = postsToShow.map(post => `
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition cursor-pointer flex flex-col group h-full" onclick="openArticle('${post.id}')">
                     <div class="h-52 overflow-hidden relative">
                         <img src="${post.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
@@ -892,6 +930,24 @@
                     </div>
                 </div>
             `).join('');
+
+            // 4. Renderizar Botões de Paginação
+            let paginationHTML = '';
+            if (totalPages > 1) {
+                for (let i = 1; i <= totalPages; i++) {
+                    const activeClass = i === currentBlogPage 
+                        ? 'bg-black text-white font-bold' 
+                        : 'bg-white text-gray-600 border border-gray-200 hover:border-black hover:text-black';
+                    paginationHTML += `<button onclick="changeBlogPage(${i})" class="w-10 h-10 rounded-lg flex items-center justify-center text-sm transition ${activeClass}">${i}</button>`;
+                }
+            }
+            paginationContainer.innerHTML = paginationHTML;
+        }
+
+        function changeBlogPage(page) {
+            currentBlogPage = page;
+            renderBlogPage();
+            document.getElementById('blog').scrollIntoView({behavior: 'smooth'});
         }
 
         // --- LEITURA DE ARTIGO E SOCIAL ---
@@ -933,9 +989,18 @@
             
             loadComments(id);
             window.currentPostTitle = post.title; // Para share
-            window.currentPostUrl = window.location.href; // URL base
-
-            navigateToHash('blog-post');
+            
+            // URL amigável para compartilhamento
+            window.location.hash = 'artigo-' + id;
+            
+            // Força a exibição da seção 'blog-post' manualmente, pois o hash change já aconteceu
+            document.querySelectorAll('.page-section').forEach(s => s.classList.add('hidden-section'));
+            const section = document.getElementById('blog-post');
+            section.classList.remove('hidden-section');
+            section.classList.remove('fade-in');
+            void section.offsetWidth; 
+            section.classList.add('fade-in');
+            window.scrollTo(0,0);
         }
 
         function sharePost(network) {
@@ -971,14 +1036,14 @@
             const list = document.getElementById('admin-posts-list');
             list.innerHTML = allBlogPosts.map(p => `
                 <div class="flex items-center gap-2 mb-2 group">
-                    <div onclick="loadPostForEdit('${p.id}')" class="flex-1 p-3 bg-gray-50 hover:bg-brand-50 border border-gray-100 rounded-lg cursor-pointer transition text-sm">
-                        <p class="font-bold text-gray-800 group-hover:text-brand-900 truncate">${p.title}</p>
+                    <div onclick="loadPostForEdit('${p.id}')" class="flex-1 p-3 bg-gray-50 hover:bg-brand-50 border border-gray-100 rounded-lg cursor-pointer transition text-sm min-w-0">
+                        <p class="font-bold text-gray-800 group-hover:text-brand-900 truncate" title="${p.title}">${p.title}</p>
                         <div class="flex justify-between mt-1 text-xs text-gray-400">
                             <span>${p.date}</span>
                             <span class="text-brand-600 font-bold group-hover:underline">Editar</span>
                         </div>
                     </div>
-                    <button onclick="deletePost('${p.id}')" class="bg-white hover:bg-red-50 text-gray-400 hover:text-red-500 border border-gray-200 p-3 rounded-lg transition" title="Excluir"><i class="ph-bold ph-trash"></i></button>
+                    <button onclick="deletePost('${p.id}')" class="bg-white hover:bg-red-50 text-gray-400 hover:text-red-500 border border-gray-200 p-3 rounded-lg transition shrink-0" title="Excluir"><i class="ph-bold ph-trash"></i></button>
                 </div>
             `).join('');
         }
@@ -1202,7 +1267,7 @@
 
         // Comentários e Likes (Mantidos e Otimizados)
         function toggleLike() {
-            const id = window.location.hash.includes('blog-post') ? allBlogPosts.find(p => p.title === document.getElementById('post-title').textContent)?.id : null;
+            const id = window.location.hash.includes('artigo-') ? allBlogPosts.find(p => p.title === document.getElementById('post-title').textContent)?.id : null;
             if(!id) return;
             // ... lógica de like existente ...
              const isLiked = localStorage.getItem(`liked_${id}`);

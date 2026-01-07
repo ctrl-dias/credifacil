@@ -9,7 +9,6 @@
     
     <!-- Google AdSense (Script Principal) -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017585624443150" crossorigin="anonymous"></script>
-    
 
     <!-- FIREBASE SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -43,28 +42,6 @@
         }
     </script>
 
-    <script>
-
-                // =========================================================================
-        // ⚠️ ATENÇÃO: COLE SUAS CREDENCIAIS DO FIREBASE AQUI EMBAIXO
-        // =========================================================================
-
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
-  authDomain: "credifacil-ddb17.firebaseapp.com",
-  projectId: "credifacil-ddb17",
-  storageBucket: "credifacil-ddb17.firebasestorage.app",
-  messagingSenderId: "473150441862",
-  appId: "1:473150441862:web:8f7b1945fa27c519c90407",
-            
-        };
-
-        // =========================================================================
-
-        let db, auth;
-        let isFirebaseInitialized = false;
-    </script>
     <style>
         body { -webkit-font-smoothing: antialiased; }
         .fade-in { animation: fadeIn 0.4s ease-in-out; }
@@ -495,7 +472,30 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        // =========================================================================
+        // ⚠️ ATENÇÃO: COLE SUAS CREDENCIAIS DO FIREBASE AQUI EMBAIXO
+        // =========================================================================
+        // 1. Aceda a https://console.firebase.google.com/ e crie um novo projeto.
+        // 2. Registre uma aplicação Web (ícone </>) para obter as chaves abaixo.
+        // 3. No menu "Criação" > "Authentication", ative o método "E-mail/Senha".
+        // 4. No menu "Criação" > "Firestore Database", crie um banco de dados.
+        // 5. Substitua os valores abaixo (mantendo as aspas ""):
+        // =========================================================================
+        
+        const firebaseConfig = {
+          apiKey: "AIzaSyCJA-eq22kpGxAfHBDCcMu8BGb8_I8NGlk",
+  authDomain: "credifacil-ddb17.firebaseapp.com",
+  projectId: "credifacil-ddb17",
+  storageBucket: "credifacil-ddb17.firebasestorage.app",
+  messagingSenderId: "473150441862",
+  appId: "1:473150441862:web:8f7b1945fa27c519c90407",
+  measurementId: "G-RSHX4BZRG0"
+        };
+        
+        // =========================================================================
 
+        let db, auth;
+        let isFirebaseInitialized = false;
 
         // DADOS DOS CARTÕES (Estático) - Restaurado cardsData
         const cardsData = [
@@ -767,6 +767,3 @@
     </script>
 </body>
 </html>
-
-
-

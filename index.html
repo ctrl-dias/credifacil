@@ -60,7 +60,7 @@
         .page-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
         main { flex: 1; }
         
-        /* Modal */
+        /* Modal e Overlays */
         .modal-overlay { background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
 
         /* Ad Slot */
@@ -84,35 +84,30 @@
         }
         .rich-editor-btn:hover { background: #e5e7eb; color: #000; }
         
+        /* Estilos do Editor e do Artigo (Consistentes) */
+        .rich-editor-content, .rich-content {
+            font-family: 'Merriweather', serif; color: #374151; line-height: 1.8;
+        }
         .rich-editor-content {
             min-height: 350px; padding: 20px; border: 1px solid #d1d5db; border-top: none;
             border-radius: 0 0 8px 8px; outline: none; background: white; overflow-y: auto;
-            font-family: 'Merriweather', serif; line-height: 1.8;
         }
         .rich-editor-content:focus { border-color: #FACC15; box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.1); }
-        .rich-editor-content h2 { font-family: 'Inter', sans-serif; font-size: 1.5em; font-weight: 700; margin: 1em 0 0.5em; border-left: 4px solid #FACC15; padding-left: 1rem; }
-        .rich-editor-content h3 { font-family: 'Inter', sans-serif; font-size: 1.25em; font-weight: 600; margin: 1em 0 0.5em; }
-        .rich-editor-content ul { list-style-type: disc; padding-left: 1.5em; }
-        .rich-editor-content ol { list-style-type: decimal; padding-left: 1.5em; }
-        .rich-editor-content b, .rich-editor-content strong { font-weight: 700; }
-        .rich-editor-content i, .rich-editor-content em { font-style: italic; }
-        .rich-editor-content blockquote { border-left: 4px solid #FACC15; padding: 1rem; background: #fffbeb; font-style: italic; margin: 1em 0; }
-
-        /* --- ESTILOS DO ARTIGO (Reforçado) --- */
-        .rich-content { font-family: 'Merriweather', serif; color: #374151; }
-        .rich-content h1 { font-family: 'Inter', sans-serif; font-size: 2.25em; font-weight: 800; margin: 1.5em 0 0.5em; color: #111; line-height: 1.2; }
-        .rich-content h2 { font-family: 'Inter', sans-serif; font-size: 1.75em; font-weight: 700; margin: 1.5em 0 0.5em; color: #1f2937; border-left: 4px solid #FACC15; padding-left: 1rem; }
-        .rich-content h3 { font-family: 'Inter', sans-serif; font-size: 1.4em; font-weight: 600; margin: 1.25em 0 0.5em; color: #374151; }
-        .rich-content p { margin-bottom: 1.25em; line-height: 1.8; font-size: 1.1rem; }
-        .rich-content ul { list-style-type: disc !important; padding-left: 1.5em !important; margin-bottom: 1.25em; }
-        .rich-content ol { list-style-type: decimal !important; padding-left: 1.5em !important; margin-bottom: 1.25em; }
-        .rich-content li { margin-bottom: 0.5em; }
-        .rich-content blockquote { border-left: 4px solid #FACC15; padding: 1.5rem; margin: 1.5em 0; background: #fffbeb; font-style: italic; color: #4b5563; border-radius: 0 8px 8px 0; }
-        .rich-content b, .rich-content strong { font-weight: 700 !important; color: #000; }
-        .rich-content i, .rich-content em { font-style: italic !important; }
-        .rich-content u { text-decoration: underline; }
-        .rich-content a { color: #CA8A04; text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
-        .rich-content img { max-width: 100%; height: auto; border-radius: 12px; margin: 2em 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        
+        /* Tipografia Rica */
+        .rich-content h1, .rich-editor-content h1 { font-family: 'Inter', sans-serif; font-size: 2.25em; font-weight: 800; margin: 1.5em 0 0.5em; color: #111; line-height: 1.2; }
+        .rich-content h2, .rich-editor-content h2 { font-family: 'Inter', sans-serif; font-size: 1.75em; font-weight: 700; margin: 1.5em 0 0.5em; color: #1f2937; border-left: 4px solid #FACC15; padding-left: 1rem; }
+        .rich-content h3, .rich-editor-content h3 { font-family: 'Inter', sans-serif; font-size: 1.4em; font-weight: 600; margin: 1.25em 0 0.5em; color: #374151; }
+        .rich-content p, .rich-editor-content p { margin-bottom: 1.25em; font-size: 1.1rem; }
+        .rich-content ul, .rich-editor-content ul { list-style-type: disc !important; padding-left: 1.5em !important; margin-bottom: 1.25em; }
+        .rich-content ol, .rich-editor-content ol { list-style-type: decimal !important; padding-left: 1.5em !important; margin-bottom: 1.25em; }
+        .rich-content li, .rich-editor-content li { margin-bottom: 0.5em; }
+        .rich-content blockquote, .rich-editor-content blockquote { border-left: 4px solid #FACC15; padding: 1.5rem; margin: 1.5em 0; background: #fffbeb; font-style: italic; color: #4b5563; border-radius: 0 8px 8px 0; }
+        .rich-content b, .rich-content strong, .rich-editor-content b, .rich-editor-content strong { font-weight: 700 !important; color: #000; }
+        .rich-content i, .rich-content em, .rich-editor-content i, .rich-editor-content em { font-style: italic !important; }
+        .rich-content u, .rich-editor-content u { text-decoration: underline; }
+        .rich-content a, .rich-editor-content a { color: #CA8A04; text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+        .rich-content img, .rich-editor-content img { max-width: 100%; height: auto; border-radius: 12px; margin: 2em 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 page-wrapper">
@@ -519,7 +514,7 @@
                     <div id="admin-panel" class="hidden flex flex-col gap-8">
                         
                         <!-- Cards de Estatísticas -->
-                        <div class="grid md:grid-cols-3 gap-6">
+                        <div class="grid md:grid-cols-4 gap-6">
                             <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex items-center gap-4">
                                 <div class="bg-blue-50 p-3 rounded-lg text-blue-600"><i class="ph-fill ph-article text-2xl"></i></div>
                                 <div><p class="text-sm text-gray-500 font-medium">Total de Posts</p><h3 id="stat-total-posts" class="text-2xl font-bold text-gray-900">0</h3></div>
@@ -531,6 +526,19 @@
                             <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex items-center gap-4">
                                 <div class="bg-purple-50 p-3 rounded-lg text-purple-600"><i class="ph-fill ph-heart text-2xl"></i></div>
                                 <div><p class="text-sm text-gray-500 font-medium">Engajamento (Likes)</p><h3 id="stat-total-likes" class="text-2xl font-bold text-gray-900">0</h3></div>
+                            </div>
+                            <!-- Card Notificações -->
+                            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex items-center gap-4">
+                                <div class="bg-red-50 p-3 rounded-lg text-red-600"><i class="ph-fill ph-bell text-2xl"></i></div>
+                                <div><p class="text-sm text-gray-500 font-medium">Novas Notificações</p><h3 id="stat-notifications" class="text-2xl font-bold text-gray-900">0</h3></div>
+                            </div>
+                        </div>
+
+                        <!-- Área de Notificações -->
+                        <div id="admin-notifications-area" class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                            <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="ph-fill ph-bell-ringing text-brand-600"></i> Últimas Notificações</h3>
+                            <div id="notifications-list" class="space-y-3 max-h-60 overflow-y-auto custom-scrollbar">
+                                <p class="text-gray-400 text-sm">Nenhuma notificação recente.</p>
                             </div>
                         </div>
 
@@ -753,7 +761,7 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="bg-black text-gray-400 py-16 border-t border-gray-900 font-sans">
+    <footer class="bg-black text-gray-400 py-16 border-t border-gray-900 font-sans mt-auto">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <div class="col-span-1 md:col-span-2">
@@ -805,7 +813,7 @@
 
     <!-- JS DO APP -->
     <script>
-        // PARCEIROS DO SIMULADOR (Movido para o topo para evitar erros)
+        // PARCEIROS DO SIMULADOR (Movido para o topo absoluto para evitar erros)
         const loanPartners = [
             { name: "Nubank", url: "https://nubank.com.br/" }, 
             { name: "Banco Inter", url: "https://inter.co/" }, 
@@ -824,7 +832,7 @@
 
         let db, auth;
         let allBlogPosts = []; 
-        let currentEditingId = null; // Para edição no Admin
+        let currentEditingId = null; 
         let currentBlogPage = 1;
         const postsPerPage = 6;
         let currentBlogCategory = 'todos';
@@ -879,8 +887,6 @@
                 void section.offsetWidth; 
                 section.classList.add('fade-in');
                 window.scrollTo(0,0);
-                
-                // Recarrega Ads apenas se necessário
                 setTimeout(() => {
                     try {
                         section.querySelectorAll('ins.adsbygoogle').forEach(slot => {
@@ -911,6 +917,7 @@
                         userInfo.classList.remove('hidden');
                         loadAdminPostsList(); 
                         updateAdminStats(); 
+                        loadAdminNotifications(); 
                     } else { 
                         loginForm.classList.remove('hidden'); 
                         panel.classList.add('hidden'); 
@@ -954,10 +961,9 @@
                     <span class="text-2xl font-bold text-gray-200 group-hover:text-brand-400 transition">0${index + 1}</span>
                     <div>
                         <h5 class="font-bold text-gray-800 text-sm leading-tight group-hover:text-brand-600 transition line-clamp-2">${post.title}</h5>
-                        <p class="text-xs text-gray-400 mt-1">${post.views || 0} leituras</p>
                     </div>
                 </div>
-            `).join('');
+            `).join(''); // REMOVIDO A VISUALIZAÇÃO DE VIEWS AQUI
         }
 
         function updateAdminStats() {
@@ -967,6 +973,37 @@
             document.getElementById('stat-total-posts').textContent = totalPosts;
             document.getElementById('stat-total-views').textContent = totalViews;
             document.getElementById('stat-total-likes').textContent = totalLikes;
+        }
+
+        function loadAdminNotifications() {
+            const list = document.getElementById('notifications-list');
+            const countBadge = document.getElementById('stat-notifications');
+            
+            db.collection('notifications').orderBy('timestamp', 'desc').limit(20).onSnapshot(snap => {
+                const unread = snap.docs.filter(d => !d.data().read).length;
+                countBadge.textContent = unread;
+                
+                if (snap.empty) {
+                    list.innerHTML = '<p class="text-gray-400 text-sm">Nenhuma notificação.</p>';
+                    return;
+                }
+
+                list.innerHTML = snap.docs.map(doc => {
+                    const n = doc.data();
+                    const icon = n.type === 'comment' ? 'ph-chat-circle-text' : 'ph-bell';
+                    const time = formatDate(n.timestamp);
+                    return `
+                        <div onclick="openArticle('${n.postId}')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-lg cursor-pointer flex items-start gap-3 border border-gray-100">
+                            <div class="bg-brand-100 text-brand-600 p-2 rounded-full"><i class="ph-fill ${icon}"></i></div>
+                            <div>
+                                <p class="text-sm text-gray-800 font-bold">${n.userName} <span class="font-normal text-gray-500">comentou em:</span></p>
+                                <p class="text-xs text-brand-600 font-bold truncate max-w-[200px]">${n.postTitle}</p>
+                                <span class="text-[10px] text-gray-400">${time}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            });
         }
 
         function renderHomeBlog() {
@@ -1025,7 +1062,7 @@
                     </div>
                     <div class="p-6 flex-1 flex flex-col">
                         <div class="flex items-center gap-2 text-xs text-gray-400 mb-3">
-                            <span>${formatDate(post.createdAt)}</span> • <span>${post.views || 0} views</span>
+                            <span>${formatDate(post.createdAt)}</span>
                         </div>
                         <h3 class="text-xl font-bold text-black mb-3 group-hover:text-brand-600 transition leading-snug">${post.title}</h3>
                         <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-1 font-serif">${post.intro}</p>
@@ -1034,7 +1071,7 @@
                         </div>
                     </div>
                 </div>
-            `).join('');
+            `).join(''); // REMOVIDO A VISUALIZAÇÃO DE VIEWS DAQUI TAMBÉM
 
             let paginationHTML = '';
             if (totalPages > 1) {
@@ -1102,7 +1139,6 @@
             window.scrollTo(0,0);
         }
 
-        // --- SISTEMA DE COMENTÁRIOS E RESPOSTAS ---
         let deleteTarget = null; 
 
         function loadComments(id) {
@@ -1421,15 +1457,29 @@
         function submitComment(e) {
             e.preventDefault();
             const id = allBlogPosts.find(p => p.title === document.getElementById('post-title').textContent)?.id;
+            const postTitle = document.getElementById('post-title').textContent; 
+            
             if(!id) return;
             const n = document.getElementById('comment-name');
             const t = document.getElementById('comment-text');
+            
             db.collection("posts").doc(id).collection("comments").add({
                 name: n.value, 
                 text: t.value, 
                 replies: [],
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => { n.value=''; t.value=''; });
+            })
+            .then(() => {
+                return db.collection("notifications").add({
+                    type: 'comment',
+                    postId: id,
+                    postTitle: postTitle,
+                    userName: n.value,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    read: false
+                });
+            })
+            .then(() => { n.value=''; t.value=''; });
         }
 
         function submitReply(e, postId, commentId) {
@@ -1438,6 +1488,8 @@
             const text = input.value;
             const currentUser = auth.currentUser;
             const name = currentUser ? "Admin CrediFácil" : "Usuário";
+            const postTitle = document.getElementById('post-title').textContent;
+
             db.collection("posts").doc(postId).collection("comments").doc(commentId).update({
                 replies: firebase.firestore.FieldValue.arrayUnion({
                     name: name,
@@ -1445,7 +1497,18 @@
                     isAdmin: !!currentUser,
                     timestamp: new Date()
                 })
-            }).then(() => {
+            })
+            .then(() => {
+                if(!currentUser) {
+                    db.collection("notifications").add({
+                        type: 'reply',
+                        postId: postId,
+                        postTitle: postTitle,
+                        userName: name,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        read: false
+                    });
+                }
                 input.value = '';
                 document.getElementById(`reply-form-${commentId}`).classList.add('hidden');
             });

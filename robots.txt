@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://github.com/ctrl-dias/credifacil/blob/main/sitemap.xml
+Sitemap:https://credifacil.vercel.app/sitemap.xml

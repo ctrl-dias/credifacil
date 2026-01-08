@@ -1103,7 +1103,8 @@
             document.getElementById('post-category').textContent = post.category;
             document.getElementById('post-author').textContent = post.author || 'Equipe CrediFácil';
             document.getElementById('post-date').textContent = formatDate(post.createdAt);
-            
+            document.title = post.title + " | CrediFácil";
+document.querySelector('meta[name="description"]').setAttribute("content", post.intro);
             const contentDiv = document.getElementById('post-content');
             contentDiv.innerHTML = `
                 <p class="text-xl md:text-2xl leading-relaxed mb-10 font-medium text-gray-600 border-l-4 border-brand-400 pl-6 intro-text font-serif italic">${post.intro}</p>
@@ -1516,3 +1517,4 @@
     </script>
 </body>
 </html>
+

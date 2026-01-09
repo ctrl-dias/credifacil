@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
-    <link rel="icon" href="/favicon.ico" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="CrediFácil - O seu guia definitivo para sair das dívidas, conseguir cartões de crédito e empréstimos com as melhores taxas.">
     <meta name="keywords" content="empréstimo, cartão de crédito, nome sujo, score, finanças, limpar nome, educação financeira">
     <meta name="author" content="CrediFácil">
     <meta name="robots" content="index, follow">
-     
+    
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017585624443150" crossorigin="anonymous"></script>
 
@@ -85,30 +84,35 @@
         }
         .rich-editor-btn:hover { background: #e5e7eb; color: #000; }
         
-        /* Estilos do Editor e do Artigo (Consistentes) */
-        .rich-editor-content, .rich-content {
-            font-family: 'Merriweather', serif; color: #374151; line-height: 1.8;
-        }
         .rich-editor-content {
             min-height: 350px; padding: 20px; border: 1px solid #d1d5db; border-top: none;
             border-radius: 0 0 8px 8px; outline: none; background: white; overflow-y: auto;
+            font-family: 'Merriweather', serif; line-height: 1.8;
         }
         .rich-editor-content:focus { border-color: #FACC15; box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.1); }
-        
-        /* Tipografia Rica */
-        .rich-content h1, .rich-editor-content h1 { font-family: 'Inter', sans-serif; font-size: 2.25em; font-weight: 800; margin: 1.5em 0 0.5em; color: #111; line-height: 1.2; }
-        .rich-content h2, .rich-editor-content h2 { font-family: 'Inter', sans-serif; font-size: 1.75em; font-weight: 700; margin: 1.5em 0 0.5em; color: #1f2937; border-left: 4px solid #FACC15; padding-left: 1rem; }
-        .rich-content h3, .rich-editor-content h3 { font-family: 'Inter', sans-serif; font-size: 1.4em; font-weight: 600; margin: 1.25em 0 0.5em; color: #374151; }
-        .rich-content p, .rich-editor-content p { margin-bottom: 1.25em; font-size: 1.1rem; }
-        .rich-content ul, .rich-editor-content ul { list-style-type: disc !important; padding-left: 1.5em !important; margin-bottom: 1.25em; }
-        .rich-content ol, .rich-editor-content ol { list-style-type: decimal !important; padding-left: 1.5em !important; margin-bottom: 1.25em; }
-        .rich-content li, .rich-editor-content li { margin-bottom: 0.5em; }
-        .rich-content blockquote, .rich-editor-content blockquote { border-left: 4px solid #FACC15; padding: 1.5rem; margin: 1.5em 0; background: #fffbeb; font-style: italic; color: #4b5563; border-radius: 0 8px 8px 0; }
-        .rich-content b, .rich-content strong, .rich-editor-content b, .rich-editor-content strong { font-weight: 700 !important; color: #000; }
-        .rich-content i, .rich-content em, .rich-editor-content i, .rich-editor-content em { font-style: italic !important; }
-        .rich-content u, .rich-editor-content u { text-decoration: underline; }
-        .rich-content a, .rich-editor-content a { color: #CA8A04; text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
-        .rich-content img, .rich-editor-content img { max-width: 100%; height: auto; border-radius: 12px; margin: 2em 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .rich-editor-content h2 { font-family: 'Inter', sans-serif; font-size: 1.5em; font-weight: 700; margin: 1em 0 0.5em; border-left: 4px solid #FACC15; padding-left: 1rem; }
+        .rich-editor-content h3 { font-family: 'Inter', sans-serif; font-size: 1.25em; font-weight: 600; margin: 1em 0 0.5em; }
+        .rich-editor-content ul { list-style-type: disc; padding-left: 1.5em; }
+        .rich-editor-content ol { list-style-type: decimal; padding-left: 1.5em; }
+        .rich-editor-content b, .rich-editor-content strong { font-weight: 700; }
+        .rich-editor-content i, .rich-editor-content em { font-style: italic; }
+        .rich-editor-content blockquote { border-left: 4px solid #FACC15; padding: 1rem; background: #fffbeb; font-style: italic; margin: 1em 0; }
+
+        /* --- ESTILOS DO ARTIGO (Reforçado) --- */
+        .rich-content { font-family: 'Merriweather', serif; color: #374151; }
+        .rich-content h1 { font-family: 'Inter', sans-serif; font-size: 2.25em; font-weight: 800; margin: 1.5em 0 0.5em; color: #111; line-height: 1.2; }
+        .rich-content h2 { font-family: 'Inter', sans-serif; font-size: 1.75em; font-weight: 700; margin: 1.5em 0 0.5em; color: #1f2937; border-left: 4px solid #FACC15; padding-left: 1rem; }
+        .rich-content h3 { font-family: 'Inter', sans-serif; font-size: 1.4em; font-weight: 600; margin: 1.25em 0 0.5em; color: #374151; }
+        .rich-content p { margin-bottom: 1.25em; line-height: 1.8; font-size: 1.1rem; }
+        .rich-content ul { list-style-type: disc !important; padding-left: 1.5em !important; margin-bottom: 1.25em; }
+        .rich-content ol { list-style-type: decimal !important; padding-left: 1.5em !important; margin-bottom: 1.25em; }
+        .rich-content li { margin-bottom: 0.5em; }
+        .rich-content blockquote { border-left: 4px solid #FACC15; padding: 1.5rem; margin: 1.5em 0; background: #fffbeb; font-style: italic; color: #4b5563; border-radius: 0 8px 8px 0; }
+        .rich-content b, .rich-content strong { font-weight: 700 !important; color: #000; }
+        .rich-content i, .rich-content em { font-style: italic !important; }
+        .rich-content u { text-decoration: underline; }
+        .rich-content a { color: #CA8A04; text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+        .rich-content img { max-width: 100%; height: auto; border-radius: 12px; margin: 2em 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 page-wrapper">
@@ -131,6 +135,7 @@
                     <a href="#emprestimo" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition text-sm uppercase tracking-wide">Empréstimos</a>
                     <a href="#cartoes" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition text-sm uppercase tracking-wide">Cartões</a>
                     <a href="#blog" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition text-sm uppercase tracking-wide">Blog</a>
+                    <a href="#fale-conosco" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition text-sm uppercase tracking-wide">Fale Conosco</a>
                     <a href="#sobre" class="nav-link text-gray-300 hover:text-brand-400 font-medium transition text-sm uppercase tracking-wide">Sobre</a>
                 </nav>
                 
@@ -155,6 +160,7 @@
                 <a href="#emprestimo" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Simulador</a>
                 <a href="#cartoes" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Cartões</a>
                 <a href="#blog" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Blog</a>
+                <a href="#fale-conosco" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:bg-black hover:text-brand-400 rounded-md">Fale Conosco</a>
                 <a href="#admin" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-brand-400 font-bold hover:bg-black rounded-md">Área Admin</a>
             </div>
         </div>
@@ -169,7 +175,7 @@
                 <div class="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-brand-900/20 to-transparent pointer-events-none"></div>
                 <div class="container mx-auto px-4 py-20 lg:py-32 relative z-10">
                     <div class="max-w-4xl mx-auto text-center">
-                        <span class="bg-brand-400/10 text-brand-400 px-4 py-1.5 rounded-full text-sm font-bold tracking-wider uppercase mb-8 inline-block border border-brand-400/20">Liberdade Financeira ao seu alcance</span>
+                        <span class="bg-brand-400/10 text-brand-400 px-4 py-1.5 rounded-full text-sm font-bold uppercase mb-8 inline-block border border-brand-400/20">Liberdade Financeira ao seu alcance</span>
                         <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-8">Saia do vermelho e recupere o seu <span class="text-brand-400 inline-block transform hover:scale-105 transition cursor-default">Crédito</span>.</h1>
                         <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
                             Acesse nosso comparador de cartões para negativados, simule empréstimos com taxas justas e aprenda a investir com nosso conteúdo educativo.
@@ -485,6 +491,61 @@
             </div>
         </section>
 
+        <!-- ================= FALE CONOSCO ================= -->
+        <section id="fale-conosco" class="page-section hidden-section fade-in">
+            <div class="bg-white min-h-screen py-24">
+                <div class="container mx-auto px-4 max-w-4xl">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <span class="text-brand-600 font-bold uppercase tracking-widest text-xs">Canal de Atendimento</span>
+                            <h1 class="text-4xl font-extrabold text-black mt-2 mb-6">Precisa de ajuda ou quer falar com a gente?</h1>
+                            <p class="text-gray-600 mb-8 leading-relaxed">
+                                O <strong>CrediFácil</strong> é seu parceiro na educação financeira. Embora não sejamos um banco, estamos aqui para tirar suas dúvidas sobre o uso do simulador, ouvir sugestões de conteúdo ou resolver problemas técnicos no site.
+                            </p>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-3 text-gray-700">
+                                    <div class="bg-gray-100 p-3 rounded-lg"><i class="ph-fill ph-envelope-simple text-xl"></i></div>
+                                    <span>contato@credifacil.com</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-700">
+                                    <div class="bg-gray-100 p-3 rounded-lg"><i class="ph-fill ph-whatsapp-logo text-xl"></i></div>
+                                    <span>(11) 99999-9999</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-8 rounded-3xl border border-gray-200 shadow-lg">
+                            <form onsubmit="submitContact(event)" class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nome Completo</label>
+                                    <input type="text" id="contact-name" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-brand-500 outline-none" required>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">E-mail</label>
+                                    <input type="email" id="contact-email" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-brand-500 outline-none" required>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Motivo do Contato</label>
+                                    <select id="contact-reason" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-brand-500 outline-none bg-white">
+                                        <option>Dúvida sobre o Simulador</option>
+                                        <option>Sugestão de Conteúdo</option>
+                                        <option>Reportar Erro no Site</option>
+                                        <option>Parceria / Publicidade</option>
+                                        <option>Outros</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Mensagem</label>
+                                    <textarea id="contact-message" rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-brand-500 outline-none resize-none" required></textarea>
+                                </div>
+                                <button type="submit" class="w-full bg-black text-white font-bold py-4 rounded-xl hover:bg-gray-800 transition shadow-lg">Enviar Mensagem</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ================= ADMIN ================= -->
         <section id="admin" class="page-section hidden-section fade-in">
             <div class="bg-gray-100 min-h-screen py-16">
@@ -701,47 +762,6 @@
             </div>
         </section>
 
-        <!-- ================= OFFER SCREEN ================= -->
-        <section id="offer-screen" class="page-section hidden-section fade-in">
-            <div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12">
-                <div class="container mx-auto px-4 max-w-xl">
-                    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200">
-                        <div class="bg-black p-8 text-center text-white">
-                            <h2 class="text-2xl font-bold mb-2">Oferta Selecionada</h2>
-                            <p class="text-gray-400 text-sm">Parceiro Oficial CrediFácil</p>
-                        </div>
-                        <div class="p-8">
-                            <div class="text-center mb-8">
-                                <h3 id="offer-partner-name" class="text-3xl font-extrabold text-brand-600 mb-2">Banco Parceiro</h3>
-                                <p class="text-gray-500">Crédito Pré-Aprovado</p>
-                            </div>
-                            
-                            <div class="bg-gray-50 rounded-xl p-6 mb-8 border border-gray-100">
-                                <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
-                                    <span class="text-gray-600 font-medium">Valor Solicitado</span>
-                                    <span id="offer-value" class="text-xl font-bold text-black">R$ 0,00</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600 font-medium">Condições</span>
-                                    <span id="offer-installments" class="text-xl font-bold text-brand-600">12x R$ 0,00</span>
-                                </div>
-                            </div>
-
-                            <ul class="space-y-3 mb-8 text-sm text-gray-600">
-                                <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-green-500"></i> Sem taxa de adesão antecipada.</li>
-                                <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-green-500"></i> Análise 100% digital.</li>
-                            </ul>
-
-                            <button id="offer-cta-btn" class="w-full bg-brand-400 hover:bg-brand-500 text-black font-bold py-4 rounded-xl transition transform hover:-translate-y-1 shadow-lg text-lg flex items-center justify-center gap-2 mb-4">
-                                Concluir no Site Oficial <i class="ph-bold ph-arrow-right"></i>
-                            </button>
-                            <a href="#emprestimo" class="block text-center text-gray-400 hover:text-black text-sm font-medium">Cancelar e Voltar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
     </main>
 
     <!-- Modal de Confirmação -->
@@ -833,7 +853,7 @@
 
         let db, auth;
         let allBlogPosts = []; 
-        let currentEditingId = null; 
+        let currentEditingId = null; // Para edição no Admin
         let currentBlogPage = 1;
         const postsPerPage = 6;
         let currentBlogCategory = 'todos';
@@ -883,6 +903,13 @@
             
             const section = document.getElementById(hash);
             if(section) {
+                // Atualiza Título da Página para SEO
+                const titleMap = {
+                    'home': 'Início', 'emprestimo': 'Simulador de Empréstimo', 'cartoes': 'Cartões de Crédito', 
+                    'blog': 'Blog Financeiro', 'fale-conosco': 'Fale Conosco', 'sobre': 'Quem Somos', 'terms': 'Termos de Uso', 'privacy': 'Privacidade', 'admin': 'Admin'
+                };
+                document.title = (titleMap[hash] || 'CrediFácil') + " | CrediFácil";
+
                 section.classList.remove('hidden-section');
                 section.classList.remove('fade-in');
                 void section.offsetWidth; 
@@ -917,8 +944,8 @@
                         panel.classList.add('flex');
                         userInfo.classList.remove('hidden');
                         loadAdminPostsList(); 
-                        updateAdminStats(); 
-                        loadAdminNotifications(); 
+                        updateAdminStats(); // Atualiza dashboard
+                        loadAdminNotifications(); // Carrega notificações
                     } else { 
                         loginForm.classList.remove('hidden'); 
                         panel.classList.add('hidden'); 
@@ -953,10 +980,13 @@
             } catch (e) { console.warn("Erro fetchBlog:", e); }
         }
 
+        // Renderiza Widget "Mais Lidos" (SEM NÚMERO DE VIEWS)
         function renderTrendingPosts() {
             const container = document.getElementById('trending-posts-widget');
             if(!container) return;
+
             const trending = [...allBlogPosts].sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 5);
+
             container.innerHTML = trending.map((post, index) => `
                 <div onclick="openArticle('${post.id}')" class="flex gap-3 cursor-pointer group items-start">
                     <span class="text-2xl font-bold text-gray-200 group-hover:text-brand-400 transition">0${index + 1}</span>
@@ -967,10 +997,12 @@
             `).join(''); // REMOVIDO A VISUALIZAÇÃO DE VIEWS AQUI
         }
 
+        // Admin Stats
         function updateAdminStats() {
             const totalPosts = allBlogPosts.length;
             const totalViews = allBlogPosts.reduce((acc, curr) => acc + (curr.views || 0), 0);
             const totalLikes = allBlogPosts.reduce((acc, curr) => acc + (curr.likes || 0), 0);
+
             document.getElementById('stat-total-posts').textContent = totalPosts;
             document.getElementById('stat-total-views').textContent = totalViews;
             document.getElementById('stat-total-likes').textContent = totalLikes;
@@ -993,8 +1025,9 @@
                     const n = doc.data();
                     const icon = n.type === 'comment' ? 'ph-chat-circle-text' : 'ph-bell';
                     const time = formatDate(n.timestamp);
+                    // Adicionado redirecionamento forçado para garantir abertura
                     return `
-                        <div onclick="openArticle('${n.postId}')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-lg cursor-pointer flex items-start gap-3 border border-gray-100">
+                        <div onclick="window.location.hash='artigo-${n.postId}'" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-lg cursor-pointer flex items-start gap-3 border border-gray-100">
                             <div class="bg-brand-100 text-brand-600 p-2 rounded-full"><i class="ph-fill ${icon}"></i></div>
                             <div>
                                 <p class="text-sm text-gray-800 font-bold">${n.userName} <span class="font-normal text-gray-500">comentou em:</span></p>
@@ -1096,16 +1129,19 @@
             const post = allBlogPosts.find(p => p.id == id);
             if(!post) return;
             
+            // Incrementa view (invisível para usuário comum)
             db.collection('posts').doc(id).update({
                 views: firebase.firestore.FieldValue.increment(1)
             }).catch(e => console.log("Erro view update", e));
 
             document.getElementById('post-title').textContent = post.title;
+            // Atualiza Título da aba para SEO
+            document.title = post.title + " | CrediFácil";
+            
             document.getElementById('post-category').textContent = post.category;
             document.getElementById('post-author').textContent = post.author || 'Equipe CrediFácil';
             document.getElementById('post-date').textContent = formatDate(post.createdAt);
-            document.title = post.title + " | CrediFácil";
-document.querySelector('meta[name="description"]').setAttribute("content", post.intro);
+            
             const contentDiv = document.getElementById('post-content');
             contentDiv.innerHTML = `
                 <p class="text-xl md:text-2xl leading-relaxed mb-10 font-medium text-gray-600 border-l-4 border-brand-400 pl-6 intro-text font-serif italic">${post.intro}</p>
@@ -1141,6 +1177,7 @@ document.querySelector('meta[name="description"]').setAttribute("content", post.
             window.scrollTo(0,0);
         }
 
+        // --- SISTEMA DE COMENTÁRIOS E RESPOSTAS ---
         let deleteTarget = null; 
 
         function loadComments(id) {
@@ -1515,12 +1552,35 @@ document.querySelector('meta[name="description"]').setAttribute("content", post.
                 document.getElementById(`reply-form-${commentId}`).classList.add('hidden');
             });
         }
+        
+        function submitContact(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = "Enviando...";
+
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const reason = document.getElementById('contact-reason').value;
+            const message = document.getElementById('contact-message').value;
+
+            db.collection("messages").add({
+                name, email, reason, message,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                read: false
+            }).then(() => {
+                alert("Mensagem enviada com sucesso! Entraremos em contato em breve.");
+                e.target.reset();
+            }).catch(err => {
+                alert("Erro ao enviar: " + err.message);
+            }).finally(() => {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            });
+        }
     </script>
 </body>
 </html>
-
-
-
-
 
 

@@ -557,6 +557,19 @@
                         <span class="font-bold text-xl text-white tracking-tight logo-text truncate">Credi<span class="text-brand-400">Admin</span></span>
                         <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white p-1 rounded-md hover:bg-gray-800"><i class="ph-bold ph-list text-xl"></i></button>
                     </div>
+                    
+                    <!-- User Profile & Logout (Moved to top) -->
+                    <div class="p-3 border-b border-gray-800 shrink-0">
+                        <div class="flex items-center gap-3 mb-3 px-2">
+                             <div class="w-8 h-8 rounded-full bg-brand-400 flex items-center justify-center text-black font-bold text-xs shrink-0">A</div>
+                             <div class="text-sm nav-text overflow-hidden">
+                                 <p class="text-white font-bold truncate">Admin</p>
+                                 <p class="text-xs truncate">Logado</p>
+                             </div>
+                        </div>
+                        <button onclick="handleLogout()" class="w-full text-left px-2 text-sm text-red-400 hover:text-red-300 font-bold flex items-center gap-2 hover:bg-gray-800 p-2 rounded-lg transition" title="Sair"><i class="ph-bold ph-sign-out text-lg shrink-0"></i> <span class="nav-text">Sair</span></button>
+                    </div>
+
                     <nav class="flex-1 p-3 space-y-1 overflow-y-auto custom-scrollbar">
                         <button onclick="switchAdminTab('dashboard')" id="tab-dashboard" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition bg-gray-800 text-white font-medium group" title="Dashboard">
                             <i class="ph-bold ph-squares-four text-xl shrink-0"></i> <span class="nav-text truncate">Dashboard</span>
@@ -568,16 +581,6 @@
                             <i class="ph-bold ph-bell text-xl shrink-0"></i> <span class="nav-text truncate">Notificações</span>
                         </button>
                     </nav>
-                    <div class="p-3 border-t border-gray-800 shrink-0">
-                        <div class="flex items-center gap-3 mb-3 px-2">
-                             <div class="w-8 h-8 rounded-full bg-brand-400 flex items-center justify-center text-black font-bold text-xs shrink-0">A</div>
-                             <div class="text-sm nav-text overflow-hidden">
-                                 <p class="text-white font-bold truncate">Admin</p>
-                                 <p class="text-xs truncate">Logado</p>
-                             </div>
-                        </div>
-                        <button onclick="handleLogout()" class="w-full text-left px-2 text-sm text-red-400 hover:text-red-300 font-bold flex items-center gap-2 hover:bg-gray-800 p-2 rounded-lg transition" title="Sair"><i class="ph-bold ph-sign-out text-lg shrink-0"></i> <span class="nav-text">Sair</span></button>
-                    </div>
                 </aside>
 
                 <!-- Content Area (Scrollable) -->

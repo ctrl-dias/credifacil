@@ -41,6 +41,10 @@
                             50: '#FEFCE8', 100: '#FEF9C3', 400: '#FACC15', 500: '#EAB308', 600: '#CA8A04', 900: '#713F12',
                         },
                         navy: { 800: '#18181b', 900: '#000000' }
+                    },
+                    transitionProperty: {
+                        'width': 'width',
+                        'spacing': 'margin, padding',
                     }
                 }
             }
@@ -56,6 +60,12 @@
         
         .animate-pulse-custom { animation: pulse-custom 0.3s ease-in-out; }
         @keyframes pulse-custom { 0% { transform: scale(1); } 50% { transform: scale(1.3) rotate(-10deg); } 100% { transform: scale(1); } }
+
+        /* Toast Animation */
+        .toast-enter { transform: translateX(100%); opacity: 0; }
+        .toast-enter-active { transform: translateX(0); opacity: 1; transition: all 0.3s ease-out; }
+        .toast-exit { transform: translateX(0); opacity: 1; }
+        .toast-exit-active { transform: translateX(100%); opacity: 0; transition: all 0.3s ease-in; }
 
         .hidden-section { display: none !important; }
         .page-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
@@ -111,12 +121,23 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Admin Sidebar Logic */
+        .sidebar-expanded { width: 16rem; }
+        .sidebar-collapsed { width: 5rem; }
+        .content-expanded { margin-left: 16rem; }
+        .content-collapsed { margin-left: 5rem; }
+        .hide-text .nav-text { display: none; }
+        .hide-text .logo-text { display: none; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 page-wrapper">
 
     <!-- Reading Progress Bar -->
     <div id="reading-progress-container"><div id="reading-progress-bar"></div></div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-5 right-5 z-[100] flex flex-col gap-2 pointer-events-none"></div>
 
     <!-- HEADER -->
     <header class="bg-black shadow-lg sticky top-0 z-50 border-b border-gray-800">
@@ -529,37 +550,38 @@
             </div>
 
             <!-- Dashboard Layout -->
-            <div id="admin-panel" class="hidden min-h-screen bg-gray-100 flex">
-                <!-- Sidebar -->
-                <aside class="w-64 bg-zinc-900 text-gray-400 flex flex-col fixed h-full z-20">
-                    <div class="h-20 flex items-center px-6 border-b border-gray-800">
-                        <span class="font-bold text-xl text-white tracking-tight">Credi<span class="text-brand-400">Admin</span></span>
+            <div id="admin-panel" class="hidden min-h-screen bg-gray-100 flex overflow-hidden">
+                <!-- Sidebar (Fixed) -->
+                <aside id="admin-sidebar" class="w-64 bg-zinc-900 text-gray-400 flex flex-col fixed h-full z-20 transition-all duration-300 ease-in-out border-r border-gray-800">
+                    <div class="h-16 flex items-center justify-between px-4 border-b border-gray-800 shrink-0">
+                        <span class="font-bold text-xl text-white tracking-tight logo-text truncate">Credi<span class="text-brand-400">Admin</span></span>
+                        <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white p-1 rounded-md hover:bg-gray-800"><i class="ph-bold ph-list text-xl"></i></button>
                     </div>
-                    <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
-                        <button onclick="switchAdminTab('dashboard')" id="tab-dashboard" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition bg-gray-800 text-white font-medium">
-                            <i class="ph-bold ph-squares-four text-lg"></i> Dashboard
+                    <nav class="flex-1 p-3 space-y-1 overflow-y-auto custom-scrollbar">
+                        <button onclick="switchAdminTab('dashboard')" id="tab-dashboard" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition bg-gray-800 text-white font-medium group" title="Dashboard">
+                            <i class="ph-bold ph-squares-four text-xl shrink-0"></i> <span class="nav-text truncate">Dashboard</span>
                         </button>
-                        <button onclick="switchAdminTab('posts')" id="tab-posts" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition font-medium">
-                            <i class="ph-bold ph-article text-lg"></i> Gerenciar Posts
+                        <button onclick="switchAdminTab('posts')" id="tab-posts" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition font-medium group" title="Gerenciar Posts">
+                            <i class="ph-bold ph-article text-xl shrink-0"></i> <span class="nav-text truncate">Gerenciar Posts</span>
                         </button>
-                        <button onclick="switchAdminTab('notifications')" id="tab-notifications" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition font-medium">
-                            <i class="ph-bold ph-bell text-lg"></i> Comentários
+                        <button onclick="switchAdminTab('notifications')" id="tab-notifications" class="w-full flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition font-medium group" title="Notificações">
+                            <i class="ph-bold ph-bell text-xl shrink-0"></i> <span class="nav-text truncate">Notificações</span>
                         </button>
                     </nav>
-                    <div class="p-4 border-t border-gray-800">
-                        <div class="flex items-center gap-3 mb-4 px-2">
-                             <div class="w-8 h-8 rounded-full bg-brand-400 flex items-center justify-center text-black font-bold text-xs">A</div>
-                             <div class="text-sm">
-                                 <p class="text-white font-bold">Admin</p>
-                                 <p class="text-xs">Logado</p>
+                    <div class="p-3 border-t border-gray-800 shrink-0">
+                        <div class="flex items-center gap-3 mb-3 px-2">
+                             <div class="w-8 h-8 rounded-full bg-brand-400 flex items-center justify-center text-black font-bold text-xs shrink-0">A</div>
+                             <div class="text-sm nav-text overflow-hidden">
+                                 <p class="text-white font-bold truncate">Admin</p>
+                                 <p class="text-xs truncate">Logado</p>
                              </div>
                         </div>
-                        <button onclick="handleLogout()" class="w-full text-left px-2 text-sm text-red-400 hover:text-red-300 font-bold flex items-center gap-2"><i class="ph-bold ph-sign-out"></i> Sair</button>
+                        <button onclick="handleLogout()" class="w-full text-left px-2 text-sm text-red-400 hover:text-red-300 font-bold flex items-center gap-2 hover:bg-gray-800 p-2 rounded-lg transition" title="Sair"><i class="ph-bold ph-sign-out text-lg shrink-0"></i> <span class="nav-text">Sair</span></button>
                     </div>
                 </aside>
 
-                <!-- Content Area -->
-                <div class="flex-1 ml-64 p-8 overflow-y-auto h-screen">
+                <!-- Content Area (Scrollable) -->
+                <div id="admin-content" class="flex-1 ml-64 p-8 overflow-y-auto overflow-x-hidden h-screen transition-all duration-300 ease-in-out">
                     
                     <!-- View: Dashboard -->
                     <div id="view-dashboard" class="space-y-8 animate-fade-in">
@@ -587,7 +609,7 @@
                             </div>
                             <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                                 <div class="flex justify-between items-start mb-4">
-                                    <div><p class="text-sm text-gray-500 font-medium">Comentários</p><h3 id="stat-notifications" class="text-3xl font-bold text-gray-900 mt-1">0</h3></div>
+                                    <div><p class="text-sm text-gray-500 font-medium">Notificações</p><h3 id="stat-notifications" class="text-3xl font-bold text-gray-900 mt-1">0</h3></div>
                                     <div class="bg-red-50 p-2 rounded-lg text-red-600"><i class="ph-fill ph-chat-circle text-xl"></i></div>
                                 </div>
                             </div>
@@ -687,7 +709,7 @@
 
                     <!-- View: Notifications/Comments -->
                     <div id="view-notifications" class="hidden animate-fade-in">
-                        <h2 class="text-2xl font-bold text-black mb-6">Últimos Comentários</h2>
+                        <h2 class="text-2xl font-bold text-black mb-6">Central de Notificações</h2>
                         <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
                              <div id="notifications-list" class="space-y-4">
                                 <!-- Lista carregada via JS -->
@@ -895,7 +917,7 @@
         let currentBlogPage = 1;
         const postsPerPage = 6;
         let currentBlogCategory = 'todos';
-        let deleteTarget = null;
+        let deleteTarget = null; // { type: 'post' | 'comment' | 'notification', id: string, parentId?: string }
 
         const cardsData = [
             { id: 1, name: "Santander SX", bgClass: "bg-red-600", iconBg: "bg-red-700", rotation: "rotate-45", badges: [{ text: "Aprovação Alta", color: "bg-green-100 text-green-700" }, { text: "Visa/Master", color: "bg-blue-100 text-blue-700" }], annuity: "Grátis (gastando R$100)", income: "R$ 1.045,00", desc: "Ideal para quem busca o primeiro cartão ou quer recuperar crédito.", link: "https://www.santander.com.br/cartao-credito-santander/sx", categories: ["todos", "negativados"] },
@@ -921,7 +943,29 @@
             };
         });
 
-        // --- HELPER DE DATA (Humanizada) ---
+        // --- UTILS ---
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+            toast.className = `${bgColor} text-white px-6 py-3 rounded-lg shadow-lg font-bold text-sm flex items-center gap-2 toast-enter`;
+            toast.innerHTML = `<i class="ph-bold ${type === 'success' ? 'ph-check' : 'ph-warning'}"></i> ${message}`;
+            container.appendChild(toast);
+            
+            // Animate In
+            requestAnimationFrame(() => {
+                toast.classList.remove('toast-enter');
+                toast.classList.add('toast-enter-active');
+            });
+
+            // Remove
+            setTimeout(() => {
+                toast.classList.remove('toast-enter-active');
+                toast.classList.add('toast-exit-active');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
         function formatDate(timestamp) {
             if (!timestamp) return '';
             const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
@@ -980,6 +1024,7 @@
                         loadAdminPostsTable(); 
                         updateAdminStats(); 
                         loadAdminNotifications(); 
+                        showToast("Bem-vindo de volta, Admin!");
                     } else { 
                         loginForm.classList.remove('hidden'); 
                         panel.classList.add('hidden'); 
@@ -1027,6 +1072,27 @@
         }
 
         // --- ADMIN DASHBOARD ---
+        function toggleSidebar() {
+            const sidebar = document.getElementById('admin-sidebar');
+            const content = document.getElementById('admin-content');
+            
+            sidebar.classList.toggle('w-64');
+            sidebar.classList.toggle('w-20');
+            content.classList.toggle('ml-64');
+            content.classList.toggle('ml-20');
+            
+            // Toggle Text Visibility
+            document.querySelectorAll('.nav-text').forEach(el => el.classList.toggle('hidden'));
+            
+            // Adjust Logo
+            const logo = document.querySelector('.logo-text');
+            if (sidebar.classList.contains('w-20')) {
+                logo.innerHTML = '<span class="text-brand-400">CA</span>';
+            } else {
+                logo.innerHTML = 'Credi<span class="text-brand-400">Admin</span>';
+            }
+        }
+
         function switchAdminTab(tabName) {
             document.querySelectorAll('[id^="view-"]').forEach(v => v.classList.add('hidden'));
             document.getElementById(`view-${tabName}`).classList.remove('hidden');
@@ -1062,21 +1128,175 @@
 
                 list.innerHTML = snap.docs.map(doc => {
                     const n = doc.data();
-                    const icon = n.type === 'comment' ? 'ph-chat-circle-text' : 'ph-bell';
+                    let icon, text;
+                    if(n.type === 'like') {
+                        icon = 'ph-heart text-purple-500';
+                        text = 'Curtiu o post:';
+                    } else if (n.type === 'comment') {
+                        icon = 'ph-chat-circle-text text-brand-600';
+                        text = 'Comentou em:';
+                    } else {
+                        icon = 'ph-bell text-gray-500';
+                        text = 'Interagiu em:';
+                    }
                     const time = formatDate(n.timestamp);
                     return `
-                        <div onclick="openArticle('${n.postId}')" class="p-4 bg-gray-50 hover:bg-gray-100 rounded-lg cursor-pointer flex items-start gap-3 border border-gray-100 transition">
-                            <div class="bg-brand-100 text-brand-600 p-2 rounded-full mt-1"><i class="ph-fill ${icon}"></i></div>
-                            <div class="flex-1">
-                                <div class="flex justify-between">
+                        <div class="p-4 bg-gray-50 hover:bg-gray-100 rounded-lg flex items-start gap-3 border border-gray-100 transition relative group">
+                            <div class="bg-white p-2 rounded-full mt-1 border border-gray-100 shadow-sm"><i class="ph-fill ${icon}"></i></div>
+                            <div class="flex-1 cursor-pointer" onclick="openArticle('${n.postId}')">
+                                <div class="flex justify-between pr-8">
                                     <p class="text-sm text-gray-900 font-bold">${n.userName}</p>
                                     <span class="text-xs text-gray-400">${time}</span>
                                 </div>
-                                <p class="text-xs text-gray-500 mt-1">Comentou em: <span class="text-brand-600 font-medium">${n.postTitle}</span></p>
+                                <p class="text-xs text-gray-500 mt-1">${text} <span class="text-black font-medium">${n.postTitle}</span></p>
                             </div>
+                            <button onclick="openDeleteModal(null, null, 'notification', '${doc.id}')" class="absolute top-4 right-4 text-gray-300 hover:text-red-500 transition" title="Excluir Notificação"><i class="ph-bold ph-trash"></i></button>
                         </div>
                     `;
                 }).join('');
+            });
+        }
+
+        // Updated Modal Logic
+        function openDeleteModal(postId, commentId, type = 'comment', notifId = null) {
+            deleteTarget = { postId, commentId, type, notifId };
+            document.getElementById('delete-modal').classList.remove('hidden');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('delete-modal').classList.add('hidden');
+            deleteTarget = null;
+        }
+
+        document.getElementById('confirm-delete-btn').addEventListener('click', () => {
+            if(!deleteTarget) return;
+
+            if (deleteTarget.type === 'comment') {
+                db.collection("posts").doc(deleteTarget.postId).collection("comments").doc(deleteTarget.commentId).delete()
+                    .then(() => { showToast("Comentário excluído"); closeDeleteModal(); })
+                    .catch(err => showToast("Erro: " + err.message, 'error'));
+            } 
+            else if (deleteTarget.type === 'post') {
+                db.collection("posts").doc(deleteTarget.postId).delete()
+                    .then(() => { 
+                        showToast("Post excluído"); 
+                        fetchBlogPosts(); 
+                        closeDeleteModal(); 
+                    })
+                    .catch(err => showToast("Erro: " + err.message, 'error'));
+            }
+            else if (deleteTarget.type === 'notification') {
+                db.collection('notifications').doc(deleteTarget.notifId).delete()
+                    .then(() => { showToast("Notificação removida"); closeDeleteModal(); })
+                    .catch(err => showToast("Erro: " + err.message, 'error'));
+            }
+        });
+
+        // --- ADMIN FUNCTIONS ---
+        function loadAdminPostsTable() {
+            const tbody = document.getElementById('admin-posts-table-body');
+            tbody.innerHTML = allBlogPosts.map(p => `
+                <tr class="hover:bg-gray-50 transition border-b border-gray-50">
+                    <td class="px-6 py-4 font-bold text-gray-800">${p.title}</td>
+                    <td class="px-6 py-4"><span class="px-2 py-1 bg-gray-100 rounded text-xs text-gray-600 uppercase font-bold">${p.category}</span></td>
+                    <td class="px-6 py-4 text-xs">${formatDate(p.createdAt)}</td>
+                    <td class="px-6 py-4 text-center font-mono text-xs">${p.views || 0}</td>
+                    <td class="px-6 py-4 text-right">
+                        <button onclick="loadPostForEdit('${p.id}')" class="text-blue-600 hover:text-blue-800 font-bold text-xs mr-3">EDITAR</button>
+                        <button onclick="openDeleteModal('${p.id}', null, 'post')" class="text-red-400 hover:text-red-600 font-bold text-xs">EXCLUIR</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterAdminPosts() {
+            const term = document.getElementById('admin-search-posts').value.toLowerCase();
+            const tbody = document.getElementById('admin-posts-table-body');
+            const filtered = allBlogPosts.filter(p => p.title.toLowerCase().includes(term));
+            
+            tbody.innerHTML = filtered.map(p => `
+                 <tr class="hover:bg-gray-50 transition border-b border-gray-50">
+                    <td class="px-6 py-4 font-bold text-gray-800">${p.title}</td>
+                    <td class="px-6 py-4"><span class="px-2 py-1 bg-gray-100 rounded text-xs text-gray-600 uppercase font-bold">${p.category}</span></td>
+                    <td class="px-6 py-4 text-xs">${formatDate(p.createdAt)}</td>
+                    <td class="px-6 py-4 text-center font-mono text-xs">${p.views || 0}</td>
+                    <td class="px-6 py-4 text-right">
+                        <button onclick="loadPostForEdit('${p.id}')" class="text-blue-600 hover:text-blue-800 font-bold text-xs mr-3">EDITAR</button>
+                        <button onclick="openDeleteModal('${p.id}', null, 'post')" class="text-red-400 hover:text-red-600 font-bold text-xs">EXCLUIR</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function showPostEditor() {
+            document.getElementById('posts-table-container').classList.add('hidden');
+            document.getElementById('post-editor').classList.remove('hidden');
+            resetAdminForm();
+        }
+
+        function hidePostEditor() {
+            document.getElementById('posts-table-container').classList.remove('hidden');
+            document.getElementById('post-editor').classList.add('hidden');
+        }
+
+        function resetAdminForm() {
+            currentEditingId = null;
+            document.getElementById('form-title').innerHTML = 'Novo Post';
+            document.getElementById('admin-submit-btn').textContent = "Publicar Artigo";
+            document.forms[1].reset(); 
+            document.getElementById('admin-title').value = '';
+            document.getElementById('admin-intro').value = '';
+            document.getElementById('admin-image').value = '';
+            document.getElementById('admin-content-rich').innerHTML = '';
+            document.getElementById('admin-author').value = 'Redação CrediFácil';
+        }
+
+        function loadPostForEdit(id) {
+            const post = allBlogPosts.find(p => p.id === id);
+            if(!post) return;
+            showPostEditor();
+            currentEditingId = id;
+            document.getElementById('form-title').innerHTML = 'Editando: ' + post.title;
+            document.getElementById('admin-submit-btn').textContent = "Salvar Alterações";
+            document.getElementById('admin-title').value = post.title;
+            document.getElementById('admin-category').value = post.category;
+            document.getElementById('admin-author').value = post.author;
+            document.getElementById('admin-image').value = post.image;
+            document.getElementById('admin-intro').value = post.intro;
+            document.getElementById('admin-content-rich').innerHTML = post.content;
+        }
+
+        function savePost(e) {
+            e.preventDefault();
+            if(!db) return;
+            const btn = document.getElementById('admin-submit-btn');
+            btn.disabled = true;
+            btn.textContent = "Salvando...";
+            const postData = {
+                title: document.getElementById('admin-title').value,
+                category: document.getElementById('admin-category').value,
+                author: document.getElementById('admin-author').value,
+                image: document.getElementById('admin-image').value,
+                intro: document.getElementById('admin-intro').value,
+                content: document.getElementById('admin-content-rich').innerHTML,
+            };
+            let promise;
+            if (currentEditingId) {
+                promise = db.collection("posts").doc(currentEditingId).update(postData);
+            } else {
+                postData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                postData.likes = 0;
+                postData.views = 0; 
+                promise = db.collection("posts").add(postData);
+            }
+            promise.then(() => {
+                showToast(currentEditingId ? "Post atualizado!" : "Post criado!");
+                fetchBlogPosts();
+                hidePostEditor();
+                btn.disabled = false;
+            }).catch(err => {
+                showToast("Erro: " + err.message, 'error');
+                btn.disabled = false;
             });
         }
 
@@ -1310,140 +1530,6 @@
             });
         }
 
-        function openDeleteModal(postId, commentId) {
-            deleteTarget = { postId, commentId };
-            document.getElementById('delete-modal').classList.remove('hidden');
-        }
-
-        function closeDeleteModal() {
-            document.getElementById('delete-modal').classList.add('hidden');
-            deleteTarget = null;
-        }
-
-        document.getElementById('confirm-delete-btn').addEventListener('click', () => {
-            if(deleteTarget) {
-                db.collection("posts").doc(deleteTarget.postId).collection("comments").doc(deleteTarget.commentId).delete()
-                    .then(() => closeDeleteModal())
-                    .catch(err => alert("Erro ao excluir: " + err.message));
-            }
-        });
-
-        // --- ADMIN FUNCTIONS ---
-        function loadAdminPostsTable() {
-            const tbody = document.getElementById('admin-posts-table-body');
-            tbody.innerHTML = allBlogPosts.map(p => `
-                <tr class="hover:bg-gray-50 transition border-b border-gray-50">
-                    <td class="px-6 py-4 font-bold text-gray-800">${p.title}</td>
-                    <td class="px-6 py-4"><span class="px-2 py-1 bg-gray-100 rounded text-xs text-gray-600 uppercase font-bold">${p.category}</span></td>
-                    <td class="px-6 py-4 text-xs">${formatDate(p.createdAt)}</td>
-                    <td class="px-6 py-4 text-center font-mono text-xs">${p.views || 0}</td>
-                    <td class="px-6 py-4 text-right">
-                        <button onclick="loadPostForEdit('${p.id}')" class="text-blue-600 hover:text-blue-800 font-bold text-xs mr-3">EDITAR</button>
-                        <button onclick="deletePost('${p.id}')" class="text-red-400 hover:text-red-600 font-bold text-xs">EXCLUIR</button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function filterAdminPosts() {
-            const term = document.getElementById('admin-search-posts').value.toLowerCase();
-            const tbody = document.getElementById('admin-posts-table-body');
-            const filtered = allBlogPosts.filter(p => p.title.toLowerCase().includes(term));
-            
-            tbody.innerHTML = filtered.map(p => `
-                 <tr class="hover:bg-gray-50 transition border-b border-gray-50">
-                    <td class="px-6 py-4 font-bold text-gray-800">${p.title}</td>
-                    <td class="px-6 py-4"><span class="px-2 py-1 bg-gray-100 rounded text-xs text-gray-600 uppercase font-bold">${p.category}</span></td>
-                    <td class="px-6 py-4 text-xs">${formatDate(p.createdAt)}</td>
-                    <td class="px-6 py-4 text-center font-mono text-xs">${p.views || 0}</td>
-                    <td class="px-6 py-4 text-right">
-                        <button onclick="loadPostForEdit('${p.id}')" class="text-blue-600 hover:text-blue-800 font-bold text-xs mr-3">EDITAR</button>
-                        <button onclick="deletePost('${p.id}')" class="text-red-400 hover:text-red-600 font-bold text-xs">EXCLUIR</button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function showPostEditor() {
-            document.getElementById('posts-table-container').classList.add('hidden');
-            document.getElementById('post-editor').classList.remove('hidden');
-            resetAdminForm();
-        }
-
-        function hidePostEditor() {
-            document.getElementById('posts-table-container').classList.remove('hidden');
-            document.getElementById('post-editor').classList.add('hidden');
-        }
-
-        function deletePost(id) {
-            if(confirm("Tem certeza que deseja excluir este post permanentemente?")) {
-                db.collection("posts").doc(id).delete().then(() => {
-                    fetchBlogPosts();
-                }).catch(err => alert("Erro: " + err.message));
-            }
-        }
-
-        function resetAdminForm() {
-            currentEditingId = null;
-            document.getElementById('form-title').innerHTML = 'Novo Post';
-            document.getElementById('admin-submit-btn').textContent = "Publicar Artigo";
-            document.forms[1].reset(); 
-            document.getElementById('admin-title').value = '';
-            document.getElementById('admin-intro').value = '';
-            document.getElementById('admin-image').value = '';
-            document.getElementById('admin-content-rich').innerHTML = '';
-            document.getElementById('admin-author').value = 'Redação CrediFácil';
-        }
-
-        function loadPostForEdit(id) {
-            const post = allBlogPosts.find(p => p.id === id);
-            if(!post) return;
-            showPostEditor();
-            currentEditingId = id;
-            document.getElementById('form-title').innerHTML = 'Editando: ' + post.title;
-            document.getElementById('admin-submit-btn').textContent = "Salvar Alterações";
-            document.getElementById('admin-title').value = post.title;
-            document.getElementById('admin-category').value = post.category;
-            document.getElementById('admin-author').value = post.author;
-            document.getElementById('admin-image').value = post.image;
-            document.getElementById('admin-intro').value = post.intro;
-            document.getElementById('admin-content-rich').innerHTML = post.content;
-        }
-
-        function savePost(e) {
-            e.preventDefault();
-            if(!db) return;
-            const btn = document.getElementById('admin-submit-btn');
-            btn.disabled = true;
-            btn.textContent = "Salvando...";
-            const postData = {
-                title: document.getElementById('admin-title').value,
-                category: document.getElementById('admin-category').value,
-                author: document.getElementById('admin-author').value,
-                image: document.getElementById('admin-image').value,
-                intro: document.getElementById('admin-intro').value,
-                content: document.getElementById('admin-content-rich').innerHTML,
-            };
-            let promise;
-            if (currentEditingId) {
-                promise = db.collection("posts").doc(currentEditingId).update(postData);
-            } else {
-                postData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-                postData.likes = 0;
-                postData.views = 0; 
-                promise = db.collection("posts").add(postData);
-            }
-            promise.then(() => {
-                alert(currentEditingId ? "Post atualizado!" : "Post criado!");
-                fetchBlogPosts();
-                hidePostEditor();
-                btn.disabled = false;
-            }).catch(err => {
-                alert("Erro: " + err.message);
-                btn.disabled = false;
-            });
-        }
-
         // --- SHARED & UTILS ---
         function sharePost(network) {
             const url = encodeURIComponent(window.location.href);
@@ -1585,6 +1671,16 @@
                  ref.update({ likes: firebase.firestore.FieldValue.increment(1) });
                  document.getElementById('like-icon').classList.add('text-brand-500', 'ph-fill');
                  document.getElementById('like-icon').classList.remove('text-gray-300', 'ph-bold');
+                 
+                 // Add Like Notification
+                 db.collection("notifications").add({
+                    type: 'like',
+                    postId: id,
+                    postTitle: document.getElementById('post-title').textContent,
+                    userName: "Visitante",
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    read: false
+                });
              }
              document.getElementById('like-icon').classList.add('animate-pulse-custom');
              setTimeout(() => document.getElementById('like-icon').classList.remove('animate-pulse-custom'), 500);
@@ -1608,6 +1704,7 @@
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             })
             .then(() => {
+                showToast("Comentário enviado!");
                 return db.collection("notifications").add({
                     type: 'comment',
                     postId: id,
@@ -1637,6 +1734,7 @@
                 })
             })
             .then(() => {
+                showToast("Resposta enviada!");
                 if(!currentUser) {
                     db.collection("notifications").add({
                         type: 'reply',
